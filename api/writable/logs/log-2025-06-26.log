@@ -1,0 +1,107 @@
+CRITICAL - 2025-06-26 17:22:26 --> InvalidArgumentException: key must be a string when using hmac
+[Method: POST, Route: empregadoLogin]
+in VENDORPATH\firebase\php-jwt\src\JWT.php on line 249.
+ 1 VENDORPATH\firebase\php-jwt\src\JWT.php(219): Firebase\JWT\JWT::sign('eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJjZXJ0ZWlyYV9hcGkiLCJzdWIiOiIxIiwiZW1haWwiOiJkYW5pZWxwYWl2YXNhbGxlc0BnbWFpbC5jb20iLCJpYXQiOjE3NTA5NTg1NDYsImV4cCI6MTc1MDk2MjE0Nn0', false, 'HS256')
+ 2 APPPATH\Controllers\Empregado.php(49): Firebase\JWT\JWT::encode([...], false, 'HS256')
+ 3 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Empregado->login()
+ 4 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Empregado))
+ 5 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 6 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 7 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 8 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ 9 SYSTEMPATH\rewrite.php(44): require_once('C:\\Users\\3Visao\\Documents\\certeira\\certeira\\api\\public\\index.php')
+CRITICAL - 2025-06-26 17:23:05 --> InvalidArgumentException: key must be a string when using hmac
+[Method: POST, Route: empregadoLogin]
+in VENDORPATH\firebase\php-jwt\src\JWT.php on line 249.
+ 1 VENDORPATH\firebase\php-jwt\src\JWT.php(219): Firebase\JWT\JWT::sign('eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJjZXJ0ZWlyYV9hcGkiLCJzdWIiOiIxIiwiZW1haWwiOiJkYW5pZWxwYWl2YXNhbGxlc0BnbWFpbC5jb20iLCJpYXQiOjE3NTA5NTg1ODUsImV4cCI6MTc1MDk2MjE4NX0', false, 'HS256')
+ 2 APPPATH\Controllers\Empregado.php(49): Firebase\JWT\JWT::encode([...], false, 'HS256')
+ 3 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Empregado->login()
+ 4 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Empregado))
+ 5 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 6 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 7 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 8 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ 9 SYSTEMPATH\rewrite.php(44): require_once('C:\\Users\\3Visao\\Documents\\certeira\\certeira\\api\\public\\index.php')
+CRITICAL - 2025-06-26 17:23:45 --> ErrorException: Array to string conversion
+[Method: POST, Route: empregadoLogin]
+in APPPATH\Controllers\Empregado.php on line 26.
+ 1 APPPATH\Controllers\Empregado.php(26): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Array to string conversion', 'C:\\Users\\3Visao\\Documents\\certeira\\certeira\\api\\app\\Controllers\\Empregado.php', 26)
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Empregado->login()
+ 3 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Empregado))
+ 4 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ 8 SYSTEMPATH\rewrite.php(44): require_once('C:\\Users\\3Visao\\Documents\\certeira\\certeira\\api\\public\\index.php')
+CRITICAL - 2025-06-26 17:32:26 --> InvalidArgumentException: key must be a string when using hmac
+[Method: POST, Route: empregadoLogin]
+in VENDORPATH\firebase\php-jwt\src\JWT.php on line 249.
+ 1 VENDORPATH\firebase\php-jwt\src\JWT.php(219): Firebase\JWT\JWT::sign('eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJjZXJ0ZWlyYV9hcGkiLCJzdWIiOiIxIiwiZW1haWwiOiJkYW5pZWxwYWl2YXNhbGxlc0BnbWFpbC5jb20iLCJpYXQiOjE3NTA5NTkxNDYsImV4cCI6MTc1MDk2Mjc0Nn0', false, 'HS256')
+ 2 APPPATH\Controllers\Empregado.php(45): Firebase\JWT\JWT::encode([...], false, 'HS256')
+ 3 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Empregado->login()
+ 4 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Empregado))
+ 5 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 6 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 7 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 8 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ 9 SYSTEMPATH\rewrite.php(44): require_once('C:\\Users\\3Visao\\Documents\\certeira\\certeira\\api\\public\\index.php')
+CRITICAL - 2025-06-26 17:33:27 --> InvalidArgumentException: key must be a string when using hmac
+[Method: POST, Route: empregadoLogin]
+in VENDORPATH\firebase\php-jwt\src\JWT.php on line 249.
+ 1 VENDORPATH\firebase\php-jwt\src\JWT.php(219): Firebase\JWT\JWT::sign('eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJjZXJ0ZWlyYV9hcGkiLCJzdWIiOiIxIiwiZW1haWwiOiJkYW5pZWxwYWl2YXNhbGxlc0BnbWFpbC5jb20iLCJpYXQiOjE3NTA5NTkyMDcsImV4cCI6MTc1MDk2MjgwN30', false, 'HS256')
+ 2 APPPATH\Controllers\Empregado.php(45): Firebase\JWT\JWT::encode([...], false, 'HS256')
+ 3 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Empregado->login()
+ 4 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Empregado))
+ 5 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 6 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 7 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 8 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ 9 SYSTEMPATH\rewrite.php(44): require_once('C:\\Users\\3Visao\\Documents\\certeira\\certeira\\api\\public\\index.php')
+CRITICAL - 2025-06-26 17:35:07 --> InvalidArgumentException: key must be a string when using hmac
+[Method: POST, Route: empregadoLogin]
+in VENDORPATH\firebase\php-jwt\src\JWT.php on line 249.
+ 1 VENDORPATH\firebase\php-jwt\src\JWT.php(219): Firebase\JWT\JWT::sign('eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJjZXJ0ZWlyYV9hcGkiLCJzdWIiOiIxIiwiZW1haWwiOiJkYW5pZWxwYWl2YXNhbGxlc0BnbWFpbC5jb20iLCJpYXQiOjE3NTA5NTkzMDcsImV4cCI6MTc1MDk2MjkwN30', false, 'HS256')
+ 2 APPPATH\Controllers\Empregado.php(45): Firebase\JWT\JWT::encode([...], false, 'HS256')
+ 3 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Empregado->login()
+ 4 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Empregado))
+ 5 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 6 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 7 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 8 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ 9 SYSTEMPATH\rewrite.php(44): require_once('C:\\Users\\3Visao\\Documents\\certeira\\certeira\\api\\public\\index.php')
+CRITICAL - 2025-06-26 17:38:21 --> InvalidArgumentException: key must be a string when using hmac
+[Method: POST, Route: empregadoLogin]
+in VENDORPATH\firebase\php-jwt\src\JWT.php on line 249.
+ 1 VENDORPATH\firebase\php-jwt\src\JWT.php(219): Firebase\JWT\JWT::sign('eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJjZXJ0ZWlyYV9hcGkiLCJzdWIiOiIxIiwiZW1haWwiOiJkYW5pZWxwYWl2YXNhbGxlc0BnbWFpbC5jb20iLCJpYXQiOjE3NTA5NTk1MDEsImV4cCI6MTc1MDk2MzEwMX0', false, 'HS256')
+ 2 APPPATH\Controllers\Empregado.php(45): Firebase\JWT\JWT::encode([...], false, 'HS256')
+ 3 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Empregado->login()
+ 4 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Empregado))
+ 5 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 6 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 7 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 8 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ 9 SYSTEMPATH\rewrite.php(44): require_once('C:\\Users\\3Visao\\Documents\\certeira\\certeira\\api\\public\\index.php')
+CRITICAL - 2025-06-26 18:08:19 --> InvalidArgumentException: key must be a string when using hmac
+[Method: POST, Route: empregadoLogin]
+in VENDORPATH\firebase\php-jwt\src\JWT.php on line 249.
+ 1 VENDORPATH\firebase\php-jwt\src\JWT.php(219): Firebase\JWT\JWT::sign('eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJjZXJ0ZWlyYV9hcGkiLCJzdWIiOiIxIiwiZW1haWwiOiJkYW5pZWxwYWl2YXNhbGxlc0BnbWFpbC5jb20iLCJpYXQiOjE3NTA5NjEyOTksImV4cCI6MTc1MDk2NDg5OX0', false, 'HS256')
+ 2 APPPATH\Controllers\Empregado.php(45): Firebase\JWT\JWT::encode([...], false, 'HS256')
+ 3 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Empregado->login()
+ 4 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Empregado))
+ 5 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 6 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 7 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 8 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ 9 SYSTEMPATH\rewrite.php(44): require_once('C:\\Users\\3Visao\\Documents\\certeira\\certeira\\api\\public\\index.php')
+CRITICAL - 2025-06-26 18:09:07 --> InvalidArgumentException: key must be a string when using hmac
+[Method: POST, Route: empregadoLogin]
+in VENDORPATH\firebase\php-jwt\src\JWT.php on line 249.
+ 1 VENDORPATH\firebase\php-jwt\src\JWT.php(219): Firebase\JWT\JWT::sign('eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJjZXJ0ZWlyYV9hcGkiLCJzdWIiOiIxIiwiZW1haWwiOiJkYW5pZWxwYWl2YXNhbGxlc0BnbWFpbC5jb20iLCJpYXQiOjE3NTA5NjEzNDcsImV4cCI6MTc1MDk2NDk0N30', false, 'HS256')
+ 2 APPPATH\Controllers\Empregado.php(45): Firebase\JWT\JWT::encode([...], false, 'HS256')
+ 3 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Empregado->login()
+ 4 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Empregado))
+ 5 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 6 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 7 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 8 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ 9 SYSTEMPATH\rewrite.php(44): require_once('C:\\Users\\3Visao\\Documents\\certeira\\certeira\\api\\public\\index.php')

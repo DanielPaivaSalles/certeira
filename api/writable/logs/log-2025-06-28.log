@@ -1,0 +1,11 @@
+CRITICAL - 2025-06-28 00:38:00 --> ErrorException: Trying to access array offset on null
+[Method: POST, Route: empregadoLogin]
+in APPPATH\Controllers\Empregado.php on line 36.
+ 1 APPPATH\Controllers\Empregado.php(36): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Trying to access array offset on null', 'C:\\Users\\Daniel\\Documents\\Daniel\\certeira\\api\\app\\Controllers\\Empregado.php', 36)
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Empregado->login()
+ 3 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Empregado))
+ 4 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ 8 SYSTEMPATH\rewrite.php(44): require_once('C:\\Users\\Daniel\\Documents\\Daniel\\certeira\\api\\public\\index.php')
