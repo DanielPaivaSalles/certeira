@@ -4,12 +4,14 @@ class CustomButton extends StatefulWidget {
   final String label;
   final bool isSelected;
   final void Function() onTap;
+  final IconData? icon;
 
   const CustomButton({
     super.key,
     required this.label,
     required this.isSelected,
     required this.onTap,
+    this.icon,
   });
 
   @override
@@ -37,18 +39,21 @@ class _CustomButtonState extends State<CustomButton> {
       child: GestureDetector(
         onTap: widget.onTap,
         child: Container(
-          margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+          margin: const EdgeInsets.symmetric(horizontal: 6, vertical: 6),
+          padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 6),
           decoration: BoxDecoration(
             border: Border.all(color: Colors.white, width: 1),
             color: backgroundColor,
             borderRadius: BorderRadius.circular(4),
           ),
-          child: Text(
-            widget.label,
-            style: const TextStyle(color: Colors.white, fontSize: 16),
-            textAlign: TextAlign.center,
-          ),
+          child:
+              widget.icon != null
+                  ? Icon(widget.icon, color: Colors.white, size: 18)
+                  : Text(
+                    widget.label,
+                    style: const TextStyle(color: Colors.white, fontSize: 16),
+                    textAlign: TextAlign.center,
+                  ),
         ),
       ),
     );

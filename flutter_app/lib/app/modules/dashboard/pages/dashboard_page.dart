@@ -25,9 +25,9 @@ class _DashboardPageState extends State<DashboardPage> {
     });
 
     // Inicializa os estados de hover
-    ['Home', 'Empresas', 'Clientes'].forEach((opcao) {
+    for (var opcao in ['Home', 'Empresas', 'Clientes']) {
       hovering[opcao] = false;
-    });
+    }
   }
 
   Widget _buildMenuButton(String opcao) {
