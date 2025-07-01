@@ -43,3 +43,14 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+# Windows build artifacts
+/windows/runner/Generated.*
+/windows/runner/Debug/
+/windows/runner/Release/
+/windows/x64/
+/windows/arm64/
+/windows/Debug/
+/windows/Release/
+/windows/profile/
+/windows/*.vcxproj.user
