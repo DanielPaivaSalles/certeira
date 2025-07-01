@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/app/core/widgets/custom_buttom.dart';
+import 'package:flutter_app/app/modules/empresa/pages/empresa_page.dart';
 import '../../../core/helpers/screen_helper.dart';
 import '../../empresa/pages/empresas_page.dart';
 
@@ -84,7 +85,15 @@ class _DashboardPageState extends State<DashboardPage> {
           child: Text('Você está na Home.', style: TextStyle(fontSize: 24)),
         );
       case 'Empresas':
-        return const EmpresasPage();
+        return EmpresasPage(
+          onIncluirPressed: () {
+            setState(() {
+              opcaoSelecionada = 'Empresa';
+            });
+          },
+        );
+      case 'Empresa':
+        return const EmpresaPage();
       case 'Clientes':
         return const Center(
           child: Text('Lista de Clientes.', style: TextStyle(fontSize: 24)),

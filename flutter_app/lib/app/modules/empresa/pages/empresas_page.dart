@@ -7,7 +7,9 @@ import 'package:flutter_app/app/core/widgets/custom_text_tabela_texto.dart';
 import 'package:flutter_app/app/core/widgets/custom_textfield_filtro.dart';
 
 class EmpresasPage extends StatefulWidget {
-  const EmpresasPage({super.key});
+  final VoidCallback onIncluirPressed;
+
+  const EmpresasPage({super.key, required this.onIncluirPressed});
 
   @override
   State<EmpresasPage> createState() => _EmpresasPageState();
@@ -15,7 +17,6 @@ class EmpresasPage extends StatefulWidget {
 
 class _EmpresasPageState extends State<EmpresasPage> {
   final TextEditingController _searchController = TextEditingController();
-
   // Lista original de dados
   late List<List<String>> allRows;
 
@@ -80,22 +81,26 @@ class _EmpresasPageState extends State<EmpresasPage> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const CustomTextTabelaTitulo(text: 'Empresas'),
-          const SizedBox(height: 10),
-
           // Campo de filtro
           Container(
-            height: 100,
             width: 1200,
             alignment: Alignment.centerRight,
             child: SizedBox(
               height: 100,
               width: 400,
-              child: Column(
+              child: Row(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                  CustomTextFieldFiltro(
-                    label: 'Pesquisar',
-                    controller: _searchController,
+                  CustomButton(
+                    label: 'Incluir',
+                    isSelected: false,
+                    onTap: widget.onIncluirPressed,
+                  ),
+                  Expanded(
+                    child: CustomTextFieldFiltro(
+                      label: 'Pesquisar',
+                      controller: _searchController,
+                    ),
                   ),
                 ],
               ),

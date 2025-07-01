@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../core/widgets/custom_textfield.dart';
-import '../../../core/widgets/custom_selection_text.dart';
+import '../../../core/widgets/custom_selection_title.dart';
 import '../../../core/widgets/custom_buttom.dart';
 
 class EmpresaPage extends StatefulWidget {
@@ -26,7 +26,7 @@ class _EmpresaPageState extends State<EmpresaPage> {
   final cepController = TextEditingController();
   final cadastroEnderecoController = TextEditingController();
 
-  void incluir() {
+  void salvar() {
     final dados = {
       "razao": razaoController.text,
       "fantasia": fantasiaController.text,
@@ -62,7 +62,7 @@ class _EmpresaPageState extends State<EmpresaPage> {
                     padding: const EdgeInsets.all(10),
                     margin: const EdgeInsets.only(bottom: 10),
                     decoration: BoxDecoration(
-                      color: Colors.black87,
+                      color: Colors.white,
                       border: Border.all(color: Colors.black),
                       borderRadius: BorderRadius.circular(4),
                     ),
@@ -130,7 +130,7 @@ class _EmpresaPageState extends State<EmpresaPage> {
                     padding: const EdgeInsets.all(10),
                     margin: const EdgeInsets.only(bottom: 10),
                     decoration: BoxDecoration(
-                      color: Colors.black87,
+                      color: Colors.white,
                       border: Border.all(color: Colors.black),
                       borderRadius: BorderRadius.circular(4),
                     ),
@@ -240,25 +240,13 @@ class _EmpresaPageState extends State<EmpresaPage> {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     CustomButton(
-                      label: 'Incluir',
+                      label: 'Salvar',
                       isSelected: false,
-                      onTap: incluir,
+                      onTap: salvar,
                     ),
                     const SizedBox(height: 10),
                     CustomButton(
-                      label: 'Alterar',
-                      isSelected: false,
-                      onTap: () {},
-                    ),
-                    const SizedBox(height: 10),
-                    CustomButton(
-                      label: 'Consultar',
-                      isSelected: false,
-                      onTap: () {},
-                    ),
-                    const SizedBox(height: 10),
-                    CustomButton(
-                      label: 'Excluir',
+                      label: 'Cancelar',
                       isSelected: false,
                       onTap: () {},
                     ),
