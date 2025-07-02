@@ -39,6 +39,7 @@ CREATE TABLE Endereco (
   codigoCidade INT NOT NULL,
   cep VARCHAR(10),
   dataCadastro DATETIME DEFAULT CURRENT_TIMESTAMP,
+  dataDesativado DATETIME DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (codigoBairro) REFERENCES Bairro(codigo),
   FOREIGN KEY (codigoCidade) REFERENCES Cidade(codigo),
   FOREIGN KEY (codigoRua) REFERENCES Rua(codigo)

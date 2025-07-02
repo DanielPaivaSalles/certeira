@@ -8,6 +8,6 @@ class EmpresaModel extends Model
 {
     protected $table = 'Empresa';
     protected $primaryKey = 'codigo';
-    protected $allowedFields = ['razao', 'fantasia', 'cnpj', 'im', 'codigo_endereco', 'data_cadastro', 'data_desativado'];
+    protected $allowedFields = ['razao', 'fantasia', 'cnpj', 'im', 'codigoEndereco', 'dataCadastro', 'dataDesativado'];
 }
 
