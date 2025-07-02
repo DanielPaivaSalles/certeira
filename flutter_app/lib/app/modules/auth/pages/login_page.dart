@@ -1,8 +1,6 @@
-import 'dart:async';
-import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/app/core/helpers/screen_helper.dart';
-import 'package:http/http.dart' as http;
+import 'package:flutter_app/app/modules/auth/controllers/login_controller.dart';
 import '../../dashboard/pages/dashboard_page.dart';
 import '../../../core/widgets/custom_buttom.dart';
 
@@ -16,6 +14,7 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final emailController = TextEditingController();
   final senhaController = TextEditingController();
+  final LoginController loginController = LoginController();
 
   String mensagem = '';
 
@@ -27,32 +26,21 @@ class _LoginPageState extends State<LoginPage> {
     });
   }
 
-  Future<void> fazerLogin() async {
-    final url = Uri.parse('http://localhost:8080/empregadoLogin');
-
-    final resposta = await http.post(
-      url,
-      headers: {'Content-Type': 'application/json'},
-      body: jsonEncode({
-        'email': 'danielpaivasalles@gmail.com', //emailController.text,
-        'senha': '530337503b614a@D', //senhaController.text,
-      }),
+  Future<void> _fazerLogin() async {
+    final response = await loginController.fazerLogin(
+      emailController.text,
+      senhaController.text,
     );
 
-    if (resposta.statusCode == 200) {
-      final json = jsonDecode(resposta.body);
-      if (json['status'] == true) {
-        Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (context) => const DashboardPage()),
-        );
-      } else {
-        setState(() {
-          mensagem = 'Erro: ${json['mensagem']}';
-        });
-      }
+    if (!mounted) return;
+
+    if (response.status) {
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (context) => const DashboardPage()),
+      );
     } else {
       setState(() {
-        mensagem = 'Erro na conexão: ${resposta.statusCode}';
+        mensagem = 'Erro: ${response.mensagem}';
       });
     }
   }
@@ -87,9 +75,9 @@ class _LoginPageState extends State<LoginPage> {
                             const SizedBox(height: 10),
                             TextField(
                               controller: emailController,
-                              style: TextStyle(color: Colors.white),
-                              decoration: InputDecoration(
-                                labelText: 'email',
+                              style: const TextStyle(color: Colors.white),
+                              decoration: const InputDecoration(
+                                labelText: 'Email',
                                 labelStyle: TextStyle(color: Colors.white),
                                 enabledBorder: UnderlineInputBorder(
                                   borderSide: BorderSide(color: Colors.white),
@@ -102,9 +90,10 @@ class _LoginPageState extends State<LoginPage> {
                             const SizedBox(height: 10),
                             TextField(
                               controller: senhaController,
-                              style: TextStyle(color: Colors.white),
-                              decoration: InputDecoration(
-                                labelText: 'senha',
+                              obscureText: true,
+                              style: const TextStyle(color: Colors.white),
+                              decoration: const InputDecoration(
+                                labelText: 'Senha',
                                 labelStyle: TextStyle(color: Colors.white),
                                 enabledBorder: UnderlineInputBorder(
                                   borderSide: BorderSide(color: Colors.white),
@@ -121,7 +110,7 @@ class _LoginPageState extends State<LoginPage> {
                                 CustomButton(
                                   label: 'Entrar',
                                   isSelected: false,
-                                  onTap: fazerLogin,
+                                  onTap: _fazerLogin,
                                 ),
                               ],
                             ),

@@ -5,82 +5,76 @@ import 'package:flutter_app/app/core/widgets/custom_text_tabela_titulo.dart';
 import 'package:flutter_app/app/core/widgets/custom_text_tabela_cabecalho.dart';
 import 'package:flutter_app/app/core/widgets/custom_text_tabela_texto.dart';
 import 'package:flutter_app/app/core/widgets/custom_textfield_filtro.dart';
+import 'package:flutter_app/app/modules/empresa/models/empresa_model.dart';
+import '../controllers/empresas_controller.dart';
 
 class EmpresasPage extends StatefulWidget {
-  final VoidCallback onIncluirPressed;
+  final void Function(EmpresaModel empresa) onIncluirPressed;
+  final void Function(EmpresaModel empresa) onAlterarPressed;
+  final void Function(EmpresaModel empresa) onDesativarPressed;
 
-  const EmpresasPage({super.key, required this.onIncluirPressed});
+  const EmpresasPage({
+    super.key,
+    required this.onIncluirPressed,
+    required this.onAlterarPressed,
+    required this.onDesativarPressed,
+  });
 
   @override
   State<EmpresasPage> createState() => _EmpresasPageState();
 }
 
 class _EmpresasPageState extends State<EmpresasPage> {
-  final TextEditingController _searchController = TextEditingController();
-  // Lista original de dados
-  late List<List<String>> allRows;
-
-  // Lista que exibe na tabela
-  late List<List<String>> filteredRows;
+  late EmpresasController controller;
+  late Future<void> futureLoad;
 
   @override
   void initState() {
     super.initState();
 
-    allRows = [
-      [
-        'Salles Vistorias Automotivas Ltda',
-        'Salles Vistorias',
-        '60.808.249/0001-50',
-        'Santa Cruz do Rio Pardo/SP',
-      ],
-      ['Garrett Winters', 'Accountant', 'Tokyo', '63'],
-      ['Ashton Cox', 'Junior Technical Author', 'San Francisco', '66'],
-      ['Cedric Kelly', 'Senior Javascript Developer', 'Edinburgh', '22'],
-      ['Airi Satou', 'Accountant', 'Tokyo', '33'],
-      ['Brielle Williamson', 'Integration Specialist', 'New York', '61'],
-      ['Herrod Chandler', 'Sales Assistant', 'San Francisco', '59'],
-      ['Rhona Davidson', 'Integration Specialist', 'Tokyo', '55'],
-      ['Colleen Hurst', 'Javascript Developer', 'San Francisco', '39'],
-      ['Sonya Frost', 'Software Engineer', 'Edinburgh', '23'],
-      [
-        'Salles Vistorias Automotivas Ltda',
-        'Salles Vistorias',
-        '60.808.249/0001-50',
-        'Santa Cruz do Rio Pardo/SP',
-      ],
-      ['Garrett Winters', 'Accountant', 'Tokyo', '63'],
-    ];
+    controller = EmpresasController();
 
-    filteredRows = List.from(allRows);
+    // importante: chamamos loadEmpresas só aqui!
+    futureLoad = controller.loadEmpresas();
 
-    _searchController.addListener(_onSearchChanged);
-  }
-
-  void _onSearchChanged() {
-    String search = _searchController.text.toLowerCase();
-
-    setState(() {
-      filteredRows =
-          allRows.where((row) {
-            return row.any((cell) => cell.toLowerCase().contains(search));
-          }).toList();
+    controller.searchController.addListener(() {
+      setState(() {});
     });
   }
 
   @override
   void dispose() {
-    _searchController.dispose();
+    controller.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    return FutureBuilder<void>(
+      future: futureLoad,
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          // Mostra loading
+          return const Center(child: CircularProgressIndicator());
+        } else if (snapshot.hasError) {
+          return Center(
+            child: Text('Erro ao carregar empresas: ${snapshot.error}'),
+          );
+        } else {
+          return _buildContent();
+        }
+      },
+    );
+  }
+
+  Widget _buildContent() {
     return CustomContainerWhite(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const CustomTextTabelaTitulo(text: 'Empresas'),
+          const SizedBox(height: 10),
+
           // Campo de filtro
           Container(
             width: 1200,
@@ -94,12 +88,25 @@ class _EmpresasPageState extends State<EmpresasPage> {
                   CustomButton(
                     label: 'Incluir',
                     isSelected: false,
-                    onTap: widget.onIncluirPressed,
+                    onTap:
+                        () => widget.onIncluirPressed(
+                          EmpresaModel(
+                            codigo: '',
+                            razao: '',
+                            fantasia: '',
+                            cnpj: '',
+                            im: '',
+                            codigoEndereco: '',
+                            dataCadastro: '',
+                            dataDesativado: '',
+                          ),
+                        ),
                   ),
+                  const SizedBox(width: 8),
                   Expanded(
                     child: CustomTextFieldFiltro(
                       label: 'Pesquisar',
-                      controller: _searchController,
+                      controller: controller.searchController,
                     ),
                   ),
                 ],
@@ -116,6 +123,7 @@ class _EmpresasPageState extends State<EmpresasPage> {
                 width: 1200,
                 child: DataTable(
                   columns: const [
+                    DataColumn(label: CustomTextTabelaCabecalho(text: 'ID')),
                     DataColumn(
                       label: CustomTextTabelaCabecalho(text: 'Razão Social'),
                     ),
@@ -129,9 +137,9 @@ class _EmpresasPageState extends State<EmpresasPage> {
                     DataColumn(label: CustomTextTabelaCabecalho(text: 'Ações')),
                   ],
                   rows:
-                      filteredRows.map((row) {
-                        return _buildRow(row[0], row[1], row[2], row[3]);
-                      }).toList(),
+                      controller.filteredEmpresas
+                          .map((empresa) => _buildRow(empresa))
+                          .toList(),
                 ),
               ),
             ),
@@ -141,39 +149,31 @@ class _EmpresasPageState extends State<EmpresasPage> {
     );
   }
 
-  DataRow _buildRow(String name, String position, String office, String age) {
+  DataRow _buildRow(EmpresaModel empresa) {
     return DataRow(
       cells: [
+        DataCell(CustomTextTabelaTexto(text: empresa.codigo)),
+        DataCell(CustomTextTabelaTexto(text: empresa.razao)),
+        DataCell(CustomTextTabelaTexto(text: empresa.fantasia)),
+        DataCell(CustomTextTabelaTexto(text: empresa.cnpj)),
+        DataCell(CustomTextTabelaTexto(text: empresa.codigoEndereco)),
         DataCell(
-          SizedBox(width: 250, child: CustomTextTabelaTexto(text: name)),
-        ),
-        DataCell(
-          SizedBox(width: 150, child: CustomTextTabelaTexto(text: position)),
-        ),
-        DataCell(
-          SizedBox(width: 150, child: CustomTextTabelaTexto(text: office)),
-        ),
-        DataCell(SizedBox(width: 210, child: CustomTextTabelaTexto(text: age))),
-        DataCell(
-          SizedBox(
-            width: 100,
-            child: Row(
-              children: [
-                CustomButton(
-                  label: '',
-                  isSelected: false,
-                  icon: Icons.edit,
-                  onTap: () => print('Editar $name'),
-                ),
-                const SizedBox(width: 8),
-                CustomButton(
-                  label: '',
-                  isSelected: false,
-                  icon: Icons.delete,
-                  onTap: () => print('Excluir $name'),
-                ),
-              ],
-            ),
+          Row(
+            children: [
+              CustomButton(
+                label: '',
+                isSelected: false,
+                icon: Icons.edit,
+                onTap: () => widget.onAlterarPressed(empresa),
+              ),
+              const SizedBox(width: 8),
+              CustomButton(
+                label: '',
+                isSelected: false,
+                icon: Icons.delete,
+                onTap: () => widget.onDesativarPressed(empresa),
+              ),
+            ],
           ),
         ),
       ],

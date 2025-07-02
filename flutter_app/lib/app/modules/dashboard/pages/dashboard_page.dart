@@ -3,6 +3,7 @@ import 'package:flutter_app/app/core/widgets/custom_buttom.dart';
 import 'package:flutter_app/app/modules/empresa/pages/empresa_page.dart';
 import '../../../core/helpers/screen_helper.dart';
 import '../../empresa/pages/empresas_page.dart';
+import '../../empresa/models/empresa_model.dart';
 
 class DashboardPage extends StatefulWidget {
   const DashboardPage({super.key});
@@ -16,6 +17,8 @@ class _DashboardPageState extends State<DashboardPage> {
 
   /// Guarda o hover de cada botão
   final Map<String, bool> hovering = {};
+
+  EmpresaModel? empresaSelecionada;
 
   @override
   void initState() {
@@ -51,7 +54,7 @@ class _DashboardPageState extends State<DashboardPage> {
           // Menu lateral
           Container(
             width: 200,
-            decoration: BoxDecoration(color: Colors.black87),
+            decoration: const BoxDecoration(color: Colors.black87),
             child: ListView(
               children: [
                 Container(
@@ -68,10 +71,7 @@ class _DashboardPageState extends State<DashboardPage> {
 
           // Conteúdo do painel direito
           Expanded(
-            child: Container(
-              decoration: BoxDecoration(color: Colors.white),
-              child: Center(child: _getConteudoWidget()),
-            ),
+            child: Container(color: Colors.white, child: _getConteudoWidget()),
           ),
         ],
       ),
@@ -84,20 +84,44 @@ class _DashboardPageState extends State<DashboardPage> {
         return const Center(
           child: Text('Você está na Home.', style: TextStyle(fontSize: 24)),
         );
+
       case 'Empresas':
         return EmpresasPage(
-          onIncluirPressed: () {
+          onIncluirPressed: (empresa) {
             setState(() {
+              empresaSelecionada = empresa;
               opcaoSelecionada = 'Empresa';
             });
           },
+          onAlterarPressed: (empresa) {
+            setState(() {
+              empresaSelecionada = empresa;
+              opcaoSelecionada = 'Empresa';
+            });
+          },
+          onDesativarPressed: (empresa) {
+            setState(() {
+              // faça algo com a empresa se necessário
+              empresaSelecionada = empresa;
+              opcaoSelecionada = 'Empresas';
+            });
+          },
         );
+
       case 'Empresa':
-        return const EmpresaPage();
+        return EmpresaPage(
+          onCancelarPressed: () {
+            setState(() {
+              opcaoSelecionada = 'Empresas';
+            });
+          },
+        );
+
       case 'Clientes':
         return const Center(
           child: Text('Lista de Clientes.', style: TextStyle(fontSize: 24)),
         );
+
       default:
         return const Center(
           child: Text('Selecione uma opção.', style: TextStyle(fontSize: 24)),

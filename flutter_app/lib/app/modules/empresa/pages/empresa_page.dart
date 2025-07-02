@@ -1,54 +1,70 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/app/modules/empresa/models/empresa_model.dart';
 import '../../../core/widgets/custom_textfield.dart';
 import '../../../core/widgets/custom_selection_title.dart';
 import '../../../core/widgets/custom_buttom.dart';
 
 class EmpresaPage extends StatefulWidget {
-  const EmpresaPage({super.key});
+  final EmpresaModel? empresa;
+  final VoidCallback? onCancelarPressed;
+
+  const EmpresaPage({super.key, this.empresa, this.onCancelarPressed});
 
   @override
   State<EmpresaPage> createState() => _EmpresaPageState();
 }
 
 class _EmpresaPageState extends State<EmpresaPage> {
-  // Controllers empresa
-  final razaoController = TextEditingController();
-  final fantasiaController = TextEditingController();
-  final cnpjController = TextEditingController();
-  final imController = TextEditingController();
-  final cadastroController = TextEditingController();
+  late TextEditingController codigoController;
+  late TextEditingController razaoController;
+  late TextEditingController fantasiaController;
+  late TextEditingController cnpjController;
+  late TextEditingController imController;
+  late TextEditingController codigoEnderecoController;
+  late TextEditingController dataCadastroController;
+  late TextEditingController dataDesativadoController;
 
-  // Controllers endereco
-  final ruaController = TextEditingController();
-  final numeroController = TextEditingController();
-  final bairroController = TextEditingController();
-  final cidadeController = TextEditingController();
-  final cepController = TextEditingController();
-  final cadastroEnderecoController = TextEditingController();
+  @override
+  void initState() {
+    super.initState();
 
-  void salvar() {
-    final dados = {
-      "razao": razaoController.text,
-      "fantasia": fantasiaController.text,
-      "cnpj": cnpjController.text,
-      "im": imController.text,
-      "cadastro": cadastroController.text,
-      "rua": ruaController.text,
-      "numero": numeroController.text,
-      "bairro": bairroController.text,
-      "cidade": cidadeController.text,
-      "cep": cepController.text,
-      "cadastro_endereco": cadastroEnderecoController.text,
-    };
+    codigoController = TextEditingController(
+      text: widget.empresa?.codigo ?? '',
+    );
+    razaoController = TextEditingController(text: widget.empresa?.razao ?? '');
+    fantasiaController = TextEditingController(
+      text: widget.empresa?.fantasia ?? '',
+    );
+    cnpjController = TextEditingController(text: widget.empresa?.cnpj ?? '');
+    imController = TextEditingController(text: widget.empresa?.im ?? '');
+    codigoEnderecoController = TextEditingController(
+      text: widget.empresa?.codigoEndereco ?? '',
+    );
+    dataCadastroController = TextEditingController(
+      text: widget.empresa?.dataCadastro ?? '',
+    );
+    dataDesativadoController = TextEditingController(
+      text: widget.empresa?.dataDesativado ?? '',
+    );
+  }
 
-    // Aqui você mandaria para a API
-    print(dados);
+  @override
+  void dispose() {
+    codigoController.dispose();
+    razaoController.dispose();
+    fantasiaController.dispose();
+    cnpjController.dispose();
+    imController.dispose();
+    codigoEnderecoController.dispose();
+    dataCadastroController.dispose();
+    dataDesativadoController.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(10),
+      padding: const EdgeInsets.all(16),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -69,7 +85,17 @@ class _EmpresaPageState extends State<EmpresaPage> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        CustomSelectionTitle(text: 'Empresa'),
+                        Row(
+                          children: [
+                            CustomSelectionTitle(text: 'Empresa'),
+                            CustomSelectionTitle(
+                              text:
+                                  widget.empresa?.codigo.isNotEmpty == true
+                                      ? widget.empresa!.codigo
+                                      : 'Novo',
+                            ),
+                          ],
+                        ),
                         const SizedBox(height: 10),
 
                         CustomTextField(
@@ -114,108 +140,13 @@ class _EmpresaPageState extends State<EmpresaPage> {
                                 padding: const EdgeInsets.only(left: 4),
                                 child: CustomTextField(
                                   label: 'Cadastro',
-                                  controller: cadastroController,
+                                  controller: dataCadastroController,
                                 ),
                               ),
                             ),
                           ],
                         ),
                         const SizedBox(height: 10),
-                      ],
-                    ),
-                  ),
-
-                  // Container Endereço
-                  Container(
-                    padding: const EdgeInsets.all(10),
-                    margin: const EdgeInsets.only(bottom: 10),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      border: Border.all(color: Colors.black),
-                      borderRadius: BorderRadius.circular(4),
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        CustomSelectionTitle(text: 'Endereço'),
-                        const SizedBox(height: 10),
-
-                        Row(
-                          children: [
-                            Expanded(
-                              flex: 3,
-                              child: Padding(
-                                padding: const EdgeInsets.only(right: 4),
-                                child: CustomTextField(
-                                  label: 'Rua',
-                                  controller: ruaController,
-                                ),
-                              ),
-                            ),
-                            Expanded(
-                              flex: 1,
-                              child: Padding(
-                                padding: const EdgeInsets.only(left: 4),
-                                child: CustomTextField(
-                                  label: 'Número',
-                                  controller: numeroController,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 10),
-
-                        Row(
-                          children: [
-                            Expanded(
-                              flex: 35,
-                              child: Padding(
-                                padding: const EdgeInsets.only(right: 4),
-                                child: CustomTextField(
-                                  label: 'Bairro',
-                                  controller: bairroController,
-                                ),
-                              ),
-                            ),
-                            Expanded(
-                              flex: 65,
-                              child: Padding(
-                                padding: const EdgeInsets.only(left: 4),
-                                child: CustomTextField(
-                                  label: 'Cidade',
-                                  controller: cidadeController,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 10),
-
-                        Row(
-                          children: [
-                            Expanded(
-                              flex: 1,
-                              child: Padding(
-                                padding: const EdgeInsets.only(right: 4),
-                                child: CustomTextField(
-                                  label: 'CEP',
-                                  controller: cepController,
-                                ),
-                              ),
-                            ),
-                            Expanded(
-                              flex: 1,
-                              child: Padding(
-                                padding: const EdgeInsets.only(left: 4),
-                                child: CustomTextField(
-                                  label: 'Cadastro',
-                                  controller: cadastroEnderecoController,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
                       ],
                     ),
                   ),
@@ -242,13 +173,17 @@ class _EmpresaPageState extends State<EmpresaPage> {
                     CustomButton(
                       label: 'Salvar',
                       isSelected: false,
-                      onTap: salvar,
+                      onTap: () {
+                        // salvar lógica aqui
+                      },
                     ),
                     const SizedBox(height: 10),
                     CustomButton(
                       label: 'Cancelar',
                       isSelected: false,
-                      onTap: () {},
+                      onTap: () {
+                        widget.onCancelarPressed!();
+                      },
                     ),
                     const SizedBox(height: 10),
                   ],
