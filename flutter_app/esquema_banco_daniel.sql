@@ -74,6 +74,7 @@ CREATE TABLE Funcionario (
   codigoEmpresa INT NOT NULL,
   codigoEmpregado INT NOT NULL,
   dataCadastro DATETIME DEFAULT CURRENT_TIMESTAMP,
+  dataDesativado DATETIME DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (codigoEmpresa) REFERENCES Empresa(codigo),
   FOREIGN KEY (codigoEmpregado) REFERENCES Empregado(codigo)
 );
@@ -90,6 +91,7 @@ CREATE TABLE Cliente (
   senha VARCHAR(100),
   desconto DECIMAL(10,2) DEFAULT 0.00,
   dataCadastro DATETIME DEFAULT CURRENT_TIMESTAMP,
+  dataDesativado DATETIME DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (codigoEndereco) REFERENCES Endereco(codigo)
 );
 
@@ -103,6 +105,7 @@ CREATE TABLE Fornecedor (
   codigoEndereco INT,
   email VARCHAR(100),
   dataCadastro DATETIME DEFAULT CURRENT_TIMESTAMP,
+  dataDesativado DATETIME DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (codigoEndereco) REFERENCES Endereco(codigo)
 );
 
@@ -111,6 +114,7 @@ CREATE TABLE Atividade (
   codigo INT AUTO_INCREMENT PRIMARY KEY,
   atividade VARCHAR(100),
   dataCadastro DATETIME DEFAULT CURRENT_TIMESTAMP
+  dataDesativado DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE Preco (
@@ -119,6 +123,7 @@ CREATE TABLE Preco (
   codigoEmpresa INT NOT NULL,
   codigoAtividade INT NOT NULL,
   dataCadastro DATETIME DEFAULT CURRENT_TIMESTAMP,
+  dataDesativado DATETIME DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (codigoEmpresa) REFERENCES Empresa(codigo),
   FOREIGN KEY (codigoAtividade) REFERENCES Atividade(codigo)
 );
@@ -209,56 +214,56 @@ INSERT INTO Rua (rua, dataCadastro) VALUES ('AV. DR. PEDRO CAMARINHA', now());
 INSERT INTO Rua (rua, dataCadastro) VALUES ('AV. DR. CYRO DE MELLO CAMARINHA', now());
 INSERT INTO Rua (rua, dataCadastro) VALUES ('R. COSTA CARVALHO', now());
 
-INSERT INTO Endereco (codigoRua, numero, codigoBairro, codigoCidade, cep, dataCadastro) VALUES (1, '852', 1, 1, '18910038', now());
-INSERT INTO Endereco (codigoRua, numero, codigoBairro, codigoCidade, cep, dataCadastro) VALUES (2, '205', 2, 1, '18900082', now());
-INSERT INTO Endereco (codigoRua, numero, codigoBairro, codigoCidade, cep, dataCadastro) VALUES (3, '756', 2, 1, '18900073', now());
-INSERT INTO Endereco (codigoRua, numero, codigoBairro, codigoCidade, cep, dataCadastro) VALUES (4, '300', 3, 2, '05429000', now());
+INSERT INTO Endereco (codigoRua, numero, codigoBairro, codigoCidade, cep, dataCadastro, dataDesativado) VALUES (1, '852', 1, 1, '18910038', now(), null);
+INSERT INTO Endereco (codigoRua, numero, codigoBairro, codigoCidade, cep, dataCadastro, dataDesativado) VALUES (2, '205', 2, 1, '18900082', now(), null);
+INSERT INTO Endereco (codigoRua, numero, codigoBairro, codigoCidade, cep, dataCadastro, dataDesativado) VALUES (3, '756', 2, 1, '18900073', now(), null);
+INSERT INTO Endereco (codigoRua, numero, codigoBairro, codigoCidade, cep, dataCadastro, dataDesativado) VALUES (4, '300', 3, 2, '05429000', now(), null);
 
 INSERT INTO Empresa (razao, fantasia, cnpj, im, codigoEndereco, dataCadastro, dataDesativado) VALUES ('SALLES VISTORIAS AUTOMOTIVAS LTDA', '3 VISAO SANTA CRUZ DO RIO PARDO', '60808249000150', '3022017', 2, now(), NULL);
 
 INSERT INTO Empregado (nome, email, senha, codigoEndereco, dataCadastro, dataDesativado) VALUES ('DANIEL PAIVA SALLES', 'danielpaivasalles@gmail.com', '$2y$12$26C4YyKQEEwoMu5/POM9b.Qs5OWGQyh67.dS7KW6qg4n0.XJ4ldei', 3, now(), NULL);
 INSERT INTO Empregado (nome, email, senha, codigoEndereco, dataCadastro, dataDesativado) VALUES ('ANESIO EVARISTO SALLES', 'anesiosalles@gmail.com', '$2y$12$Y9HaVLSMeBzviLGiisSiR.L/T3x/dtfatwfYivMU1yFPde5FsSsBa', 3, now(), NULL);
 
-INSERT INTO Funcionario (codigoEmpresa, codigoEmpregado, dataCadastro) VALUES (1, 1, now());
-INSERT INTO Funcionario (codigoEmpresa, codigoEmpregado, dataCadastro) VALUES (1, 2, now());
+INSERT INTO Funcionario (codigoEmpresa, codigoEmpregado, dataCadastro, dataDesativado) VALUES (1, 1, now(), null);
+INSERT INTO Funcionario (codigoEmpresa, codigoEmpregado, dataCadastro, dataDesativado) VALUES (1, 2, now(), null);
 
-INSERT INTO Cliente (nomeRazao, apelidoFantasia, cpfCNPJ, rgIE, codigoEndereco, email, senha, desconto, dataCadastro) VALUES ('GABRIEL APARECIDO SALLES', 'SALLES', '38816815825', '416848525', 1, 'gabrielsallesbw@gmail.com', NULL, 0.00, now());
+INSERT INTO Cliente (nomeRazao, apelidoFantasia, cpfCNPJ, rgIE, codigoEndereco, email, senha, desconto, dataCadastro, dataDesativado) VALUES ('GABRIEL APARECIDO SALLES', 'SALLES', '38816815825', '416848525', 1, 'gabrielsallesbw@gmail.com', NULL, 0.00, now(), null);
 
-INSERT INTO Fornecedor (nomeRazao, apelidoFantasia, cpfCNPJ, rgIE, im, codigoEndereco, email, dataCadastro) VALUES ('CIA DE SANEAMENTO BASICO DO ESTADO DE SÃO PAULO', 'SABESP', '43776517000180', '109091792118', NULL, 4, NULL, now());
+INSERT INTO Fornecedor (nomeRazao, apelidoFantasia, cpfCNPJ, rgIE, im, codigoEndereco, email, dataCadastro, dataDesativado) VALUES ('CIA DE SANEAMENTO BASICO DO ESTADO DE SÃO PAULO', 'SABESP', '43776517000180', '109091792118', NULL, 4, NULL, now(), null);
 
-INSERT INTO Atividade (atividade, dataCadastro) VALUES ('VISTORIA TRANSFERÊNCIA CARRO', now());
-INSERT INTO Atividade (atividade, dataCadastro) VALUES ('VISTORIA CAUTELAR CARRO', now());
-INSERT INTO Atividade (atividade, dataCadastro) VALUES ('VISTORIA DESBLOQUEIO CARRO', now());
-INSERT INTO Atividade (atividade, dataCadastro) VALUES ('VISTORIA COLECIONADOR CARRO', now());
-INSERT INTO Atividade (atividade, dataCadastro) VALUES ('VISTORIA TRANSFERÊNCIA MOTO', now());
-INSERT INTO Atividade (atividade, dataCadastro) VALUES ('VISTORIA CAUTELAR MOTO', now());
-INSERT INTO Atividade (atividade, dataCadastro) VALUES ('VISTORIA DESBLOQUEIO MOTO', now());
-INSERT INTO Atividade (atividade, dataCadastro) VALUES ('VISTORIA COLECIONADOR MOTO', now());
-INSERT INTO Atividade (atividade, dataCadastro) VALUES ('VISTORIA TRANSFERÊNCIA REBOQUE', now());
-INSERT INTO Atividade (atividade, dataCadastro) VALUES ('VISTORIA CAUTELAR REBOQUE', now());
-INSERT INTO Atividade (atividade, dataCadastro) VALUES ('VISTORIA DESBLOQUEIO REBOQUE', now());
-INSERT INTO Atividade (atividade, dataCadastro) VALUES ('VISTORIA COLECIONADOR REBOQUE', now());
-INSERT INTO Atividade (atividade, dataCadastro) VALUES ('VISTORIA TRANSFERÊNCIA CAMINHÃO', now());
-INSERT INTO Atividade (atividade, dataCadastro) VALUES ('VISTORIA CAUTELAR CAMINHÃO', now());
-INSERT INTO Atividade (atividade, dataCadastro) VALUES ('VISTORIA DESBLOQUEIO CAMINHÃO', now());
-INSERT INTO Atividade (atividade, dataCadastro) VALUES ('VISTORIA COLECIONADOR CAMINHÃO', now());
+INSERT INTO Atividade (atividade, dataCadastro, dataDesativado) VALUES ('VISTORIA TRANSFERÊNCIA CARRO', now(), null);
+INSERT INTO Atividade (atividade, dataCadastro, dataDesativado) VALUES ('VISTORIA CAUTELAR CARRO', now(), null);
+INSERT INTO Atividade (atividade, dataCadastro, dataDesativado) VALUES ('VISTORIA DESBLOQUEIO CARRO', now(), null);
+INSERT INTO Atividade (atividade, dataCadastro, dataDesativado) VALUES ('VISTORIA COLECIONADOR CARRO', now(), null);
+INSERT INTO Atividade (atividade, dataCadastro, dataDesativado) VALUES ('VISTORIA TRANSFERÊNCIA MOTO', now(), null);
+INSERT INTO Atividade (atividade, dataCadastro, dataDesativado) VALUES ('VISTORIA CAUTELAR MOTO', now(), null);
+INSERT INTO Atividade (atividade, dataCadastro, dataDesativado) VALUES ('VISTORIA DESBLOQUEIO MOTO', now(), null);
+INSERT INTO Atividade (atividade, dataCadastro, dataDesativado) VALUES ('VISTORIA COLECIONADOR MOTO', now(), null);
+INSERT INTO Atividade (atividade, dataCadastro, dataDesativado) VALUES ('VISTORIA TRANSFERÊNCIA REBOQUE', now(), null);
+INSERT INTO Atividade (atividade, dataCadastro, dataDesativado) VALUES ('VISTORIA CAUTELAR REBOQUE', now(), null);
+INSERT INTO Atividade (atividade, dataCadastro, dataDesativado) VALUES ('VISTORIA DESBLOQUEIO REBOQUE', now(), null);
+INSERT INTO Atividade (atividade, dataCadastro, dataDesativado) VALUES ('VISTORIA COLECIONADOR REBOQUE', now(), null);
+INSERT INTO Atividade (atividade, dataCadastro, dataDesativado) VALUES ('VISTORIA TRANSFERÊNCIA CAMINHÃO', now(), null);
+INSERT INTO Atividade (atividade, dataCadastro, dataDesativado) VALUES ('VISTORIA CAUTELAR CAMINHÃO', now(), null);
+INSERT INTO Atividade (atividade, dataCadastro, dataDesativado) VALUES ('VISTORIA DESBLOQUEIO CAMINHÃO', now(), null);
+INSERT INTO Atividade (atividade, dataCadastro, dataDesativado) VALUES ('VISTORIA COLECIONADOR CAMINHÃO', now(), null);
 
-INSERT INTO Preco (preco, codigoEmpresa, codigoAtividade, dataCadastro) VALUES (120.00, 1, 1, now());
-INSERT INTO Preco (preco, codigoEmpresa, codigoAtividade, dataCadastro) VALUES (300.00, 1, 1, now());
-INSERT INTO Preco (preco, codigoEmpresa, codigoAtividade, dataCadastro) VALUES (170.00, 1, 1, now());
-INSERT INTO Preco (preco, codigoEmpresa, codigoAtividade, dataCadastro) VALUES (300.00, 1, 1, now());
-INSERT INTO Preco (preco, codigoEmpresa, codigoAtividade, dataCadastro) VALUES (100.00, 1, 2, now());
-INSERT INTO Preco (preco, codigoEmpresa, codigoAtividade, dataCadastro) VALUES (250.00, 1, 2, now());
-INSERT INTO Preco (preco, codigoEmpresa, codigoAtividade, dataCadastro) VALUES (150.00, 1, 2, now());
-INSERT INTO Preco (preco, codigoEmpresa, codigoAtividade, dataCadastro) VALUES (250.00, 1, 2, now());
-INSERT INTO Preco (preco, codigoEmpresa, codigoAtividade, dataCadastro) VALUES (100.00, 1, 3, now());
-INSERT INTO Preco (preco, codigoEmpresa, codigoAtividade, dataCadastro) VALUES (250.00, 1, 3, now());
-INSERT INTO Preco (preco, codigoEmpresa, codigoAtividade, dataCadastro) VALUES (150.00, 1, 3, now());
-INSERT INTO Preco (preco, codigoEmpresa, codigoAtividade, dataCadastro) VALUES (250.00, 1, 3, now());
-INSERT INTO Preco (preco, codigoEmpresa, codigoAtividade, dataCadastro) VALUES (240.00, 1, 4, now());
-INSERT INTO Preco (preco, codigoEmpresa, codigoAtividade, dataCadastro) VALUES (600.00, 1, 4, now());
-INSERT INTO Preco (preco, codigoEmpresa, codigoAtividade, dataCadastro) VALUES (290.00, 1, 4, now());
-INSERT INTO Preco (preco, codigoEmpresa, codigoAtividade, dataCadastro) VALUES (600.00, 1, 4, now());
+INSERT INTO Preco (preco, codigoEmpresa, codigoAtividade, dataCadastro, dataDesativado) VALUES (120.00, 1, 1, now(), null);
+INSERT INTO Preco (preco, codigoEmpresa, codigoAtividade, dataCadastro, dataDesativado) VALUES (300.00, 1, 1, now(), null);
+INSERT INTO Preco (preco, codigoEmpresa, codigoAtividade, dataCadastro, dataDesativado) VALUES (170.00, 1, 1, now(), null);
+INSERT INTO Preco (preco, codigoEmpresa, codigoAtividade, dataCadastro, dataDesativado) VALUES (300.00, 1, 1, now(), null);
+INSERT INTO Preco (preco, codigoEmpresa, codigoAtividade, dataCadastro, dataDesativado) VALUES (100.00, 1, 2, now(), null);
+INSERT INTO Preco (preco, codigoEmpresa, codigoAtividade, dataCadastro, dataDesativado) VALUES (250.00, 1, 2, now(), null);
+INSERT INTO Preco (preco, codigoEmpresa, codigoAtividade, dataCadastro, dataDesativado) VALUES (150.00, 1, 2, now(), null);
+INSERT INTO Preco (preco, codigoEmpresa, codigoAtividade, dataCadastro, dataDesativado) VALUES (250.00, 1, 2, now(), null);
+INSERT INTO Preco (preco, codigoEmpresa, codigoAtividade, dataCadastro, dataDesativado) VALUES (100.00, 1, 3, now(), null);
+INSERT INTO Preco (preco, codigoEmpresa, codigoAtividade, dataCadastro, dataDesativado) VALUES (250.00, 1, 3, now(), null);
+INSERT INTO Preco (preco, codigoEmpresa, codigoAtividade, dataCadastro, dataDesativado) VALUES (150.00, 1, 3, now(), null);
+INSERT INTO Preco (preco, codigoEmpresa, codigoAtividade, dataCadastro, dataDesativado) VALUES (250.00, 1, 3, now(), null);
+INSERT INTO Preco (preco, codigoEmpresa, codigoAtividade, dataCadastro, dataDesativado) VALUES (240.00, 1, 4, now(), null);
+INSERT INTO Preco (preco, codigoEmpresa, codigoAtividade, dataCadastro, dataDesativado) VALUES (600.00, 1, 4, now(), null);
+INSERT INTO Preco (preco, codigoEmpresa, codigoAtividade, dataCadastro, dataDesativado) VALUES (290.00, 1, 4, now(), null);
+INSERT INTO Preco (preco, codigoEmpresa, codigoAtividade, dataCadastro, dataDesativado) VALUES (600.00, 1, 4, now(), null);
 
 INSERT INTO Servico (codigoCliente, codigoFuncionario, dataCadastro) VALUES (1, 1, now());
 

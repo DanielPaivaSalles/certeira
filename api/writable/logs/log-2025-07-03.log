@@ -1,0 +1,11 @@
+CRITICAL - 2025-07-03 20:27:23 --> ErrorException: Undefined array key "codigo"
+[Method: PUT, Route: empresa/2]
+in APPPATH\Controllers\Empresa.php on line 265.
+ 1 APPPATH\Controllers\Empresa.php(265): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array key "codigo"', 'C:\\Users\\3Visao\\Documents\\certeira\\certeira\\api\\app\\Controllers\\Empresa.php', 265)
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Empresa->put('2')
+ 3 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Empresa))
+ 4 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ 8 SYSTEMPATH\rewrite.php(44): require_once('C:\\Users\\3Visao\\Documents\\certeira\\certeira\\api\\public\\index.php')

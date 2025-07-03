@@ -110,6 +110,7 @@ class _DashboardPageState extends State<DashboardPage> {
 
       case 'Empresa':
         return EmpresaPage(
+          empresa: empresaSelecionada,
           onCancelarPressed: () {
             setState(() {
               opcaoSelecionada = 'Empresas';

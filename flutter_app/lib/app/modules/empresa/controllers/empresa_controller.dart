@@ -25,14 +25,14 @@ class EmpresaController {
       if (empresa.codigo.isEmpty) {
         // Novo cadastro → POST
         response = await http.post(
-          Uri.parse(ApiRoutes.empresas),
+          Uri.parse(ApiRoutes.empresa),
           headers: {'Content-Type': 'application/json'},
           body: body,
         );
       } else {
         // Atualização → PUT
         response = await http.put(
-          Uri.parse("${ApiRoutes.empresas}/${empresa.codigo}"),
+          Uri.parse("${ApiRoutes.empresa}"),
           headers: {'Content-Type': 'application/json'},
           body: body,
         );
