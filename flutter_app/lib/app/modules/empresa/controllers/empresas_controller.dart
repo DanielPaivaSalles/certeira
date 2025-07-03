@@ -34,6 +34,7 @@ class EmpresasController extends ChangeNotifier {
                     codigoEndereco: json['codigoEndereco'] ?? '',
                     dataCadastro: json['dataCadastro'] ?? '',
                     dataDesativado: json['dataDesativado'] ?? '',
+                    endereco: json['endereco'] ?? '',
                   ),
                 )
                 .toList();
@@ -51,18 +52,21 @@ class EmpresasController extends ChangeNotifier {
   void _onSearchChanged() {
     final query = searchController.text.toLowerCase();
 
-    filteredEmpresas =
-        allEmpresas.where((empresa) {
-          return empresa.codigo.toLowerCase().contains(query) ||
-              empresa.razao.toLowerCase().contains(query) ||
-              empresa.fantasia.toLowerCase().contains(query) ||
-              empresa.cnpj.toLowerCase().contains(query) ||
-              empresa.im.toLowerCase().contains(query) ||
-              empresa.codigoEndereco.toLowerCase().contains(query) ||
-              empresa.dataCadastro.toLowerCase().contains(query) ||
-              empresa.dataDesativado.toLowerCase().contains(query);
-        }).toList();
-
+    if (query.isEmpty) {
+      filteredEmpresas = List.from(allEmpresas);
+    } else {
+      filteredEmpresas =
+          allEmpresas.where((empresa) {
+            return empresa.codigo.toLowerCase().contains(query) ||
+                empresa.razao.toLowerCase().contains(query) ||
+                empresa.fantasia.toLowerCase().contains(query) ||
+                empresa.cnpj.toLowerCase().contains(query) ||
+                empresa.codigoEndereco.toLowerCase().contains(query) ||
+                (empresa.endereco?['cidade']?.toLowerCase() ?? '').contains(
+                  query,
+                );
+          }).toList();
+    }
     notifyListeners();
   }
 

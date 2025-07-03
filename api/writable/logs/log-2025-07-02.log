@@ -181,3 +181,14 @@ WHERE `codigoEmpresa` = :codigoEmpresa:
 12 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
 13 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
 14 SYSTEMPATH\rewrite.php(44): require_once('C:\\Users\\3Visao\\Documents\\certeira\\certeira\\api\\public\\index.php')
+CRITICAL - 2025-07-02 21:33:01 --> ErrorException: Undefined array key "dataDesativado"
+[Method: GET, Route: empresas]
+in APPPATH\Controllers\Empresa.php on line 63.
+ 1 APPPATH\Controllers\Empresa.php(63): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array key "dataDesativado"', 'C:\\Users\\Daniel\\Documents\\Daniel\\certeira\\api\\app\\Controllers\\Empresa.php', 63)
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Empresa->index()
+ 3 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Empresa))
+ 4 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ 8 SYSTEMPATH\rewrite.php(44): require_once('C:\\Users\\Daniel\\Documents\\Daniel\\certeira\\api\\public\\index.php')

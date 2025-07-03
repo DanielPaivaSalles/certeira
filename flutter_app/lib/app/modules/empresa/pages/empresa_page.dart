@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/app/modules/empresa/models/empresa_model.dart';
+import 'package:flutter_app/app/modules/empresa/controllers/empresa_controller.dart';
 import '../../../core/widgets/custom_textfield.dart';
 import '../../../core/widgets/custom_selection_title.dart';
 import '../../../core/widgets/custom_buttom.dart';
@@ -15,6 +16,10 @@ class EmpresaPage extends StatefulWidget {
 }
 
 class _EmpresaPageState extends State<EmpresaPage> {
+  // Controlador da empresa
+  late EmpresaController empresaController;
+
+  //Parte da empresa
   late TextEditingController codigoController;
   late TextEditingController razaoController;
   late TextEditingController fantasiaController;
@@ -24,10 +29,21 @@ class _EmpresaPageState extends State<EmpresaPage> {
   late TextEditingController dataCadastroController;
   late TextEditingController dataDesativadoController;
 
+  // Parte do endereço
+  late TextEditingController ruaController;
+  late TextEditingController numeroController;
+  late TextEditingController bairroController;
+  late TextEditingController cidadeController;
+  late TextEditingController cepController;
+
   @override
   void initState() {
     super.initState();
 
+    // Inicia o controlador da empresa
+    empresaController = EmpresaController();
+
+    //Inicia controllers de empresa
     codigoController = TextEditingController(
       text: widget.empresa?.codigo ?? '',
     );
@@ -46,10 +62,28 @@ class _EmpresaPageState extends State<EmpresaPage> {
     dataDesativadoController = TextEditingController(
       text: widget.empresa?.dataDesativado ?? '',
     );
+
+    // Inicia controllers de endereço
+    ruaController = TextEditingController(
+      text: widget.empresa?.endereco?['rua'] ?? '',
+    );
+    numeroController = TextEditingController(
+      text: widget.empresa?.endereco?['numero'] ?? '',
+    );
+    bairroController = TextEditingController(
+      text: widget.empresa?.endereco?['bairro'] ?? '',
+    );
+    cidadeController = TextEditingController(
+      text: widget.empresa?.endereco?['cidade'] ?? '',
+    );
+    cepController = TextEditingController(
+      text: widget.empresa?.endereco?['cep'] ?? '',
+    );
   }
 
   @override
   void dispose() {
+    // Dispose dos controllers de empresa
     codigoController.dispose();
     razaoController.dispose();
     fantasiaController.dispose();
@@ -58,6 +92,13 @@ class _EmpresaPageState extends State<EmpresaPage> {
     codigoEnderecoController.dispose();
     dataCadastroController.dispose();
     dataDesativadoController.dispose();
+
+    // Dispose dos controllers de endereço
+    ruaController.dispose();
+    numeroController.dispose();
+    bairroController.dispose();
+    cidadeController.dispose();
+    cepController.dispose();
     super.dispose();
   }
 
@@ -92,7 +133,7 @@ class _EmpresaPageState extends State<EmpresaPage> {
                               text:
                                   widget.empresa?.codigo.isNotEmpty == true
                                       ? widget.empresa!.codigo
-                                      : 'Novo',
+                                      : '',
                             ),
                           ],
                         ),
@@ -150,6 +191,67 @@ class _EmpresaPageState extends State<EmpresaPage> {
                       ],
                     ),
                   ),
+                  // Container Endereço
+                  Container(
+                    padding: const EdgeInsets.all(10),
+                    margin: const EdgeInsets.only(bottom: 10),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      border: Border.all(color: Colors.black),
+                      borderRadius: BorderRadius.circular(4),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        CustomSelectionTitle(text: 'Endereço'),
+                        const SizedBox(height: 10),
+
+                        CustomTextField(
+                          label: 'Rua',
+                          controller: ruaController,
+                        ),
+                        const SizedBox(height: 10),
+
+                        Row(
+                          children: [
+                            Expanded(
+                              child: CustomTextField(
+                                label: 'Número',
+                                controller: numeroController,
+                              ),
+                            ),
+                            const SizedBox(width: 8),
+                            Expanded(
+                              child: CustomTextField(
+                                label: 'Bairro',
+                                controller: bairroController,
+                              ),
+                            ),
+                            const SizedBox(width: 8),
+                            Expanded(
+                              child: CustomTextField(
+                                label: 'CEP',
+                                controller: cepController,
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 10),
+
+                        Row(
+                          children: [
+                            Expanded(
+                              child: CustomTextField(
+                                label: 'Cidade',
+                                controller: cidadeController,
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 10),
+                      ],
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -173,8 +275,41 @@ class _EmpresaPageState extends State<EmpresaPage> {
                     CustomButton(
                       label: 'Salvar',
                       isSelected: false,
-                      onTap: () {
-                        // salvar lógica aqui
+                      onTap: () async {
+                        final endereco = {
+                          'rua': ruaController.text,
+                          'numero': numeroController.text,
+                          'bairro': bairroController.text,
+                          'cidade': cidadeController.text,
+                          'cep': cepController.text,
+                        };
+
+                        final empresa = EmpresaModel(
+                          codigo: codigoController.text,
+                          razao: razaoController.text,
+                          fantasia: fantasiaController.text,
+                          cnpj: cnpjController.text,
+                          im: imController.text,
+                          codigoEndereco: codigoEnderecoController.text,
+                          dataCadastro: dataCadastroController.text,
+                          dataDesativado: dataDesativadoController.text,
+                          endereco: endereco,
+                        );
+
+                        final sucesso = await empresaController.salvarEmpresa(
+                          empresa,
+                        );
+
+                        if (sucesso) {
+                          // Ex: voltar para tela anterior
+                          Navigator.pop(context);
+                        } else {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text('Erro ao salvar empresa'),
+                            ),
+                          );
+                        }
                       },
                     ),
                     const SizedBox(height: 10),
