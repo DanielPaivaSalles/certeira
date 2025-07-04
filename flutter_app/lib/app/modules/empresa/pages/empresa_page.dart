@@ -65,19 +65,19 @@ class _EmpresaPageState extends State<EmpresaPage> {
 
     // Inicia controllers de endereço
     ruaController = TextEditingController(
-      text: widget.empresa?.endereco?['rua'] ?? '',
+      text: widget.empresa?.endereco?.rua ?? '',
     );
     numeroController = TextEditingController(
-      text: widget.empresa?.endereco?['numero'] ?? '',
+      text: widget.empresa?.endereco?.numero ?? '',
     );
     bairroController = TextEditingController(
-      text: widget.empresa?.endereco?['bairro'] ?? '',
+      text: widget.empresa?.endereco?.bairro ?? '',
     );
     cidadeController = TextEditingController(
-      text: widget.empresa?.endereco?['cidade'] ?? '',
+      text: widget.empresa?.endereco?.cidade ?? '',
     );
     cepController = TextEditingController(
-      text: widget.empresa?.endereco?['cep'] ?? '',
+      text: widget.empresa?.endereco?.cep ?? '',
     );
   }
 
@@ -284,7 +284,7 @@ class _EmpresaPageState extends State<EmpresaPage> {
                           'cep': cepController.text,
                         };
 
-                        final empresa = EmpresaModel(
+                        final sucesso = await empresaController.salvarEmpresa(
                           codigo: codigoController.text,
                           razao: razaoController.text,
                           fantasia: fantasiaController.text,
@@ -296,12 +296,7 @@ class _EmpresaPageState extends State<EmpresaPage> {
                           endereco: endereco,
                         );
 
-                        final sucesso = await empresaController.salvarEmpresa(
-                          empresa,
-                        );
-
                         if (sucesso) {
-                          // Ex: voltar para tela anterior
                           Navigator.pop(context);
                         } else {
                           ScaffoldMessenger.of(context).showSnackBar(

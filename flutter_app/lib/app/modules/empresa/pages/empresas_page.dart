@@ -6,6 +6,7 @@ import 'package:flutter_app/app/core/widgets/custom_text_tabela_cabecalho.dart';
 import 'package:flutter_app/app/core/widgets/custom_text_tabela_texto.dart';
 import 'package:flutter_app/app/core/widgets/custom_textfield_filtro.dart';
 import 'package:flutter_app/app/modules/empresa/models/empresa_model.dart';
+import 'package:flutter_app/app/modules/endereco/models/empresa_model.dart';
 import '../controllers/empresas_controller.dart';
 
 class EmpresasPage extends StatefulWidget {
@@ -99,7 +100,7 @@ class _EmpresasPageState extends State<EmpresasPage> {
                             codigoEndereco: '',
                             dataCadastro: '',
                             dataDesativado: '',
-                            endereco: {},
+                            endereco: EnderecoModel(),
                           ),
                         ),
                   ),
@@ -158,7 +159,7 @@ class _EmpresasPageState extends State<EmpresasPage> {
         DataCell(CustomTextTabelaTexto(text: empresa.fantasia)),
         DataCell(CustomTextTabelaTexto(text: empresa.cnpj)),
         DataCell(
-          CustomTextTabelaTexto(text: empresa.endereco?['cidade'] ?? ''),
+          CustomTextTabelaTexto(text: empresa.endereco?.cidade ?? ''),
         ),
         DataCell(
           Row(

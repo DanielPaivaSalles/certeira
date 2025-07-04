@@ -42,10 +42,10 @@ class EmpresasController extends ChangeNotifier {
         filteredEmpresas = List.from(allEmpresas);
         notifyListeners();
       } else {
-        print('Erro ao carregar empresas: ${response.statusCode}');
+        //print('Erro ao carregar empresas: ${response.statusCode}');
       }
     } catch (e) {
-      print('Erro ao carregar empresas: $e');
+      //print('Erro ao carregar empresas: $e');
     }
   }
 
@@ -62,7 +62,7 @@ class EmpresasController extends ChangeNotifier {
                 empresa.fantasia.toLowerCase().contains(query) ||
                 empresa.cnpj.toLowerCase().contains(query) ||
                 empresa.codigoEndereco.toLowerCase().contains(query) ||
-                (empresa.endereco?['cidade']?.toLowerCase() ?? '').contains(
+                (empresa.endereco?.cidade.toLowerCase() ?? '').contains(
                   query,
                 );
           }).toList();

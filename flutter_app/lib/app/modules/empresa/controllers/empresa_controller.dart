@@ -1,13 +1,34 @@
 import 'dart:convert';
 import 'package:flutter_app/app/core/constants.dart';
 import 'package:flutter_app/app/modules/empresa/models/empresa_model.dart';
+import 'package:flutter_app/app/modules/endereco/models/empresa_model.dart';
 import 'package:http/http.dart' as http;
 
 class EmpresaController {
-  /// Cria ou atualiza empresa
-  Future<bool> salvarEmpresa(EmpresaModel empresa) async {
+  Future<bool> salvarEmpresa({
+    required String codigo,
+    required String razao,
+    required String fantasia,
+    required String cnpj,
+    required String im,
+    required String codigoEndereco,
+    required String dataCadastro,
+    required String dataDesativado,
+    required Map<String, dynamic> endereco,
+  }) async {
     try {
-      // Monta o corpo JSON
+      final empresa = EmpresaModel(
+        codigo: codigo,
+        razao: razao,
+        fantasia: fantasia,
+        cnpj: cnpj,
+        im: im,
+        codigoEndereco: codigoEndereco,
+        dataCadastro: dataCadastro,
+        dataDesativado: dataDesativado,
+        endereco: EnderecoModel.fromJson(endereco),
+      );
+
       final body = jsonEncode({
         'codigo': empresa.codigo,
         'razao': empresa.razao,
@@ -23,29 +44,22 @@ class EmpresaController {
       http.Response response;
 
       if (empresa.codigo.isEmpty) {
-        // Novo cadastro → POST
         response = await http.post(
           Uri.parse(ApiRoutes.empresa),
           headers: {'Content-Type': 'application/json'},
           body: body,
         );
       } else {
-        // Atualização → PUT
         response = await http.put(
-          Uri.parse("${ApiRoutes.empresa}"),
+          Uri.parse('${ApiRoutes.empresa}/${empresa.codigo}'),
           headers: {'Content-Type': 'application/json'},
           body: body,
         );
       }
 
-      if (response.statusCode == 200) {
-        return true;
-      } else {
-        print("Erro ao salvar empresa: ${response.statusCode}");
-        return false;
-      }
+      return response.statusCode == 201 || response.statusCode == 200;
     } catch (e) {
-      print("Erro ao salvar empresa: $e");
+        print("Erro ao salvar empresa: $e");
       return false;
     }
   }

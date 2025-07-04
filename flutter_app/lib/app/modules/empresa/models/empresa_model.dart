@@ -1,3 +1,5 @@
+import 'package:flutter_app/app/modules/endereco/models/empresa_model.dart';
+
 class EmpresaModel {
   final String codigo;
   final String razao;
@@ -7,7 +9,7 @@ class EmpresaModel {
   final String codigoEndereco;
   final String dataCadastro;
   final String dataDesativado;
-  final Map<String, dynamic>? endereco;
+  final EnderecoModel? endereco;
 
   EmpresaModel({
     this.codigo = '',
@@ -31,7 +33,23 @@ class EmpresaModel {
       codigoEndereco: json['codigoEndereco']?.toString() ?? '',
       dataCadastro: json['dataCadastro'] ?? '',
       dataDesativado: json['dataDesativado'] ?? '',
-      endereco: json['endereco'],
+      endereco: json['endereco'] != null
+          ? EnderecoModel.fromJson(json['endereco'])
+          : null,
     );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'codigo': codigo,
+      'razao': razao,
+      'fantasia': fantasia,
+      'cnpj': cnpj,
+      'im': im,
+      'codigoEndereco': codigoEndereco,
+      'dataCadastro': dataCadastro,
+      'dataDesativado': dataDesativado,
+      'endereco': endereco?.toJson(),
+    };
   }
 }
