@@ -26,8 +26,8 @@ class _EmpresaPageState extends State<EmpresaPage> {
   late TextEditingController cnpjController;
   late TextEditingController imController;
   late TextEditingController codigoEnderecoController;
-  late TextEditingController dataCadastroController;
-  late TextEditingController dataDesativadoController;
+  late TextEditingController dataCadastroEmpresaController;
+  late TextEditingController dataDesativadoEmpresaController;
 
   // Parte do endereço
   late TextEditingController ruaController;
@@ -56,11 +56,11 @@ class _EmpresaPageState extends State<EmpresaPage> {
     codigoEnderecoController = TextEditingController(
       text: widget.empresa?.codigoEndereco ?? '',
     );
-    dataCadastroController = TextEditingController(
-      text: widget.empresa?.dataCadastro ?? '',
+    dataCadastroEmpresaController = TextEditingController(
+      text: widget.empresa?.dataCadastroEmpresa ?? '',
     );
-    dataDesativadoController = TextEditingController(
-      text: widget.empresa?.dataDesativado ?? '',
+    dataDesativadoEmpresaController = TextEditingController(
+      text: widget.empresa?.dataDesativadoEmpresa ?? '',
     );
 
     // Inicia controllers de endereço
@@ -90,8 +90,8 @@ class _EmpresaPageState extends State<EmpresaPage> {
     cnpjController.dispose();
     imController.dispose();
     codigoEnderecoController.dispose();
-    dataCadastroController.dispose();
-    dataDesativadoController.dispose();
+    dataCadastroEmpresaController.dispose();
+    dataDesativadoEmpresaController.dispose();
 
     // Dispose dos controllers de endereço
     ruaController.dispose();
@@ -181,7 +181,7 @@ class _EmpresaPageState extends State<EmpresaPage> {
                                 padding: const EdgeInsets.only(left: 4),
                                 child: CustomTextField(
                                   label: 'Cadastro',
-                                  controller: dataCadastroController,
+                                  controller: dataCadastroEmpresaController,
                                 ),
                               ),
                             ),
@@ -291,8 +291,10 @@ class _EmpresaPageState extends State<EmpresaPage> {
                           cnpj: cnpjController.text,
                           im: imController.text,
                           codigoEndereco: codigoEnderecoController.text,
-                          dataCadastro: dataCadastroController.text,
-                          dataDesativado: dataDesativadoController.text,
+                          dataCadastroEmpresa:
+                              dataCadastroEmpresaController.text,
+                          dataDesativadoEmpresa:
+                              dataDesativadoEmpresaController.text,
                           endereco: endereco,
                         );
 

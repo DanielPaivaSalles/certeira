@@ -6,11 +6,13 @@ use CodeIgniter\Router\RouteCollection;
  * @var RouteCollection $routes
  */
 
-//Empresa
-$routes->get('empresa/(:num)', 'Empresa::get/$1');
-$routes->post('empresa', 'Empresa::post');
-$routes->put('empresa/(:num)', 'Empresa::put/$1');
-//Empresas
-$routes->get('empresas', 'Empresa::index');
+//Auth
+ $routes->post('auth/login', 'Auth::login');//Autenticação
 
-$routes->post('empregadoLogin', 'Empregado::login');
+//Empresa
+$routes->get('empresas', 'Empresa::getEmpresas');//Lista
+$routes->get('empresa/(:num)', 'Empresa::get/$1');//Busca uma empresa
+$routes->post('empresa', 'Empresa::post');//Cadastra uma empresa
+$routes->put('empresa/(:num)', 'Empresa::put/$1');//Altera uma empresa
+$routes->delete('empresa/(:num)', 'Empresa::delete/$1');//'Deleta' uma empresa
+

@@ -32,8 +32,8 @@ class EmpresasController extends ChangeNotifier {
                     cnpj: json['cnpj'] ?? '',
                     im: json['im'] ?? '',
                     codigoEndereco: json['codigoEndereco'] ?? '',
-                    dataCadastro: json['dataCadastro'] ?? '',
-                    dataDesativado: json['dataDesativado'] ?? '',
+                    dataCadastroEmpresa: json['dataCadastroEmpresa'] ?? '',
+                    dataDesativadoEmpresa: json['dataDesativadoEmpresa'] ?? '',
                     endereco: json['endereco'] ?? '',
                   ),
                 )
@@ -62,9 +62,7 @@ class EmpresasController extends ChangeNotifier {
                 empresa.fantasia.toLowerCase().contains(query) ||
                 empresa.cnpj.toLowerCase().contains(query) ||
                 empresa.codigoEndereco.toLowerCase().contains(query) ||
-                (empresa.endereco?.cidade.toLowerCase() ?? '').contains(
-                  query,
-                );
+                (empresa.endereco?.cidade.toLowerCase() ?? '').contains(query);
           }).toList();
     }
     notifyListeners();

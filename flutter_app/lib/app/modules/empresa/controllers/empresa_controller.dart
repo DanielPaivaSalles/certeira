@@ -12,8 +12,8 @@ class EmpresaController {
     required String cnpj,
     required String im,
     required String codigoEndereco,
-    required String dataCadastro,
-    required String dataDesativado,
+    required String dataCadastroEmpresa,
+    required String dataDesativadoEmpresa,
     required Map<String, dynamic> endereco,
   }) async {
     try {
@@ -24,8 +24,8 @@ class EmpresaController {
         cnpj: cnpj,
         im: im,
         codigoEndereco: codigoEndereco,
-        dataCadastro: dataCadastro,
-        dataDesativado: dataDesativado,
+        dataCadastroEmpresa: dataCadastroEmpresa,
+        dataDesativadoEmpresa: dataDesativadoEmpresa,
         endereco: EnderecoModel.fromJson(endereco),
       );
 
@@ -36,8 +36,8 @@ class EmpresaController {
         'cnpj': empresa.cnpj,
         'im': empresa.im,
         'codigoEndereco': empresa.codigoEndereco,
-        'dataCadastro': empresa.dataCadastro,
-        'dataDesativado': empresa.dataDesativado,
+        'dataCadastroEmpresa': empresa.dataCadastroEmpresa,
+        'dataDesativadoEmpresa': empresa.dataDesativadoEmpresa,
         'endereco': empresa.endereco,
       });
 
@@ -59,7 +59,7 @@ class EmpresaController {
 
       return response.statusCode == 201 || response.statusCode == 200;
     } catch (e) {
-        print("Erro ao salvar empresa: $e");
+      //print("Erro ao salvar empresa: $e");
       return false;
     }
   }

@@ -8,6 +8,6 @@ class BairroModel extends Model
 {
     protected $table = 'Bairro';
     protected $primaryKey = 'codigo';
-    protected $allowedFields = ['bairro', 'dataCadastro'];
+    protected $allowedFields = ['bairro', 'dataCadastroBairro'];
 }
 

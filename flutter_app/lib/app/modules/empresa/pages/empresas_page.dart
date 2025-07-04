@@ -98,8 +98,8 @@ class _EmpresasPageState extends State<EmpresasPage> {
                             cnpj: '',
                             im: '',
                             codigoEndereco: '',
-                            dataCadastro: '',
-                            dataDesativado: '',
+                            dataCadastroEmpresa: '',
+                            dataDesativadoEmpresa: '',
                             endereco: EnderecoModel(),
                           ),
                         ),
@@ -158,9 +158,7 @@ class _EmpresasPageState extends State<EmpresasPage> {
         DataCell(CustomTextTabelaTexto(text: empresa.razao)),
         DataCell(CustomTextTabelaTexto(text: empresa.fantasia)),
         DataCell(CustomTextTabelaTexto(text: empresa.cnpj)),
-        DataCell(
-          CustomTextTabelaTexto(text: empresa.endereco?.cidade ?? ''),
-        ),
+        DataCell(CustomTextTabelaTexto(text: empresa.endereco?.cidade ?? '')),
         DataCell(
           Row(
             children: [

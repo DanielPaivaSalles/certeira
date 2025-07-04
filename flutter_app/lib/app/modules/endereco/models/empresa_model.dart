@@ -5,8 +5,8 @@ class EnderecoModel {
   final String bairro;
   final String cidade;
   final String cep;
-  final String dataCadastro;
-  final String dataDesativado;
+  final String dataCadastroEndereco;
+  final String dataDesativadoEndereco;
 
   EnderecoModel({
     this.codigo = '',
@@ -15,8 +15,8 @@ class EnderecoModel {
     this.bairro = '',
     this.cidade = '',
     this.cep = '',
-    this.dataCadastro = '',
-    this.dataDesativado = '',
+    this.dataCadastroEndereco = '',
+    this.dataDesativadoEndereco = '',
   });
 
   factory EnderecoModel.fromJson(Map<String, dynamic> json) {
@@ -27,8 +27,8 @@ class EnderecoModel {
       bairro: json['bairro'] ?? '',
       cidade: json['cidade'] ?? '',
       cep: json['cep'] ?? '',
-      dataCadastro: json['dataCadastro'] ?? '',
-      dataDesativado: json['dataDesativado'] ?? '',
+      dataCadastroEndereco: json['dataCadastroEndereco'] ?? '',
+      dataDesativadoEndereco: json['dataDesativadoEndereco'] ?? '',
     );
   }
 
@@ -40,8 +40,8 @@ class EnderecoModel {
       'bairro': bairro,
       'cidade': cidade,
       'cep': cep,
-      'dataCadastro': dataCadastro,
-      'dataDesativado': dataDesativado,
+      'dataCadastroEndereco': dataCadastroEndereco,
+      'dataDesativadoEndereco': dataDesativadoEndereco,
     };
   }
 }

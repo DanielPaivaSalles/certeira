@@ -12,32 +12,84 @@ use CodeIgniter\RESTful\ResourceController;
 
 class Empresa extends ResourceController
 {
+    protected $empresaModel;
+    protected $enderecoModel;
+    protected $ruaModel;
+    protected $bairroModel;
+    protected $cidadeModel;
+    protected $estadoModel;
+    
+    public function __construct(){
+    $this->empresaModel = new EmpresaModel();
+    $this->enderecoModel = new EnderecoModel();
+    $this->ruaModel = new RuaModel();
+    $this->bairroModel = new BairroModel();
+    $this->cidadeModel = new CidadeModel();
+    $this->estadoModel = new EstadoModel();
+
+    }
+
+    public function getEmpresas()
+    {
+        // Busca TODAS as empresas
+        $empresas = $this->empresaModel->findAll();
+
+        $resultado = [];
+
+        foreach ($empresas as $empresa) {
+            $cidadeNome = '';
+
+            if (!empty($empresa['codigoEndereco'])) {
+                // Busca o endereço
+                $endereco = $this->enderecoModel
+                    ->where('codigo', $empresa['codigoEndereco'])
+                    ->first();
+
+                if ($endereco && !empty($endereco['codigoCidade'])) {
+                    // Busca a cidade
+                    $cidade = $this->cidadeModel
+                        ->where('codigo', $endereco['codigoCidade'])
+                        ->first();
+
+                    if ($cidade) {
+                        $cidadeNome = $cidade['cidade'];
+                    }
+                }
+            }
+
+            // Monta o array simplificado
+            $resultado[] = [
+                'codigo'    => $empresa['codigo'],
+                'razao'     => $empresa['razao'],
+                'fantasia'  => $empresa['fantasia'],
+                'cnpj'      => $empresa['cnpj'],
+                'cidade'    => $cidadeNome,
+            ];
+        }
+
+        return $this->response->setJSON($resultado);
+    }
+
     public function get($codigo = null)
     {
-        $empresaModel = new EmpresaModel();
-        $enderecoModel = new EnderecoModel();
-        $ruaModel = new RuaModel();
-        $bairroModel = new BairroModel();
-        $cidadeModel = new CidadeModel();
-
-        $empresa = $empresaModel->where('codigo', $codigo)->first();
+        $empresa = $this->empresaModel->where('codigo', $codigo)->first();
         if(!$empresa){
             return $this->failNotFound('Empresa não encontrada');
         }
 
-        $endereco = $enderecoModel
+        $endereco = $this->enderecoModel
             ->where('codigo', $empresa['codigoEndereco'])
             ->first();
 
-        $rua = $ruaModel
+        $rua = $this->ruaModel
             ->where('codigo', $endereco['codigoRua'])
             ->first();
 
-        $bairro = $bairroModel
+        $bairro = $this->bairroModel
             ->where('codigo', $endereco['codigoBairro'])
             ->first();
 
-        $cidade = $cidadeModel
+        $cidade = $this->cidadeModel
             ->where('codigo', $endereco['codigoCidade'])
             ->first();
 
@@ -48,8 +100,8 @@ class Empresa extends ResourceController
             'rua'             => $rua['rua']??null,
             'bairro'          => $bairro['bairro']??null,
             'cidade'          => $cidade['cidade']??null,
-            'dataCadastro'    => $endereco['dataCadastro']??null,
-            'dataDesativado'  => $endereco['dataDesativado']??null,
+            'dataCadastroEndereco'    => $endereco['dataCadastroEndereco']??null,
+            'dataDesativadoEndereco'  => $endereco['dataDesativadoEndereco']??null,
         ];
 
         $empresa['endereco'] = $enderecoCompleto;
@@ -59,19 +111,13 @@ class Empresa extends ResourceController
 
     public function post()
     {
-        $empresaModel = new EmpresaModel();
-        $enderecoModel = new EnderecoModel();
-        $ruaModel = new RuaModel();
-        $bairroModel = new BairroModel();
-        $cidadeModel = new CidadeModel();
-
         $dados = $this->request->getJSON(true);
 
         if(empty($dados['razao'])||empty($dados['fantasia'])||empty($dados['cnpj'])||empty($dados['im'])){
             return $this->failValidationErrors("Campos 'Razão', 'Fantasia', 'CNPJ' ou 'IM' obrigatórios");
         }
 
-        if(empty($dados['rua'])||empty($dados['numero'])||empty($dados['bairro'])||empty($dados['cidade'])||empty($dados['cep'])){
+        if(empty($dados['endereco']['rua'])||empty($dados['endereco']['numero'])||empty($dados['endereco']['bairro'])||empty($dados['endereco']['cidade'])||empty($dados['endereco']['cep'])){
             return $this->failValidationErrors("Campos 'Rua', 'Numero', 'Bairro', 'Cidade' ou 'CEP' obrigatórios");
         }
 
@@ -84,13 +130,13 @@ class Empresa extends ResourceController
         $codigoRua = null;
 
         if (!empty($ruaNome)) {
-            $ruaExistente = $ruaModel->where('rua', $ruaNome)->first();
+            $ruaExistente = $this->ruaModel->where('rua', $ruaNome)->first();
 
             if ($ruaExistente) {
                 $codigoRua = $ruaExistente['codigo'];
             } else {
-                $ruaModel->insert(['rua' => $ruaNome]);
-                $codigoRua = $ruaModel->getInsertID();
+                $this->ruaModel->insert(['rua' => $ruaNome]);
+                $codigoRua = $this->ruaModel->getInsertID();
             }
         } else {
             $codigoRua = 0;
@@ -105,13 +151,13 @@ class Empresa extends ResourceController
         $codigoBairro = null;
 
         if (!empty($bairroNome)) {
-            $bairroExistente = $bairroModel->where('bairro', $bairroNome)->first();
+            $bairroExistente = $this->bairroModel->where('bairro', $bairroNome)->first();
 
             if ($bairroExistente) {
                 $codigoBairro = $bairroExistente['codigo'];
             } else {
-                $bairroModel->insert(['bairro' => $bairroNome]);
-                $codigoBairro = $bairroModel->getInsertID();
+                $this->bairroModel->insert(['bairro' => $bairroNome]);
+                $codigoBairro = $this->bairroModel->getInsertID();
             }
         } else {
             $codigoBairro = 0;
@@ -126,13 +172,13 @@ class Empresa extends ResourceController
         $codigoCidade = null;
 
         if (!empty($cidadeNome)) {
-            $cidadeExistente = $cidadeModel->where('cidade', $cidadeNome)->first();
+            $cidadeExistente = $this->cidadeModel->where('cidade', $cidadeNome)->first();
 
             if ($cidadeExistente) {
                 $codigoCidade = $cidadeExistente['codigo'];
             } else {
-                $cidadeModel->insert(['cidade' => $cidadeNome]);
-                $codigoCidade = $cidadeModel->getInsertID();
+                $this->cidadeModel->insert(['cidade' => $cidadeNome]);
+                $codigoCidade = $this->cidadeModel->getInsertID();
             }
         } else {
             $codigoCidade = 0;
@@ -151,8 +197,8 @@ class Empresa extends ResourceController
             'cep'           => $dados['endereco']['cep'] ?? null,
         ];
 
-        $enderecoModel->insert($enderecoData);
-        $codigoEndereco = $enderecoModel->getInsertID();
+        $this->enderecoModel->insert($enderecoData);
+        $codigoEndereco = $this->enderecoModel->getInsertID();
 
         /**
          * ==========================
@@ -165,34 +211,28 @@ class Empresa extends ResourceController
             'cnpj'             => $dados['cnpj']??null,
             'im'               => $dados['im']??null,
             'codigoEndereco'   => $codigoEndereco,
-            'dataCadastro'   => $dados['dataCadastro']??null,
+            'dataCadastroEmpresa'   => $dados['dataCadastroEmpresa']??null,
             'dataDesativado'   => null,
         ];
 
-        $empresaModel->insert($empresaData);
+        $this->empresaModel->insert($empresaData);
 
         return $this->respondCreated(['message' => 'Empresa criada com sucesso']);
     }
 
     public function put($codigo = null)
     {
-        $empresaModel = new EmpresaModel();
-        $enderecoModel = new EnderecoModel();
-        $ruaModel = new RuaModel();
-        $bairroModel = new BairroModel();
-        $cidadeModel = new CidadeModel();
-
         $dados = $this->request->getJSON(true);
 
         if(empty($dados['razao'])||empty($dados['fantasia'])||empty($dados['cnpj'])||empty($dados['im'])){
             return $this->failValidationErrors("Campos 'Razão', 'Fantasia', 'CNPJ' ou 'IM' obrigatórios");
         }
 
-        if(empty($dados['rua'])||empty($dados['numero'])||empty($dados['bairro'])||empty($dados['cidade'])||empty($dados['cep'])){
+        if(empty($dados['endereco']['rua'])||empty($dados['endereco']['numero'])||empty($dados['endereco']['bairro'])||empty($dados['endereco']['cidade'])||empty($dados['endereco']['cep'])){
             return $this->failValidationErrors("Campos 'Rua', 'Numero', 'Bairro', 'Cidade' ou 'CEP' obrigatórios");
         }
 
-        $empresa = $empresaModel->where('codigo', $codigo)->first();
+        $empresa = $this->empresaModel->where('codigo', $codigo)->first();
 
         if(!$empresa){
             return $this->failNotFound('Empresa não encontrada');
@@ -207,13 +247,13 @@ class Empresa extends ResourceController
         $codigoRua = null;
 
         if (!empty($ruaNome)) {
-            $ruaExistente = $ruaModel->where('rua', $ruaNome)->first();
+            $ruaExistente = $this->ruaModel->where('rua', $ruaNome)->first();
 
             if ($ruaExistente) {
                 $codigoRua = $ruaExistente['codigo'];
             } else {
-                $ruaModel->insert(['rua' => $ruaNome]);
-                $codigoRua = $ruaModel->getInsertID();
+                $this->ruaModel->insert(['rua' => $ruaNome]);
+                $codigoRua = $this->ruaModel->getInsertID();
             }
         } else {
             $codigoRua = 0;
@@ -228,13 +268,13 @@ class Empresa extends ResourceController
         $codigoBairro = null;
 
         if (!empty($bairroNome)) {
-            $bairroExistente = $bairroModel->where('bairro', $bairroNome)->first();
+            $bairroExistente = $this->bairroModel->where('bairro', $bairroNome)->first();
 
             if ($bairroExistente) {
                 $codigoBairro = $bairroExistente['codigo'];
             } else {
-                $bairroModel->insert(['bairro' => $bairroNome]);
-                $codigoBairro = $bairroModel->getInsertID();
+                $this->bairroModel->insert(['bairro' => $bairroNome]);
+                $codigoBairro = $this->bairroModel->getInsertID();
             }
         } else {
             $codigoBairro = 0;
@@ -249,13 +289,13 @@ class Empresa extends ResourceController
         $codigoCidade = null;
 
         if (!empty($cidadeNome)) {
-            $cidadeExistente = $cidadeModel->where('cidade', $cidadeNome)->first();
+            $cidadeExistente = $this->cidadeModel->where('cidade', $cidadeNome)->first();
 
             if ($cidadeExistente) {
                 $codigoCidade = $cidadeExistente['codigo'];
             } else {
-                $cidadeModel->insert(['cidade' => $cidadeNome]);
-                $codigoCidade = $cidadeModel->getInsertID();
+                $this->cidadeModel->insert(['cidade' => $cidadeNome]);
+                $codigoCidade = $this->cidadeModel->getInsertID();
             }
         } else {
             $codigoCidade = 0;
@@ -277,7 +317,7 @@ class Empresa extends ResourceController
             'cep'           => $dados['endereco']['cep'] ?? null,
         ];
 
-        $enderecoModel->update($codigoEndereco, $enderecoData);
+        $this->enderecoModel->update($codigoEndereco, $enderecoData);
 
         /**
          * ==========================
@@ -291,12 +331,37 @@ class Empresa extends ResourceController
             'cnpj'             => $dados['cnpj']??null,
             'im'               => $dados['im']??null,
             'codigoEndereco'   => $codigoEndereco,
-            'dataCadastro'   => $dados['dataCadastro']??null,
-            'dataDesativado'   => $dados['dataDesativado']??null,
+            'dataCadastroEmpresa'   => $dados['dataCadastroEmpresa']??null,
+            'dataDesativadoEmpresa'   => $dados['dataDesativadoEmpresa']??null,
         ];
 
-        $empresaModel->update($codigo, $empresaData);
+        $this->empresaModel->update($codigo, $empresaData);
 
         return $this->respondCreated(['message' => 'Empresa alterada com sucesso']);
     }
+
+    public function delete($codigo = null)
+    {
+        $empresa = $this->empresaModel->where('codigo', $codigo)->first();
+
+        if(!$empresa){
+            return $this->failNotFound('Empresa não encontrada');
+        }
+
+        /**
+         * ==========================
+         * EMPRESA
+         * ==========================
+         */
+
+        $empresaData = [
+            'dataDesativadoEmpresa'   => $dados['dataDesativadoEmpresa']??null,
+        ];
+
+        $this->empresaModel->update($codigo, $empresaData);
+
+        return $this->respondCreated(['message' => 'Empresa desativada com sucesso']);
+    }
+
 }
+

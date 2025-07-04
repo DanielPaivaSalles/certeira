@@ -7,8 +7,8 @@ class EmpresaModel {
   final String cnpj;
   final String im;
   final String codigoEndereco;
-  final String dataCadastro;
-  final String dataDesativado;
+  final String dataCadastroEmpresa;
+  final String dataDesativadoEmpresa;
   final EnderecoModel? endereco;
 
   EmpresaModel({
@@ -18,8 +18,8 @@ class EmpresaModel {
     this.cnpj = '',
     this.im = '',
     this.codigoEndereco = '',
-    this.dataCadastro = '',
-    this.dataDesativado = '',
+    this.dataCadastroEmpresa = '',
+    this.dataDesativadoEmpresa = '',
     this.endereco,
   });
 
@@ -31,11 +31,12 @@ class EmpresaModel {
       cnpj: json['cnpj'] ?? '',
       im: json['im'] ?? '',
       codigoEndereco: json['codigoEndereco']?.toString() ?? '',
-      dataCadastro: json['dataCadastro'] ?? '',
-      dataDesativado: json['dataDesativado'] ?? '',
-      endereco: json['endereco'] != null
-          ? EnderecoModel.fromJson(json['endereco'])
-          : null,
+      dataCadastroEmpresa: json['dataCadastroEmpresa'] ?? '',
+      dataDesativadoEmpresa: json['dataDesativadoEmpresa'] ?? '',
+      endereco:
+          json['endereco'] != null
+              ? EnderecoModel.fromJson(json['endereco'])
+              : null,
     );
   }
 
@@ -47,8 +48,8 @@ class EmpresaModel {
       'cnpj': cnpj,
       'im': im,
       'codigoEndereco': codigoEndereco,
-      'dataCadastro': dataCadastro,
-      'dataDesativado': dataDesativado,
+      'dataCadastroEmpresa': dataCadastroEmpresa,
+      'dataDesativadoEmpresa': dataDesativadoEmpresa,
       'endereco': endereco?.toJson(),
     };
   }
