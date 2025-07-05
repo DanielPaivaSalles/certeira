@@ -8,6 +8,6 @@ class EstadoModel extends Model
 {
     protected $table = 'Estado';
     protected $primaryKey = 'codigo';
-    protected $allowedFields = ['estado', 'uf','dataCadastroEstado'];
+    protected $allowedFields = ['estado', 'uf','dataCadastro'];
 }
 

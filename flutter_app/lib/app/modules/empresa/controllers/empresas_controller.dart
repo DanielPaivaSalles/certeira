@@ -17,6 +17,7 @@ class EmpresasController extends ChangeNotifier {
   Future<void> loadEmpresas() async {
     try {
       final url = Uri.parse(ApiRoutes.empresas);
+      print(url);
       final response = await http.get(url);
 
       if (response.statusCode == 200) {

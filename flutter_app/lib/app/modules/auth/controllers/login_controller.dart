@@ -6,7 +6,7 @@ import '../models/login_model.dart';
 class LoginController {
   Future<LoginResponse> fazerLogin(String email, String senha) async {
     try {
-      final url = Uri.parse(ApiRoutes.empregadosLogin);
+      final url = Uri.parse(ApiRoutes.authLogin);
 
       final resposta = await http.post(
         url,

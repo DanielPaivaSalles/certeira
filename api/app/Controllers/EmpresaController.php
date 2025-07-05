@@ -2,68 +2,84 @@
 
 namespace App\Controllers;
 
-use App\Models\BairroModel;
-use App\Models\CidadeModel;
 use App\Models\EmpresaModel;
-use App\Models\EnderecoModel;
-use App\Models\EstadoModel;
-use App\Models\RuaModel;
+use App\Models\EnderecoController;
 use CodeIgniter\RESTful\ResourceController;
 
 class Empresa extends ResourceController
 {
     protected $empresaModel;
-    protected $enderecoModel;
-    protected $ruaModel;
-    protected $bairroModel;
-    protected $cidadeModel;
-    protected $estadoModel;
+    protected $enderecoController;
     
     public function __construct(){
     $this->empresaModel = new EmpresaModel();
-    $this->enderecoModel = new EnderecoModel();
-    $this->ruaModel = new RuaModel();
-    $this->bairroModel = new BairroModel();
-    $this->cidadeModel = new CidadeModel();
-    $this->estadoModel = new EstadoModel();
+    $this->enderecoController = new EnderecoController();
 
+    }
+
+    public function toArray($codigo = null)
+    {
+        if (!$codigo) {
+            return null;
+        }
+
+        $empresa = $this->empresaModel->find($codigo);
+
+        if (!$empresa) {
+            return null;
+        }
+
+        $endereco = $this->enderecoController->toArray($empresa['codigoEndereco']);
+
+        return [
+            'codigo' => $empresa['codigo'] ?? null,
+            'razao' => $empresa['razao'] ?? null,
+            'fantasia' => $empresa['fantasia'] ?? null,
+            'cnpj' => $empresa['cnpj'] ?? null,
+            'im' => $empresa['im'] ?? null,
+            'codigoEndereco' => $empresa['codigoEndereco'] ?? null,
+            'dataCadastro' => $empresa['dataCadastro'] ?? null,
+            'dataDesativado' => $empresa['dataDesativado'] ?? null,
+            'endereco' => $endereco,
+        ];
     }
 
     public function getEmpresas()
     {
-        // Busca TODAS as empresas
         $empresas = $this->empresaModel->findAll();
 
         $resultado = [];
 
         foreach ($empresas as $empresa) {
-            $cidadeNome = '';
+            $enderecoCompleto = null;
 
             if (!empty($empresa['codigoEndereco'])) {
-                // Busca o endereço
                 $endereco = $this->enderecoModel
                     ->where('codigo', $empresa['codigoEndereco'])
                     ->first();
 
-                if ($endereco && !empty($endereco['codigoCidade'])) {
-                    // Busca a cidade
-                    $cidade = $this->cidadeModel
-                        ->where('codigo', $endereco['codigoCidade'])
-                        ->first();
-
-                    if ($cidade) {
-                        $cidadeNome = $cidade['cidade'];
-                    }
-                }
+                $enderecoCompleto = [
+                    'codigo'          => $endereco['codigo'] ?? null,
+                    'numero'          => $endereco['numero'] ?? null,
+                    'cep'             => $endereco['cep'] ?? null,
+                    'rua'             => $rua['rua'] ?? null,
+                    'bairro'          => $bairro['bairro'] ?? null,
+                    'cidade'          => $cidade['cidade'] ?? null,
+                    'dataCadastroEndereco'    => $endereco['dataCadastroEndereco'] ?? null,
+                    'dataDesativadoEndereco'  => $endereco['dataDesativadoEndereco'] ?? null,
+                ];
             }
 
-            // Monta o array simplificado
             $resultado[] = [
-                'codigo'    => $empresa['codigo'],
-                'razao'     => $empresa['razao'],
-                'fantasia'  => $empresa['fantasia'],
-                'cnpj'      => $empresa['cnpj'],
-                'cidade'    => $cidadeNome,
+                'codigo'                => $empresa['codigo'],
+                'razao'                 => $empresa['razao'],
+                'fantasia'              => $empresa['fantasia'],
+                'cnpj'                  => $empresa['cnpj'],
+                'im'                    => $empresa['im'],
+                'codigoEndereco'        => $empresa['codigoEndereco'],
+                'dataCadastroEmpresa'   => $empresa['dataCadastroEmpresa'] ?? null,
+                'dataDesativadoEmpresa' => $empresa['dataDesativadoEmpresa'] ?? null,
+                'endereco'              => $enderecoCompleto,
             ];
         }
 

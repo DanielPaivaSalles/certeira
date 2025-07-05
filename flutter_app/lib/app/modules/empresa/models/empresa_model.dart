@@ -1,4 +1,4 @@
-import 'package:flutter_app/app/modules/endereco/models/empresa_model.dart';
+import 'package:flutter_app/app/modules/endereco/models/endereco_model.dart';
 
 class EmpresaModel {
   final String codigo;

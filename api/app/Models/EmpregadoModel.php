@@ -8,6 +8,6 @@ class EmpregadoModel extends Model
 {
     protected $table = 'Empregado';
     protected $primaryKey = 'codigo';
-    protected $allowedFields = ['nome', 'email', 'senha', 'codigoEndereco', 'dataCadastroEmpregado', 'dataDesativadoEmpregado'];
+    protected $allowedFields = ['nome', 'email', 'senha', 'codigoEndereco', 'dataCadastro', 'dataDesativado'];
 }
 

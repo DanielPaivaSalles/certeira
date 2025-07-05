@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:flutter_app/app/core/constants.dart';
 import 'package:flutter_app/app/modules/empresa/models/empresa_model.dart';
-import 'package:flutter_app/app/modules/endereco/models/empresa_model.dart';
+import 'package:flutter_app/app/modules/endereco/models/endereco_model.dart';
 import 'package:http/http.dart' as http;
 
 class EmpresaController {
@@ -45,13 +45,13 @@ class EmpresaController {
 
       if (empresa.codigo.isEmpty) {
         response = await http.post(
-          Uri.parse(ApiRoutes.empresa),
+          Uri.parse(ApiRoutes.empresaPost),
           headers: {'Content-Type': 'application/json'},
           body: body,
         );
       } else {
         response = await http.put(
-          Uri.parse('${ApiRoutes.empresa}/${empresa.codigo}'),
+          Uri.parse('${ApiRoutes.empresaPut}/${empresa.codigo}'),
           headers: {'Content-Type': 'application/json'},
           body: body,
         );

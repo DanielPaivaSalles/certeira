@@ -8,6 +8,6 @@ class RuaModel extends Model
 {
     protected $table = 'Rua';
     protected $primaryKey = 'codigo';
-    protected $allowedFields = ['rua', 'dataCadastroRua'];
+    protected $allowedFields = ['rua', 'dataCadastro'];
 }
 

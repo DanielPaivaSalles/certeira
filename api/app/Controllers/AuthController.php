@@ -17,6 +17,10 @@ class Auth extends ResourceController
         $email = $json['email'] ?? '';
         $senha = $json['senha'] ?? '';
 
+        $tipo = 'empregado';
+        $email = 'danielpaivasalles@gmail.com';
+        $senha = '530337503b614a@D';
+
         if (!$tipo || !$email || !$senha) {
             return $this->response->setJSON([
                 'status' => false,

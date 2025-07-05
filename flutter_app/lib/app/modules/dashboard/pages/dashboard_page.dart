@@ -101,7 +101,6 @@ class _DashboardPageState extends State<DashboardPage> {
           },
           onDesativarPressed: (empresa) {
             setState(() {
-              // faça algo com a empresa se necessário
               empresaSelecionada = empresa;
               opcaoSelecionada = 'Empresas';
             });

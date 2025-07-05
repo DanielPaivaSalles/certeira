@@ -6,7 +6,7 @@ import 'package:flutter_app/app/core/widgets/custom_text_tabela_cabecalho.dart';
 import 'package:flutter_app/app/core/widgets/custom_text_tabela_texto.dart';
 import 'package:flutter_app/app/core/widgets/custom_textfield_filtro.dart';
 import 'package:flutter_app/app/modules/empresa/models/empresa_model.dart';
-import 'package:flutter_app/app/modules/endereco/models/empresa_model.dart';
+import 'package:flutter_app/app/modules/endereco/models/endereco_model.dart';
 import '../controllers/empresas_controller.dart';
 
 class EmpresasPage extends StatefulWidget {
@@ -35,7 +35,6 @@ class _EmpresasPageState extends State<EmpresasPage> {
 
     controller = EmpresasController();
 
-    // importante: chamamos loadEmpresas só aqui!
     futureLoad = controller.loadEmpresas();
 
     controller.searchController.addListener(() {
