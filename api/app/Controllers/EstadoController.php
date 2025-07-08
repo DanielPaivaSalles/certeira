@@ -5,7 +5,7 @@ namespace App\Controllers;
 use App\Models\EstadoModel;
 use CodeIgniter\RESTful\ResourceController;
 
-class Estado extends ResourceController
+class EstadoController extends ResourceController
 {
     protected $estadoModel;
 
@@ -16,10 +16,6 @@ class Estado extends ResourceController
 
     public function toArray($codigo = null)
     {
-        if (!$codigo) {
-            return null;
-        }
-
         $estado = $this->estadoModel->find($codigo);
 
         if (!$estado) {
@@ -27,14 +23,14 @@ class Estado extends ResourceController
         }
 
         return [
-            'codigo' => $estado['codigo'] ?? null,
-            'estado' => $estado['estado'] ?? null,
-            'uf' => $estado['uf'] ?? null,
-            'dataCadastro' => $estado['dataCadastro'] ?? null,
+            'codigo' => $estado['codigo'],
+            'estado' => $estado['estado'],
+            'uf' => $estado['uf'],
+            'dataCadastro' => $estado['dataCadastro'],
         ];
     }
 
-    public function gets()
+    public function index()
     {
         $estados = $this->estadoModel->findAll();
 
@@ -42,13 +38,7 @@ class Estado extends ResourceController
 
         foreach ($estados as $estado) {
             $estadoData = null;
-
-            $estadoData = [
-                'codigo' => $estado['codigo'] ?? null,
-                'estado' => $estado['estado'] ?? null,
-                'uf' => $estado['uf'] ?? null,
-                'dataCadastro' => $estado['dataCadastro'] ?? null,
-            ];
+            $estadoData = $this->toArray($estado['codigo']);
 
             $resultado[] = $estadoData;
         }
@@ -56,25 +46,15 @@ class Estado extends ResourceController
         return $this->response->setJSON($resultado);
     }
 
-    public function get($codigo = null)
+    public function show($codigo = null)
     {
-        $estado = $this->estadoModel->find($codigo);
-
-        if (!$estado) {
-            return $this->failNotFound('Estado não encontrada!');
-        }
-
-        $estadoData = [
-            'codigo' => $estado['codigo']??null,
-            'estado' => $estado['estado']??'',
-            'uf' => $estado['uf'] ?? '',
-            'dataCadastro' => $estado['dataCadastro']??null,
-        ];
+        $estadoData = $this->toArray($codigo);
 
         return $this->response->setJSON($estadoData);
+
     }
 
-    public function post()
+    public function create()
     {
         $dados = $this->request->getJSON(true);
 
@@ -92,19 +72,17 @@ class Estado extends ResourceController
         return $this->respondCreated(['message' => 'Estado criada com sucesso.']);
     }
 
-    public function put($codigo = null)
+    public function update($codigo = null)
     {
         $dados = $this->request->getJSON(true);
 
-        $estado = $this->estadoModel->find($codigo);
-
-        if (!$estado) {
-            return $this->failNotFound('Estado não encontrada!');
+        if ($this->toArray($codigo) === null || empty(trim($dados['estado']))) {
+            return $this->failNotFound('Estado não encontrado!');
         }
 
         $estadoData = [
-            'estado' => trim($dados['estado'] ?? ''),
-            'uf' => $dados['uf'] ?? '',
+            'estado' => trim($dados['estado']),
+            'uf' => $dados['uf'],
         ];
 
         $this->estadoModel->update($codigo, $estadoData);
@@ -114,10 +92,8 @@ class Estado extends ResourceController
 
     public function delete($codigo = null)
     {
-        $estado = $this->estadoModel->find($codigo);
-
-        if (!$estado) {
-            return $this->failNotFound('Estado não encontrada!');
+        if ($this->toArray($codigo) === null) {
+            return $this->failNotFound('Estado não encontrado!');
         }
 
         $estadoData = [

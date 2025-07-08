@@ -5,7 +5,7 @@ namespace App\Controllers;
 use App\Models\RuaModel;
 use CodeIgniter\RESTful\ResourceController;
 
-class Rua extends ResourceController
+class RuaController extends ResourceController
 {
     protected $ruaModel;
 
@@ -16,10 +16,6 @@ class Rua extends ResourceController
 
     public function toArray($codigo = null)
     {
-        if (!$codigo) {
-            return null;
-        }
-
         $rua = $this->ruaModel->find($codigo);
 
         if (!$rua) {
@@ -27,24 +23,21 @@ class Rua extends ResourceController
         }
 
         return [
-            'codigo' => $rua['codigo'] ?? null,
-            'rua' => $rua['rua'] ?? null,
-            'dataCadastro' => $rua['dataCadastro'] ?? null,
+            'codigo' => $rua['codigo'],
+            'rua' => $rua['rua'],
+            'dataCadastro' => $rua['dataCadastro'],
         ];
     }
 
-    public function gets()
+    public function index()
     {
         $ruas = $this->ruaModel->findAll();
 
         $resultado = [];
 
         foreach ($ruas as $rua) {
-            $ruaData = [
-                'codigo' => $rua['codigo'] ?? null,
-                'rua' => $rua['rua'] ?? null,
-                'dataCadastro' => $rua['dataCadastro'] ?? null,
-            ];
+            $ruaData = null;
+            $ruaData = $this->toArray($rua['codigo']);
 
             $resultado[] = $ruaData;
         }
@@ -52,24 +45,14 @@ class Rua extends ResourceController
         return $this->response->setJSON($resultado);
     }
 
-    public function get($codigo = null)
+    public function show($codigo = null)
     {
-        $rua = $this->ruaModel->find($codigo);
-
-        if (!$rua) {
-            return $this->failNotFound('Rua não encontrada!');
-        }
-
-        $ruaData = [
-            'codigo' => $rua['codigo']??null,
-            'rua' => $rua['rua']??null,
-            'dataCadastro' => $rua['dataCadastro']??null,
-        ];
+        $ruaData = $this->toArray($codigo);
 
         return $this->response->setJSON($ruaData);
     }
 
-    public function post()
+    public function create()
     {
         $dados = $this->request->getJSON(true);
 
@@ -78,7 +61,7 @@ class Rua extends ResourceController
         }
 
         $ruaData = [
-            'rua' => trim($dados['rua'] ?? ''),
+            'rua' => trim($dados['rua']),
             'dataCadastro' => date('Y-m-d H:i:s'),
         ];
         $this->ruaModel->insert($ruaData);
@@ -86,18 +69,16 @@ class Rua extends ResourceController
         return $this->respondCreated(['message' => 'Rua criada com sucesso.']);
     }
 
-    public function put($codigo = null)
+    public function update($codigo = null)
     {
         $dados = $this->request->getJSON(true);
 
-        $rua = $this->ruaModel->find($codigo);
-
-        if (!$rua) {
+        if ($this->toArray($codigo) === null || empty(trim($dados['rua']))) {
             return $this->failNotFound('Rua não encontrada!');
         }
 
         $ruaData = [
-            'rua' => trim($dados['rua'] ?? ''),
+            'rua' => trim($dados['rua']),
         ];
 
         $this->ruaModel->update($codigo, $ruaData);
@@ -107,9 +88,7 @@ class Rua extends ResourceController
 
     public function delete($codigo = null)
     {
-        $rua = $this->ruaModel->find($codigo);
-
-        if (!$rua) {
+        if ($this->toArray($codigo) === null) {
             return $this->failNotFound('Rua não encontrada!');
         }
 

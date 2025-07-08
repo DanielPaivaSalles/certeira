@@ -3,38 +3,35 @@
 namespace App\Controllers;
 
 use App\Models\CidadeModel;
-use App\Models\EstadoModel;
+use App\Controllers\EstadoController;
 use CodeIgniter\RESTful\ResourceController;
 
-class Cidade extends ResourceController
+class CidadeController extends ResourceController
 {
     protected $cidadeModel;
-    protected $estadoModel;
+    protected $estadoController;
 
     public function __construct()
     {
         $this->cidadeModel = new CidadeModel();
-        $this->estadoModel = new EstadoModel();
+        $this->estadoController = new EstadoController();
     }
 
     public function toArray($codigo = null)
     {
-        if (!$codigo) {
-            return null;
-        }
-
         $cidade = $this->cidadeModel->find($codigo);
 
         if (!$cidade) {
             return null;
         }
 
-        $estado = $this->estadoModel->toArray($cidade['codigoEstado']);
+        $estado = $this->estadoController->toArray($cidade['codigoEstado']);
 
         return [
-            'codigo' => $cidade['codigo'] ?? null,
-            'cidade' => $cidade['cidade'] ?? null,
-            'dataCadastro' => $cidade['dataCadastroCidade'] ?? null,
+            'codigo' => $cidade['codigo'],
+            'cidade' => $cidade['cidade'],
+            'codigoEstado' => $cidade['codigoEstado'],
+            'dataCadastro' => $cidade['dataCadastroCidade'],
             'estado' => $estado,
         ];
     }
@@ -45,22 +42,16 @@ class Cidade extends ResourceController
         $resultado = [];
 
         foreach ($cidades as $cidade) {
-            $estado = null;
+            $cidadeData = null;
+            $estadoData = null;
 
-            if (!empty($cidade['codigoEstado'])) {
-                $estado = $this->estadoModel->find($cidade['codigoEstado']);
-            }
-
+            $estadoData = $this->estadoController->toArray($cidade['codigoEstado']);
             $cidadeData = [
-                'codigo' => $cidade['codigo'] ?? null,
-                'cidade' => $cidade['cidade'] ?? null,
-                'dataCadastro' => $cidade['dataCadastroCidade'] ?? null,
-                'estado' => $estado ? [
-                    'codigo' => $estado['codigo'] ?? null,
-                    'estado' => $estado['estado'] ?? null,
-                    'uf' => $estado['uf'] ?? null,
-                    'dataCadastro' => $estado['dataCadastro'] ?? null,
-                ] : null,
+                'codigo' => $cidade['codigo'],
+                'cidade' => $cidade['cidade'],
+                'codigoEstado' => $cidade['codigoEstado'],
+                'dataCadastro' => $cidade['dataCadastroCidade'],
+                'estado' => $estadoData,
             ];
 
             $resultado[] = $cidadeData;
@@ -71,28 +62,7 @@ class Cidade extends ResourceController
 
     public function show($codigo = null)
     {
-        $cidade = $this->cidadeModel->find($codigo);
-
-        if (!$cidade) {
-            return $this->failNotFound('Cidade não encontrada!');
-        }
-
-        $estado = null;
-        if (!empty($cidade['codigoEstado'])) {
-            $estado = $this->estadoModel->find($cidade['codigoEstado']);
-        }
-
-        $cidadeData = [
-            'codigo' => $cidade['codigo'] ?? null,
-            'cidade' => $cidade['cidade'] ?? null,
-            'dataCadastro' => $cidade['dataCadastroCidade'] ?? null,
-            'estado' => $estado ? [
-                'codigo' => $estado['codigo'] ?? null,
-                'estado' => $estado['estado'] ?? null,
-                'uf' => $estado['uf'] ?? null,
-                'dataCadastro' => $estado['dataCadastro'] ?? null,
-            ] : null,
-        ];
+        $cidadeData = $this->toArray($codigo);
 
         return $this->response->setJSON($cidadeData);
     }
@@ -101,17 +71,14 @@ class Cidade extends ResourceController
     {
         $dados = $this->request->getJSON(true);
 
-        if (empty($dados['cidade'])) {
-            return $this->failValidationErrors("Campo 'cidade' obrigatório!");
-        }
-
-        if (empty($dados['codigoEstado'])) {
-            return $this->failValidationErrors("Campo 'codigoEstado' obrigatório!");
+        if (empty(trim($dados['cidade'])) || empty(trim($dados['ibge']))) {
+            return $this->failValidationErrors("Campo 'Cidade' obrigatório!");
         }
 
         $cidadeData = [
             'cidade' => trim($dados['cidade']),
             'codigoEstado' => $dados['codigoEstado'],
+            'ibge' => $dados['ibge'],
             'dataCadastroCidade' => date('Y-m-d H:i:s'),
         ];
 
@@ -120,20 +87,18 @@ class Cidade extends ResourceController
         return $this->respondCreated(['message' => 'Cidade criada com sucesso.']);
     }
 
-    // PUT /cidade/{id}
     public function update($codigo = null)
     {
         $dados = $this->request->getJSON(true);
 
-        $cidade = $this->cidadeModel->find($codigo);
-
-        if (!$cidade) {
+        if($this->toArray($codigo === null || empty(trim($dados['cidade'])))){
             return $this->failNotFound('Cidade não encontrada!');
         }
 
         $cidadeData = [
-            'cidade' => trim($dados['cidade'] ?? $cidade['cidade']),
-            'codigoEstado' => $dados['codigoEstado'] ?? $cidade['codigoEstado'],
+            'cidade' => trim($dados['cidade']),
+            'ibge' => trim($dados['ibge']),
+            'codigoEstado' => trim($dados['codigoEstado']),
         ];
 
         $this->cidadeModel->update($codigo, $cidadeData);
@@ -141,12 +106,9 @@ class Cidade extends ResourceController
         return $this->respond(['message' => 'Cidade atualizada com sucesso.']);
     }
 
-    // DELETE /cidade/{id}
     public function delete($codigo = null)
     {
-        $cidade = $this->cidadeModel->find($codigo);
-
-        if (!$cidade) {
+        if($this->toArray($codigo === null)){
             return $this->failNotFound('Cidade não encontrada!');
         }
 

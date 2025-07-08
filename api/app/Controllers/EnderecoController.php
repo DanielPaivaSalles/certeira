@@ -3,16 +3,16 @@
 namespace App\Controllers;
 
 use App\Models\EnderecoModel;
-use App\Models\RuaModel;
-use App\Models\BairroModel;
-use App\Models\CidadeModel;
+use App\Controllers\RuaController;
+use App\Controllers\BairroController;
+use App\Controllers\CidadeController;
 use CodeIgniter\RESTful\ResourceController;
 
 class Endereco extends ResourceController
 {
     protected $enderecoModel;
-    protected $ruaModel;
-    protected $bairroModel;
+    protected $ruaController;
+    protected $bairroController;
     protected $cidadeModel;
 
     public function __construct()
