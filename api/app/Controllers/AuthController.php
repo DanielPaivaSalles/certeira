@@ -7,10 +7,8 @@ use App\Models\ClienteModel;
 use CodeIgniter\RESTful\ResourceController;
 use Firebase\JWT\JWT;
 
-class Auth extends ResourceController
-{
-    public function login()
-    {
+class Auth extends ResourceController {
+    public function login() {
         $json = $this->request->getJSON(true);
 
         $tipo = $json['tipo'] ?? '';

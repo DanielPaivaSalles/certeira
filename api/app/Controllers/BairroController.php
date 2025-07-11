@@ -5,17 +5,14 @@ namespace App\Controllers;
 use App\Models\BairroModel;
 use CodeIgniter\RESTful\ResourceController;
 
-class BairroController extends ResourceController
-{
+class BairroController extends ResourceController {
     protected $bairroModel;
 
-    public function __construct()
-    {
+    public function __construct() {
         $this->bairroModel = new BairroModel();
     }
 
-    public function toArray($codigo = null)
-    {
+    public function toArray($codigo = null) {
         $bairro = $this->bairroModel->find($codigo);
 
         if (!$bairro) {
@@ -29,8 +26,7 @@ class BairroController extends ResourceController
         ];
     }
 
-    public function index()
-    {
+    public function index() {
         $bairros = $this->bairroModel->findAll();
 
         $resultado = [];
@@ -45,15 +41,13 @@ class BairroController extends ResourceController
         return $this->response->setJSON($resultado);
     }
 
-    public function show($codigo = null)
-    {
+    public function show($codigo = null) {
         $bairroData = $this->toArray($codigo);
 
         return $this->response->setJSON($bairroData);
     }
 
-    public function create()
-    {
+    public function create() {
         $dados = $this->request->getJSON(true);
 
         if(empty(trim($dados['bairro']))){
@@ -69,8 +63,7 @@ class BairroController extends ResourceController
         return $this->respondCreated(['message' => 'Bairro criado com sucesso.']);
     }
 
-    public function update($codigo = null)
-    {
+    public function update($codigo = null) {
         $dados = $this->request->getJSON(true);
 
         if ($this->toArray($codigo) === null || empty(trim($dados['bairro']))) {
@@ -86,8 +79,7 @@ class BairroController extends ResourceController
         return $this->respond(['message' => 'Bairro atualizada com sucesso.']);
     }
 
-    public function delete($codigo = null)
-    {
+    public function delete($codigo = null) {
         if ($this->toArray($codigo) === null) {
             return $this->failNotFound('Bairro não encontrado!');
         }

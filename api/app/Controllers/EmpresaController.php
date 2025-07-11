@@ -3,18 +3,16 @@
 namespace App\Controllers;
 
 use App\Models\EmpresaModel;
-use App\Models\EnderecoController;
+use App\Controllers\EnderecoController;
 use CodeIgniter\RESTful\ResourceController;
 
-class Empresa extends ResourceController
-{
+class Empresa extends ResourceController {
     protected $empresaModel;
     protected $enderecoController;
     
     public function __construct(){
     $this->empresaModel = new EmpresaModel();
     $this->enderecoController = new EnderecoController();
-
     }
 
     public function toArray($codigo = null)

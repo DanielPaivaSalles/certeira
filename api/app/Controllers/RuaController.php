@@ -5,17 +5,14 @@ namespace App\Controllers;
 use App\Models\RuaModel;
 use CodeIgniter\RESTful\ResourceController;
 
-class RuaController extends ResourceController
-{
+class RuaController extends ResourceController {
     protected $ruaModel;
 
-    public function __construct()
-    {
+    public function __construct() {
         $this->ruaModel = new RuaModel();
     }
 
-    public function toArray($codigo = null)
-    {
+    public function toArray($codigo = null) {
         $rua = $this->ruaModel->find($codigo);
 
         if (!$rua) {
@@ -29,8 +26,7 @@ class RuaController extends ResourceController
         ];
     }
 
-    public function index()
-    {
+    public function index() {
         $ruas = $this->ruaModel->findAll();
 
         $resultado = [];
@@ -45,15 +41,13 @@ class RuaController extends ResourceController
         return $this->response->setJSON($resultado);
     }
 
-    public function show($codigo = null)
-    {
+    public function show($codigo = null) {
         $ruaData = $this->toArray($codigo);
 
         return $this->response->setJSON($ruaData);
     }
 
-    public function create()
-    {
+    public function create() {
         $dados = $this->request->getJSON(true);
 
         if(empty($dados['rua'])){
@@ -69,8 +63,7 @@ class RuaController extends ResourceController
         return $this->respondCreated(['message' => 'Rua criada com sucesso.']);
     }
 
-    public function update($codigo = null)
-    {
+    public function update($codigo = null) {
         $dados = $this->request->getJSON(true);
 
         if ($this->toArray($codigo) === null || empty(trim($dados['rua']))) {
@@ -86,8 +79,7 @@ class RuaController extends ResourceController
         return $this->respond(['message' => 'Rua atualizada com sucesso.']);
     }
 
-    public function delete($codigo = null)
-    {
+    public function delete($codigo = null) {
         if ($this->toArray($codigo) === null) {
             return $this->failNotFound('Rua não encontrada!');
         }

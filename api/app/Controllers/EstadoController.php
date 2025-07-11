@@ -5,17 +5,14 @@ namespace App\Controllers;
 use App\Models\EstadoModel;
 use CodeIgniter\RESTful\ResourceController;
 
-class EstadoController extends ResourceController
-{
+class EstadoController extends ResourceController {
     protected $estadoModel;
 
-    public function __construct()
-    {
+    public function __construct() {
         $this->estadoModel = new EstadoModel();
     }
 
-    public function toArray($codigo = null)
-    {
+    public function toArray($codigo = null) {
         $estado = $this->estadoModel->find($codigo);
 
         if (!$estado) {
@@ -30,8 +27,7 @@ class EstadoController extends ResourceController
         ];
     }
 
-    public function index()
-    {
+    public function index() {
         $estados = $this->estadoModel->findAll();
 
         $resultado = [];
@@ -46,16 +42,14 @@ class EstadoController extends ResourceController
         return $this->response->setJSON($resultado);
     }
 
-    public function show($codigo = null)
-    {
+    public function show($codigo = null) {
         $estadoData = $this->toArray($codigo);
 
         return $this->response->setJSON($estadoData);
 
     }
 
-    public function create()
-    {
+    public function create() {
         $dados = $this->request->getJSON(true);
 
         if(empty($dados['estado'])){
@@ -72,8 +66,7 @@ class EstadoController extends ResourceController
         return $this->respondCreated(['message' => 'Estado criada com sucesso.']);
     }
 
-    public function update($codigo = null)
-    {
+    public function update($codigo = null) {
         $dados = $this->request->getJSON(true);
 
         if ($this->toArray($codigo) === null || empty(trim($dados['estado']))) {
@@ -90,8 +83,7 @@ class EstadoController extends ResourceController
         return $this->respond(['message' => 'Estado atualizada com sucesso.']);
     }
 
-    public function delete($codigo = null)
-    {
+    public function delete($codigo = null) {
         if ($this->toArray($codigo) === null) {
             return $this->failNotFound('Estado não encontrado!');
         }

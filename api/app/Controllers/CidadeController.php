@@ -6,19 +6,16 @@ use App\Models\CidadeModel;
 use App\Controllers\EstadoController;
 use CodeIgniter\RESTful\ResourceController;
 
-class CidadeController extends ResourceController
-{
+class CidadeController extends ResourceController {
     protected $cidadeModel;
     protected $estadoController;
 
-    public function __construct()
-    {
+    public function __construct() {
         $this->cidadeModel = new CidadeModel();
         $this->estadoController = new EstadoController();
     }
 
-    public function toArray($codigo = null)
-    {
+    public function toArray($codigo = null) {
         $cidade = $this->cidadeModel->find($codigo);
 
         if (!$cidade) {
@@ -36,8 +33,7 @@ class CidadeController extends ResourceController
         ];
     }
 
-    public function index()
-    {
+    public function index() {
         $cidades = $this->cidadeModel->findAll();
         $resultado = [];
 
@@ -60,19 +56,17 @@ class CidadeController extends ResourceController
         return $this->response->setJSON($resultado);
     }
 
-    public function show($codigo = null)
-    {
+    public function show($codigo = null) {
         $cidadeData = $this->toArray($codigo);
 
         return $this->response->setJSON($cidadeData);
     }
 
-    public function create()
-    {
+    public function create() {
         $dados = $this->request->getJSON(true);
 
         if (empty(trim($dados['cidade'])) || empty(trim($dados['ibge']))) {
-            return $this->failValidationErrors("Campo 'Cidade' obrigatório!");
+            return $this->failValidationErrors("Campo 'Cidade' e 'IBGE' obrigatórios!");
         }
 
         $cidadeData = [
@@ -87,8 +81,7 @@ class CidadeController extends ResourceController
         return $this->respondCreated(['message' => 'Cidade criada com sucesso.']);
     }
 
-    public function update($codigo = null)
-    {
+    public function update($codigo = null) {
         $dados = $this->request->getJSON(true);
 
         if($this->toArray($codigo === null || empty(trim($dados['cidade'])))){
@@ -106,8 +99,7 @@ class CidadeController extends ResourceController
         return $this->respond(['message' => 'Cidade atualizada com sucesso.']);
     }
 
-    public function delete($codigo = null)
-    {
+    public function delete($codigo = null) {
         if($this->toArray($codigo === null)){
             return $this->failNotFound('Cidade não encontrada!');
         }
