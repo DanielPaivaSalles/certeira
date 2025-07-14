@@ -32,7 +32,6 @@ class RuaController extends ResourceController {
         $resultado = [];
 
         foreach ($ruas as $rua) {
-            $ruaData = null;
             $ruaData = $this->toArray($rua['codigo']);
 
             $resultado[] = $ruaData;
@@ -42,9 +41,7 @@ class RuaController extends ResourceController {
     }
 
     public function show($codigo = null) {
-        $ruaData = $this->toArray($codigo);
-
-        return $this->response->setJSON($ruaData);
+        return $this->response->setJSON($this->toArray($codigo));
     }
 
     public function create() {
@@ -60,7 +57,7 @@ class RuaController extends ResourceController {
         ];
         $this->ruaModel->insert($ruaData);
 
-        return $this->respondCreated(['message' => 'Rua criada com sucesso.']);
+        return $this->response->setJSON($this->toArray($this->ruaModel->getInsertID()));
     }
 
     public function update($codigo = null) {
@@ -76,7 +73,7 @@ class RuaController extends ResourceController {
 
         $this->ruaModel->update($codigo, $ruaData);
 
-        return $this->respond(['message' => 'Rua atualizada com sucesso.']);
+        return $this->response->setJSON($this->toArray($this->ruaModel->getInsertID()));
     }
 
     public function delete($codigo = null) {
@@ -93,3 +90,14 @@ class RuaController extends ResourceController {
         return $this->respond(['message' => 'Rua desativada com sucesso.']);
     }
 }
+
+
+
+
+
+
+
+
+
+
+

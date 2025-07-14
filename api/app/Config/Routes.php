@@ -7,7 +7,14 @@ use CodeIgniter\Router\RouteCollection;
  */
 
 //Auth
- $routes->post('auth/login', 'Auth::login');//Autenticação
+$routes->post('auth/login', 'AuthController::login');//Autenticação
+
+//Bairro
+$routes->get('bairros', 'BairroController::index');//Lista
+$routes->get('bairro/(:num)', 'BairroController::show/$1');//Busca uma empresa
+$routes->post('bairro', 'BairroController::create');//Cadastra uma empresa
+$routes->put('bairro/(:num)', 'BairroController::update/$1');//Altera uma empresa
+$routes->delete('bairro/(:num)', 'BairroController::delete/$1');//'Deleta' uma empresa
 
 //Empresa
 $routes->get('empresas', 'Empresa::getEmpresas');//Lista

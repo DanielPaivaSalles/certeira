@@ -28,38 +28,31 @@ class CidadeController extends ResourceController {
             'codigo' => $cidade['codigo'],
             'cidade' => $cidade['cidade'],
             'codigoEstado' => $cidade['codigoEstado'],
-            'dataCadastro' => $cidade['dataCadastroCidade'],
+            'dataCadastro' => $cidade['dataCadastro'],
             'estado' => $estado,
         ];
     }
 
     public function index() {
         $cidades = $this->cidadeModel->findAll();
+
         $resultado = [];
 
         foreach ($cidades as $cidade) {
-            $cidadeData = null;
-            $estadoData = null;
-
             $estadoData = $this->estadoController->toArray($cidade['codigoEstado']);
-            $cidadeData = [
+            $resultado[] =  [
                 'codigo' => $cidade['codigo'],
                 'cidade' => $cidade['cidade'],
                 'codigoEstado' => $cidade['codigoEstado'],
-                'dataCadastro' => $cidade['dataCadastroCidade'],
+                'dataCadastro' => $cidade['dataCadastro'],
                 'estado' => $estadoData,
             ];
-
-            $resultado[] = $cidadeData;
         }
-
         return $this->response->setJSON($resultado);
     }
 
     public function show($codigo = null) {
-        $cidadeData = $this->toArray($codigo);
-
-        return $this->response->setJSON($cidadeData);
+        return $this->response->setJSON($this->toArray($codigo));
     }
 
     public function create() {
@@ -72,13 +65,13 @@ class CidadeController extends ResourceController {
         $cidadeData = [
             'cidade' => trim($dados['cidade']),
             'codigoEstado' => $dados['codigoEstado'],
-            'ibge' => $dados['ibge'],
-            'dataCadastroCidade' => date('Y-m-d H:i:s'),
+            'ibge' => trim($dados['ibge']),
+            'dataCadastro' => date('Y-m-d H:i:s'),
         ];
 
         $this->cidadeModel->insert($cidadeData);
 
-        return $this->respondCreated(['message' => 'Cidade criada com sucesso.']);
+        return $this->response->setJSON($this->toArray($this->cidadeModel->getInsertID()));
     }
 
     public function update($codigo = null) {
@@ -96,7 +89,7 @@ class CidadeController extends ResourceController {
 
         $this->cidadeModel->update($codigo, $cidadeData);
 
-        return $this->respond(['message' => 'Cidade atualizada com sucesso.']);
+        return $this->response->setJSON($this->toArray($this->cidadeModel->getInsertID()));
     }
 
     public function delete($codigo = null) {
@@ -105,7 +98,7 @@ class CidadeController extends ResourceController {
         }
 
         $cidadeData = [
-            'dataDesativadoCidade' => date('Y-m-d H:i:s'),
+            'dataDesativado' => date('Y-m-d H:i:s'),
         ];
 
         $this->cidadeModel->update($codigo, $cidadeData);
@@ -113,3 +106,14 @@ class CidadeController extends ResourceController {
         return $this->respond(['message' => 'Cidade desativada com sucesso.']);
     }
 }
+
+
+
+
+
+
+
+
+
+
+

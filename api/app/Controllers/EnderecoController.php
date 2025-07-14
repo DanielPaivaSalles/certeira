@@ -8,7 +8,7 @@ use App\Controllers\BairroController;
 use App\Controllers\CidadeController;
 use CodeIgniter\RESTful\ResourceController;
 
-class Endereco extends ResourceController
+class EnderecoController extends ResourceController
 {
     protected $enderecoModel;
     protected $ruaController;
@@ -34,13 +34,13 @@ class Endereco extends ResourceController
         $cidade = $this->cidadeController->toArray($endereco['codigoCidade']);
 
         return [
-            'codigo' => $endereco['codigo'] ?? null,
-            'codigoRua' => $endereco['codigoRua'] ?? null,
-            'numero' => $endereco['numero'] ?? null,
-            'codigoBairro' => $endereco['codigoBairro'] ?? null,
-            'codigoCidade' => $endereco['codigoCidade'] ?? null,
-            'cep' => $endereco['cep'] ?? null,
-            'dataCadastro' => $endereco['dataCadastro'] ?? null,
+            'codigo' => $endereco['codigo'],
+            'codigoRua' => $endereco['codigoRua'],
+            'numero' => $endereco['numero'],
+            'codigoBairro' => $endereco['codigoBairro'],
+            'codigoCidade' => $endereco['codigoCidade'],
+            'cep' => $endereco['cep'],
+            'dataCadastro' => $endereco['dataCadastro'],
             'rua' => $rua,
             'bairro' => $bairro,
             'cidade' => $cidade,
@@ -76,9 +76,7 @@ class Endereco extends ResourceController
     }
 
     public function show($codigo = null) {
-        $enderecoData = $this->toArray($codigo);
-
-        return $this->response->setJSON($enderecoData);
+        return $this->response->setJSON($this->toArray($codigo));
     }
 
     public function create() {
@@ -99,7 +97,7 @@ class Endereco extends ResourceController
 
         $this->enderecoModel->insert($enderecoData);
 
-        return $this->respondCreated(['message' => 'Endereço criado com sucesso.']);
+        return $this->response->setJSON($this->toArray($this->enderecoModel->getInsertID()));
     }
 
     public function update($codigo = null) {
@@ -110,17 +108,17 @@ class Endereco extends ResourceController
         }
 
         $enderecoData = [
-            'codigoRua' => trim($dados['codigoRua']),
+            'codigoRua' => $dados['codigoRua'],
             'numero' => trim($dados['numero']),
-            'codigoBairro' => trim($dados['codigoBairro']),
-            'codigoCidade' => trim($dados['codigoCidade']),
+            'codigoBairro' => $dados['codigoBairro'],
+            'codigoCidade' => $dados['codigoCidade'],
             'cep' => trim($dados['cep']),
         ];
 
 
         $this->enderecoModel->update($codigo, $enderecoData);
 
-        return $this->respond(['message' => 'Endereço atualizado com sucesso.']);
+        return $this->response->setJSON($this->toArray($this->enderecoModel->getInsertID()));
     }
 
     public function delete($codigo = null) {
@@ -137,3 +135,14 @@ class Endereco extends ResourceController
         return $this->respond(['message' => 'Endereço desativado com sucesso.']);
     }
 }
+
+
+
+
+
+
+
+
+
+
+

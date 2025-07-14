@@ -33,7 +33,6 @@ class EstadoController extends ResourceController {
         $resultado = [];
 
         foreach ($estados as $estado) {
-            $estadoData = null;
             $estadoData = $this->toArray($estado['codigo']);
 
             $resultado[] = $estadoData;
@@ -43,10 +42,7 @@ class EstadoController extends ResourceController {
     }
 
     public function show($codigo = null) {
-        $estadoData = $this->toArray($codigo);
-
-        return $this->response->setJSON($estadoData);
-
+        return $this->response->setJSON($this->toArray($codigo));
     }
 
     public function create() {
@@ -57,13 +53,13 @@ class EstadoController extends ResourceController {
         }
 
         $estadoData = [
-            'estado' => trim($dados['estado'] ?? ''),
-            'uf' => $dados['uf'] ?? '',
+            'estado' => trim($dados['estado']),
+            'uf' => $dados['uf'],
             'dataCadastro' => date('Y-m-d H:i:s'),
         ];
         $this->estadoModel->insert($estadoData);
 
-        return $this->respondCreated(['message' => 'Estado criada com sucesso.']);
+        return $this->response->setJSON($this->toArray($this->estadoModel->getInsertID()));
     }
 
     public function update($codigo = null) {
@@ -80,7 +76,7 @@ class EstadoController extends ResourceController {
 
         $this->estadoModel->update($codigo, $estadoData);
 
-        return $this->respond(['message' => 'Estado atualizada com sucesso.']);
+        return $this->response->setJSON($this->toArray($this->estadoModel->getInsertID()));
     }
 
     public function delete($codigo = null) {
@@ -97,3 +93,14 @@ class EstadoController extends ResourceController {
         return $this->respond(['message' => 'Estado desativada com sucesso.']);
     }
 }
+
+
+
+
+
+
+
+
+
+
+

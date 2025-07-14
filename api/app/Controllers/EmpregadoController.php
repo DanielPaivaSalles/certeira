@@ -7,7 +7,7 @@ use CodeIgniter\RESTful\ResourceController;
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
 
-class Empregado extends ResourceController {
+class EmpregadoController extends ResourceController {
     public function index() {
         $model = new EmpregadoModel();
         $data = $model->findAll();
