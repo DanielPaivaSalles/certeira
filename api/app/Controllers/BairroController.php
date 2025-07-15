@@ -12,7 +12,7 @@ class BairroController extends ResourceController {
         $this->bairroModel = new BairroModel();
     }
 
-    //Metodo para criar 'json' de objeto Bairro por código
+    //Metodo para criar um objeto de instância da tabela
     public function toArray($codigo = null) {
         $bairro = $this->bairroModel->find($codigo);
 
@@ -27,25 +27,21 @@ class BairroController extends ResourceController {
         ];
     }
 
-    //Metodo para criar lista de bairros
+    //Metodo para criar lista de objetos
     public function index() {
-        //Cria um objeto com todos os bairros da base
+        //Cria um objeto com todos os objetos da base
         $bairros = $this->bairroModel->findAll();
 
         //Lista de objetos vazia para criar o json de resposta
         $resultado = [];
 
-        //Para cada bairro dentro de bairros
+        //Para cada objeto na lista de objetos
         foreach ($bairros as $bairro) {
-            //Cria uma lista do objeto bairro
-            $resultado[] = [
-                'codigo' => $bairro['codigo'],
-                'bairro' => $bairro['bairro'],
-                'dataCadastro' => $bairro['dataCadastro'],
-            ];
+            //Cria uma lista de bojetos
+            $resultado[] = $this->toArray($bairro['codigo']);
         }
 
-        //Depois de criada a lista de bairros, é criado um json para a resposta da requisição
+        //Depois de criada a lista de objetos, é criado um json para a resposta da requisição
         return $this->response->setJSON($resultado);
     }
 
@@ -54,56 +50,67 @@ class BairroController extends ResourceController {
         return $this->response->setJSON($this->toArray($codigo));
     }
 
-    //Metodo para criar uma instância na tabela bairro
+    //Metodo para criar uma instância na tabela
     public function create() {
         //Dados recupera as informações enviadas via formulário
         $dados = $this->request->getJSON(true);
 
-        //Verifica se o campo bairro esta vazio. Caso sim, retorna um pedido de incluir o bairro
+        //Verifica se os dados estão vazios. Caso sim, retorna um pedido de incluir eles
         if(empty(trim($dados['bairro']))){
             return $this->failValidationErrors("Campo 'Bairro' obrigatório!");
         }
 
-        //Cria uma lista de dados de bairro
+        //Cria os dados a serem inseridos na base
         $bairroData = [
             'bairro' => $dados['bairro'],
             'dataCadastro' => date('Y-m-d H:i:s'),
         ];
 
-        //Cria o insert de bairro no banco de dados
+        //Cria o insert no banco de dados
         $this->bairroModel->insert($bairroData);
 
-        //Retorna um json do bairro que acabou de ser inserido
+        //Retorna um json que acabou de ser inserido
         return $this->response->setJSON($this->toArray($this->bairroModel->getInsertID()));
     }
 
+    //Metodo para alterar uma instância na tabela
     public function update($codigo = null) {
+        //Dados recupera as informações enviadas via formulário
         $dados = $this->request->getJSON(true);
 
+        //Verifica se os dados estão vazios. Caso sim, retorna instância não encontrada
         if ($this->toArray($codigo) === null || empty(trim($dados['bairro']))) {
             return $this->failNotFound('Bairro não encontrado!');
         }
 
+        //Cria uma lista com os dados a serem alterados
         $bairroData = [
             'bairro' => trim($dados['bairro']),
         ];
 
+        //Cria o update de bairro no banco de dados
         $this->bairroModel->update($codigo, $bairroData);
 
-        return $this->response->setJSON($this->toArray($this->bairroModel->getInsertID()));
+        //Retorna um json que acabou de ser alterado
+        return $this->response->setJSON($this->toArray($codigo));
     }
 
+    //Metodo para desativar uma instância na tabela
     public function delete($codigo = null) {
+        //Se não for passado um código válido, vai retornar 'não encontrado'
         if ($this->toArray($codigo) === null) {
             return $this->failNotFound('Bairro não encontrado!');
         }
 
+        //Cria uma lista para alterar a dataDesativado
         $bairroData = [
             'dataDesativado' => date('Y-m-d H:i:s'),
         ];
 
+        //Cria o update de dataDesativado no banco de dados
         $this->bairroModel->update($codigo, $bairroData);
 
+        //Retorna um json confirmando que foi desativado
         return $this->respond(['message' => 'Bairro desativada com sucesso.']);
     }
 }

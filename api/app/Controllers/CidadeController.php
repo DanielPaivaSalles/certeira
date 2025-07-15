@@ -15,6 +15,7 @@ class CidadeController extends ResourceController {
         $this->estadoController = new EstadoController();
     }
 
+    //Metodo para criar 'json' de objeto Cidade por código
     public function toArray($codigo = null) {
         $cidade = $this->cidadeModel->find($codigo);
 

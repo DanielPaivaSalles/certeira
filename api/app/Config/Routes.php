@@ -10,16 +10,44 @@ use CodeIgniter\Router\RouteCollection;
 $routes->post('auth/login', 'AuthController::login');//Autenticação
 
 //Bairro
-$routes->get('bairros', 'BairroController::index');//Lista
-$routes->get('bairro/(:num)', 'BairroController::show/$1');//Busca uma empresa
-$routes->post('bairro', 'BairroController::create');//Cadastra uma empresa
-$routes->put('bairro/(:num)', 'BairroController::update/$1');//Altera uma empresa
-$routes->delete('bairro/(:num)', 'BairroController::delete/$1');//'Deleta' uma empresa
+$routes->get('bairros', 'BairroController::index');//Lista os bairros
+$routes->get('bairro/(:num)', 'BairroController::show/$1');//Busca um bairro
+$routes->post('bairro', 'BairroController::create');//Cadastra um bairro
+$routes->put('bairro/(:num)', 'BairroController::update/$1');//Altera um bairro
+//$routes->delete('bairro/(:num)', 'BairroController::delete/$1');//'Deleta' um bairro
+
+//Estado
+$routes->get('estados', 'EstadoController::index');//Lista os estados
+$routes->get('estado/(:num)', 'EstadoController::show/$1');//Busca um estado
+$routes->post('estado', 'EstadoController::create');//Cadastra um estado
+$routes->put('estado/(:num)', 'EstadoController::update/$1');//Altera um estado
+//$routes->delete('estado/(:num)', 'EstadoController::delete/$1');//'Deleta' um estado
+
+//Rua
+$routes->get('ruas', 'RuaController::index');//Lista as ruas
+$routes->get('rua/(:num)', 'RuaController::show/$1');//Busca uma rua
+$routes->post('rua', 'RuaController::create');//Cadastra uma rua
+$routes->put('rua/(:num)', 'RuaController::update/$1');//Altera uma rua
+$routes->delete('rua/(:num)', 'RuaController::delete/$1');//'Deleta' uma rua
+
+//Endereco
+$routes->get('enderecos', 'EnderecoController::index');//Lista os enderecos
+$routes->get('endereco/(:num)', 'EnderecoController::show/$1');//Busca um endereco
+$routes->post('endereco', 'EnderecoController::create');//Cadastra um endereco
+$routes->put('endereco/(:num)', 'EnderecoController::update/$1');//Altera um endereco
+$routes->delete('endereco/(:num)', 'EnderecoController::delete/$1');//'Deleta' um endereco
 
 //Empresa
-$routes->get('empresas', 'Empresa::getEmpresas');//Lista
-$routes->get('empresa/(:num)', 'Empresa::get/$1');//Busca uma empresa
-$routes->post('empresa', 'Empresa::post');//Cadastra uma empresa
-$routes->put('empresa/(:num)', 'Empresa::put/$1');//Altera uma empresa
-$routes->delete('empresa/(:num)', 'Empresa::delete/$1');//'Deleta' uma empresa
+$routes->get('empresas', 'EmpresaController::index');//Lista as empresas
+$routes->get('empresa/(:num)', 'EmpresaController::show/$1');//Busca uma empresa
+$routes->post('empresa', 'EmpresaController::create');//Cadastra uma empresa
+$routes->put('empresa/(:num)', 'EmpresaController::update/$1');//Altera uma empresa
+$routes->delete('empresa/(:num)', 'EmpresaController::delete/$1');//'Deleta' uma empresa
+
+//Empregado
+$routes->get('empregados', 'EmpregadoController::index');//Lista os empregados
+$routes->get('empregado/(:num)', 'EmpregadoController::show/$1');//Busca um empregado
+$routes->post('empregado', 'EmpregadoController::create');//Cadastra um empregado
+$routes->put('empregado/(:num)', 'EmpregadoController::update/$1');//Altera um empregado
+$routes->delete('empregado/(:num)', 'EmpregadoController::delete/$1');//'Deleta' um empregado
 

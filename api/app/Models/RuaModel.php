@@ -8,5 +8,17 @@ class RuaModel extends Model {
     protected $table = 'Rua';
     protected $primaryKey = 'codigo';
     protected $allowedFields = ['rua', 'dataCadastro'];
+
+    protected $beforeInsert = ['uppercaseFields'];
+    protected $beforeUpdate = ['uppercaseFields'];
+
+    protected function uppercaseFields(array $data)
+    {
+        if (isset($data['data']['rua'])) {
+            $data['data']['rua'] = strtoupper($data['data']['rua']);
+        }
+
+        return $data;
+    }
 }
 

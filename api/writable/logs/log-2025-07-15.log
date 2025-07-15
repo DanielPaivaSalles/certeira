@@ -1,0 +1,77 @@
+CRITICAL - 2025-07-15 18:49:38 --> ErrorException: Undefined array key "bairro"
+[Method: PUT, Route: bairro/2]
+in APPPATH\Controllers\BairroController.php on line 82.
+ 1 APPPATH\Controllers\BairroController.php(82): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array key "bairro"', 'C:\\Users\\3Visao\\Documents\\certeira\\certeira\\api\\app\\Controllers\\BairroController.php', 82)
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\BairroController->update('2')
+ 3 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\BairroController))
+ 4 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ 8 SYSTEMPATH\rewrite.php(44): require_once('C:\\Users\\3Visao\\Documents\\certeira\\certeira\\api\\public\\index.php')
+CRITICAL - 2025-07-15 18:50:36 --> ErrorException: Undefined array key "bairro"
+[Method: PUT, Route: bairro/2]
+in APPPATH\Controllers\BairroController.php on line 82.
+ 1 APPPATH\Controllers\BairroController.php(82): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array key "bairro"', 'C:\\Users\\3Visao\\Documents\\certeira\\certeira\\api\\app\\Controllers\\BairroController.php', 82)
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\BairroController->update('2')
+ 3 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\BairroController))
+ 4 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ 8 SYSTEMPATH\rewrite.php(44): require_once('C:\\Users\\3Visao\\Documents\\certeira\\certeira\\api\\public\\index.php')
+CRITICAL - 2025-07-15 19:46:13 --> ErrorException: Undefined array key "dataCadastro"
+[Method: PUT, Route: empresa/2]
+in APPPATH\Controllers\EmpresaController.php on line 109.
+ 1 APPPATH\Controllers\EmpresaController.php(109): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array key "dataCadastro"', 'C:\\Users\\3Visao\\Documents\\certeira\\certeira\\api\\app\\Controllers\\EmpresaController.php', 109)
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\EmpresaController->update('2')
+ 3 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\EmpresaController))
+ 4 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ 8 SYSTEMPATH\rewrite.php(44): require_once('C:\\Users\\3Visao\\Documents\\certeira\\certeira\\api\\public\\index.php')
+CRITICAL - 2025-07-15 19:48:01 --> ErrorException: Undefined array key "dataCadastro"
+[Method: PUT, Route: empresa/2]
+in APPPATH\Controllers\EmpresaController.php on line 109.
+ 1 APPPATH\Controllers\EmpresaController.php(109): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array key "dataCadastro"', 'C:\\Users\\3Visao\\Documents\\certeira\\certeira\\api\\app\\Controllers\\EmpresaController.php', 109)
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\EmpresaController->update('2')
+ 3 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\EmpresaController))
+ 4 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ 8 SYSTEMPATH\rewrite.php(44): require_once('C:\\Users\\3Visao\\Documents\\certeira\\certeira\\api\\public\\index.php')
+CRITICAL - 2025-07-15 19:48:41 --> ErrorException: Undefined array key "dataCadastro"
+[Method: PUT, Route: empresa/2]
+in APPPATH\Controllers\EmpresaController.php on line 109.
+ 1 APPPATH\Controllers\EmpresaController.php(109): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array key "dataCadastro"', 'C:\\Users\\3Visao\\Documents\\certeira\\certeira\\api\\app\\Controllers\\EmpresaController.php', 109)
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\EmpresaController->update('2')
+ 3 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\EmpresaController))
+ 4 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ 8 SYSTEMPATH\rewrite.php(44): require_once('C:\\Users\\3Visao\\Documents\\certeira\\certeira\\api\\public\\index.php')
+CRITICAL - 2025-07-15 19:50:29 --> ErrorException: Undefined array key "dataCadastro"
+[Method: PUT, Route: empresa/2]
+in APPPATH\Controllers\EmpresaController.php on line 109.
+ 1 APPPATH\Controllers\EmpresaController.php(109): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array key "dataCadastro"', 'C:\\Users\\3Visao\\Documents\\certeira\\certeira\\api\\app\\Controllers\\EmpresaController.php', 109)
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\EmpresaController->update('2')
+ 3 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\EmpresaController))
+ 4 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ 8 SYSTEMPATH\rewrite.php(44): require_once('C:\\Users\\3Visao\\Documents\\certeira\\certeira\\api\\public\\index.php')
+CRITICAL - 2025-07-15 20:25:54 --> ErrorException: Undefined array key "razao"
+[Method: PUT, Route: empregado/3]
+in APPPATH\Controllers\EmpregadoController.php on line 95.
+ 1 APPPATH\Controllers\EmpregadoController.php(95): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array key "razao"', 'C:\\Users\\3Visao\\Documents\\certeira\\certeira\\api\\app\\Controllers\\EmpregadoController.php', 95)
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\EmpregadoController->update('3')
+ 3 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\EmpregadoController))
+ 4 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ 8 SYSTEMPATH\rewrite.php(44): require_once('C:\\Users\\3Visao\\Documents\\certeira\\certeira\\api\\public\\index.php')
