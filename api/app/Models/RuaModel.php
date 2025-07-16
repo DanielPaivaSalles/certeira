@@ -9,6 +9,9 @@ class RuaModel extends Model {
     protected $primaryKey = 'codigo';
     protected $allowedFields = ['rua', 'dataCadastro'];
 
+    protected $useSoftDeletes = true;
+    protected $deletedField = 'dataDesativado';
+
     protected $beforeInsert = ['uppercaseFields'];
     protected $beforeUpdate = ['uppercaseFields'];
 
