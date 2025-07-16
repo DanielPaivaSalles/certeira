@@ -23,5 +23,6 @@ class RuaModel extends Model {
 
         return $data;
     }
+
 }
 

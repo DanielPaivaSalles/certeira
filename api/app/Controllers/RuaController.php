@@ -50,10 +50,13 @@ class RuaController extends ResourceController {
 
     //Metodo para retornar o json do objeto específico solicitado
     public function show($codigo = null) {
+        //Procura pela instância na base. Se não encontrar, retorna uma mensagem
         $rua = $this->ruaModel->find($codigo);
         if(!$rua){
             return $this->failNotFound('Rua não encontrada');
         }
+
+        //Se encontrar, retorna um Data Transform Objeto da instância
         $dto = new RuaDTO($rua);
         return $this->respond($dto->toArray());
     }
