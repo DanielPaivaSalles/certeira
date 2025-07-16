@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Models\RuaModel;
+use App\DTOs\RuaDTO;
 use CodeIgniter\RESTful\ResourceController;
 
 class RuaController extends ResourceController {
@@ -49,18 +50,28 @@ class RuaController extends ResourceController {
 
     //Metodo para retornar o json do objeto específico solicitado
     public function show($codigo = null) {
-        return $this->response->setJSON($this->toArray($codigo));
+        $rua = $this->ruaModel->find($codigo);
+        if(!$rua){
+            return $this->failNotFound('Rua não encontrada');
+        }
+        $dto = new RuaDTO($rua);
+        return $this->respond($dto->toArray());
     }
 
     //Metodo para criar uma instância na tabela
     public function create() {
+        //Regras de validação dos dados
+        $rules = [
+            'rua' => 'required|max_lenght[100]'
+        ];
+
         //Dados recupera as informações enviadas via formulário
         $dados = $this->request->getJSON(true);
 
-        //Verifica se os dados estão vazios. Caso sim, retorna um pedido de incluir eles
-        if(empty($dados['rua'])){
-            return $this->failValidationErrors("Campo 'Rua' obrigatório!");
-        }
+        if(!$this->validate($rules)){
+            return $this->failValidationErrors($this->validator->getErrors());
+
+        };
 
         //Cria os dados a serem inseridos na base
         $ruaData = [
