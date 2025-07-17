@@ -7,17 +7,17 @@ use CodeIgniter\Config\BaseConfig;
 class App extends BaseConfig
 {
     public string $baseURL;
-    public string $forceGlobalSecureRequests;
-    public string $CSPEnabled;
 
     public function __construct()
     {
         parent::__construct();
 
         $this->baseURL = rtrim(getenv('app.baseURL'), '/') . '/';
-        $this->forceGlobalSecureRequests = getenv('app.forceGlobalSecureRequests');
-        $this->CSPEnabled = getenv('app.CSPEnabled');
     }
+
+    public bool $forceGlobalSecureRequests = false;
+
+    public bool $CSPEnabled = false;
 
     public array $allowedHostnames = [];
 

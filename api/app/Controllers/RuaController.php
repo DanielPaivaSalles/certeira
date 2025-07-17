@@ -3,7 +3,6 @@
 namespace App\Controllers;
 
 use App\Models\RuaModel;
-use App\DTOs\RuaDTO;
 use CodeIgniter\RESTful\ResourceController;
 
 class RuaController extends ResourceController {
@@ -57,8 +56,7 @@ class RuaController extends ResourceController {
         }
 
         //Se encontrar, retorna um Data Transform Objeto da instância
-        $dto = new RuaDTO($rua);
-        return $this->respond($dto->toArray());
+        return $this->respond($this->toArray());
     }
 
     //Metodo para criar uma instância na tabela

@@ -48,6 +48,7 @@ class EmpresaController extends ResourceController {
 
         //Para cada objeto na lista de objetos
         foreach ($empresas as $empresa) {
+            return $empresa;
             //Cria uma lista de bojetos
             $resultado[] = $this->toArray($empresa['codigo']);
         }

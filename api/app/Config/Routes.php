@@ -9,19 +9,26 @@ use CodeIgniter\Router\RouteCollection;
 //Auth
 $routes->post('auth/login', 'AuthController::login');//Autenticação
 
-//Bairro
-$routes->get('bairros', 'BairroController::index');//Lista os bairros
-$routes->get('bairro/(:num)', 'BairroController::show/$1');//Busca um bairro
-$routes->post('bairro', 'BairroController::create');//Cadastra um bairro
-$routes->put('bairro/(:num)', 'BairroController::update/$1');//Altera um bairro
-//$routes->delete('bairro/(:num)', 'BairroController::delete/$1');//'Deleta' um bairro
-
 //Estado
 $routes->get('estados', 'EstadoController::index');//Lista os estados
 $routes->get('estado/(:num)', 'EstadoController::show/$1');//Busca um estado
 $routes->post('estado', 'EstadoController::create');//Cadastra um estado
 $routes->put('estado/(:num)', 'EstadoController::update/$1');//Altera um estado
 //$routes->delete('estado/(:num)', 'EstadoController::delete/$1');//'Deleta' um estado
+
+//Cidade
+$routes->get('cidades', 'CidadeController::index');//Lista os cidades
+$routes->get('cidade/(:num)', 'CidadeController::show/$1');//Busca um cidade
+$routes->post('cidade', 'CidadeController::create');//Cadastra um cidade
+$routes->put('cidade/(:num)', 'CidadeController::update/$1');//Altera um cidade
+//$routes->delete('bairro/(:num)', 'CidadeController::delete/$1');//'Deleta' um cidade
+
+//Bairro
+$routes->get('bairros', 'BairroController::index');//Lista os bairros
+$routes->get('bairro/(:num)', 'BairroController::show/$1');//Busca um bairro
+$routes->post('bairro', 'BairroController::create');//Cadastra um bairro
+$routes->put('bairro/(:num)', 'BairroController::update/$1');//Altera um bairro
+//$routes->delete('bairro/(:num)', 'BairroController::delete/$1');//'Deleta' um bairro
 
 //Rua
 $routes->get('ruas', 'RuaController::index');//Lista as ruas

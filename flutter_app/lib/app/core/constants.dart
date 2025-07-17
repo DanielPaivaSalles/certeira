@@ -1,6 +1,7 @@
 class ApiRoutes {
   //Path base do servidor
-  static const String baseUrl = 'http://localhost:8080';
+  static const String baseUrl = 'http://localhost:8080'; //desenvolvimento
+  //static const String baseUrl = 'http://localhost:8080'; //produção
 
   //Login
   static String get authLogin => '$baseUrl/auth/login';
