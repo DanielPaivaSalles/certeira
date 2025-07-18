@@ -26,8 +26,8 @@ class _EmpresaPageState extends State<EmpresaPage> {
   late TextEditingController cnpjController;
   late TextEditingController imController;
   late TextEditingController codigoEnderecoController;
-  late TextEditingController dataCadastroEmpresaController;
-  late TextEditingController dataDesativadoEmpresaController;
+  late TextEditingController dataCadastroController;
+  late TextEditingController dataDesativadoController;
 
   // Parte do endereço
   late TextEditingController ruaController;
@@ -56,25 +56,25 @@ class _EmpresaPageState extends State<EmpresaPage> {
     codigoEnderecoController = TextEditingController(
       text: widget.empresa?.codigoEndereco ?? '',
     );
-    dataCadastroEmpresaController = TextEditingController(
-      text: widget.empresa?.dataCadastroEmpresa ?? '',
+    dataCadastroController = TextEditingController(
+      text: widget.empresa?.dataCadastro ?? '',
     );
-    dataDesativadoEmpresaController = TextEditingController(
-      text: widget.empresa?.dataDesativadoEmpresa ?? '',
+    dataDesativadoController = TextEditingController(
+      text: widget.empresa?.dataDesativado ?? '',
     );
 
     // Inicia controllers de endereço
     ruaController = TextEditingController(
-      text: widget.empresa?.endereco?.rua ?? '',
+      text: widget.empresa?.endereco?.rua?.rua ?? '',
     );
     numeroController = TextEditingController(
       text: widget.empresa?.endereco?.numero ?? '',
     );
     bairroController = TextEditingController(
-      text: widget.empresa?.endereco?.bairro ?? '',
+      text: widget.empresa?.endereco?.bairro?.bairro ?? '',
     );
     cidadeController = TextEditingController(
-      text: widget.empresa?.endereco?.cidade ?? '',
+      text: widget.empresa?.endereco?.cidade?.cidade ?? '',
     );
     cepController = TextEditingController(
       text: widget.empresa?.endereco?.cep ?? '',
@@ -90,8 +90,8 @@ class _EmpresaPageState extends State<EmpresaPage> {
     cnpjController.dispose();
     imController.dispose();
     codigoEnderecoController.dispose();
-    dataCadastroEmpresaController.dispose();
-    dataDesativadoEmpresaController.dispose();
+    dataCadastroController.dispose();
+    dataDesativadoController.dispose();
 
     // Dispose dos controllers de endereço
     ruaController.dispose();
@@ -181,7 +181,7 @@ class _EmpresaPageState extends State<EmpresaPage> {
                                 padding: const EdgeInsets.only(left: 4),
                                 child: CustomTextField(
                                   label: 'Cadastro',
-                                  controller: dataCadastroEmpresaController,
+                                  controller: dataCadastroController,
                                 ),
                               ),
                             ),
@@ -291,21 +291,21 @@ class _EmpresaPageState extends State<EmpresaPage> {
                           cnpj: cnpjController.text,
                           im: imController.text,
                           codigoEndereco: codigoEnderecoController.text,
-                          dataCadastroEmpresa:
-                              dataCadastroEmpresaController.text,
-                          dataDesativadoEmpresa:
-                              dataDesativadoEmpresaController.text,
+                          dataCadastro: dataCadastroController.text,
+                          dataDesativado: dataDesativadoController.text,
                           endereco: endereco,
                         );
 
-                        if (sucesso) {
-                          Navigator.pop(context);
-                        } else {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text('Erro ao salvar empresa'),
-                            ),
-                          );
+                        if (!mounted) {
+                          if (sucesso) {
+                            Navigator.pop(context);
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text('Erro ao salvar empresa'),
+                              ),
+                            );
+                          }
                         }
                       },
                     ),

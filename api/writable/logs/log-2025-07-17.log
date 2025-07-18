@@ -476,3 +476,15 @@ WHERE `Rua`.`dataDesativado` IS NULL', [], false)
 12 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
 13 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
 14 SYSTEMPATH\rewrite.php(44): require_once('C:\\Users\\3Visao\\Documents\\certeira\\certeira\\api\\public\\index.php')
+CRITICAL - 2025-07-17 22:57:29 --> ErrorException: Undefined array key "dataCadastro"
+[Method: GET, Route: estados]
+in APPPATH\Controllers\EstadoController.php on line 27.
+ 1 APPPATH\Controllers\EstadoController.php(27): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array key "dataCadastro"', 'C:\\Users\\Daniel\\Documents\\Daniel\\certeira\\api\\app\\Controllers\\EstadoController.php', 27)
+ 2 APPPATH\Controllers\EstadoController.php(42): App\Controllers\EstadoController->toArray('1')
+ 3 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\EstadoController->index()
+ 4 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\EstadoController))
+ 5 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 6 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 7 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 8 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ 9 SYSTEMPATH\rewrite.php(44): require_once('C:\\Users\\Daniel\\Documents\\Daniel\\certeira\\api\\public\\index.php')

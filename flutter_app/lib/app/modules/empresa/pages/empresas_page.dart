@@ -7,6 +7,7 @@ import 'package:flutter_app/app/core/widgets/custom_text_tabela_texto.dart';
 import 'package:flutter_app/app/core/widgets/custom_textfield_filtro.dart';
 import 'package:flutter_app/app/modules/empresa/models/empresa_model.dart';
 import 'package:flutter_app/app/modules/endereco/models/endereco_model.dart';
+import 'package:provider/provider.dart';
 import '../controllers/empresas_controller.dart';
 
 class EmpresasPage extends StatefulWidget {
@@ -28,23 +29,23 @@ class EmpresasPage extends StatefulWidget {
 class _EmpresasPageState extends State<EmpresasPage> {
   late EmpresasController controller;
   late Future<void> futureLoad;
+  bool _initialized = false;
 
   @override
-  void initState() {
-    super.initState();
+  void didChangeDependencies() {
+    super.didChangeDependencies();
 
-    controller = EmpresasController();
-
-    futureLoad = controller.loadEmpresas();
-
-    controller.searchController.addListener(() {
-      setState(() {});
-    });
+    if (!_initialized) {
+      controller = Provider.of<EmpresasController>(context, listen: false);
+      futureLoad = controller.loadEmpresas(); // Agora armazenando
+      _initialized = true;
+    }
   }
 
   @override
   void dispose() {
-    controller.dispose();
+    controller.searchController
+        .dispose(); // cuidado: só chame dispose se você criou!
     super.dispose();
   }
 
@@ -54,20 +55,21 @@ class _EmpresasPageState extends State<EmpresasPage> {
       future: futureLoad,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          // Mostra loading
           return const Center(child: CircularProgressIndicator());
         } else if (snapshot.hasError) {
-          return Center(
-            child: Text('Erro ao carregar empresas: ${snapshot.error}'),
-          );
+          return Center(child: Text('Erro ao carregar: ${snapshot.error}'));
         } else {
-          return _buildContent();
+          return Consumer<EmpresasController>(
+            builder: (context, controller, child) {
+              return _buildContent(controller);
+            },
+          );
         }
       },
     );
   }
 
-  Widget _buildContent() {
+  Widget _buildContent(EmpresasController controller) {
     return CustomContainerWhite(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -79,39 +81,36 @@ class _EmpresasPageState extends State<EmpresasPage> {
           Container(
             width: 1200,
             alignment: Alignment.centerRight,
-            child: SizedBox(
-              height: 100,
-              width: 400,
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  CustomButton(
-                    label: 'Incluir',
-                    isSelected: false,
-                    onTap:
-                        () => widget.onIncluirPressed(
-                          EmpresaModel(
-                            codigo: '',
-                            razao: '',
-                            fantasia: '',
-                            cnpj: '',
-                            im: '',
-                            codigoEndereco: '',
-                            dataCadastroEmpresa: '',
-                            dataDesativadoEmpresa: '',
-                            endereco: EnderecoModel(),
-                          ),
+            padding: const EdgeInsets.only(bottom: 16),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                CustomButton(
+                  label: 'Incluir',
+                  isSelected: false,
+                  onTap:
+                      () => widget.onIncluirPressed(
+                        EmpresaModel(
+                          codigo: '',
+                          razao: '',
+                          fantasia: '',
+                          cnpj: '',
+                          im: '',
+                          codigoEndereco: '',
+                          dataCadastro: '',
+                          dataDesativado: '',
+                          endereco: EnderecoModel(),
                         ),
+                      ),
+                ),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: CustomTextFieldFiltro(
+                    label: 'Pesquisar',
+                    controller: controller.searchController,
                   ),
-                  const SizedBox(width: 8),
-                  Expanded(
-                    child: CustomTextFieldFiltro(
-                      label: 'Pesquisar',
-                      controller: controller.searchController,
-                    ),
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
 
@@ -157,7 +156,9 @@ class _EmpresasPageState extends State<EmpresasPage> {
         DataCell(CustomTextTabelaTexto(text: empresa.razao)),
         DataCell(CustomTextTabelaTexto(text: empresa.fantasia)),
         DataCell(CustomTextTabelaTexto(text: empresa.cnpj)),
-        DataCell(CustomTextTabelaTexto(text: empresa.endereco?.cidade ?? '')),
+        DataCell(
+          CustomTextTabelaTexto(text: empresa.endereco?.cidade?.cidade ?? ''),
+        ),
         DataCell(
           Row(
             children: [

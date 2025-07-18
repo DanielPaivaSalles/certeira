@@ -37,7 +37,6 @@ class CidadeController extends ResourceController {
 
     //Metodo para criar lista de objetos
     public function index() {
-        return 1;
         //Cria um objeto com todos os objetos da base
         $cidades = $this->cidadeModel->findAll();
 

@@ -1,3 +1,5 @@
+import 'package:provider/provider.dart';
+import 'package:flutter_app/app/modules/empresa/controllers/empresas_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/app/core/widgets/custom_buttom.dart';
 import 'package:flutter_app/app/modules/empresa/pages/empresa_page.dart';
@@ -70,7 +72,8 @@ class _DashboardPageState extends State<DashboardPage> {
           ),
 
           // Conteúdo do painel direito
-          Expanded(
+          Flexible(
+            fit: FlexFit.tight,
             child: Container(color: Colors.white, child: _getConteudoWidget()),
           ),
         ],
@@ -86,27 +89,28 @@ class _DashboardPageState extends State<DashboardPage> {
         );
 
       case 'Empresas':
-        return EmpresasPage(
-          onIncluirPressed: (empresa) {
-            setState(() {
-              empresaSelecionada = empresa;
-              opcaoSelecionada = 'Empresa';
-            });
-          },
-          onAlterarPressed: (empresa) {
-            setState(() {
-              empresaSelecionada = empresa;
-              opcaoSelecionada = 'Empresa';
-            });
-          },
-          onDesativarPressed: (empresa) {
-            setState(() {
-              empresaSelecionada = empresa;
-              opcaoSelecionada = 'Empresas';
-            });
-          },
+        return ChangeNotifierProvider(
+          create: (_) => EmpresasController()..loadEmpresas(),
+          child: EmpresasPage(
+            onIncluirPressed: (empresa) {
+              setState(() {
+                empresaSelecionada = empresa;
+                opcaoSelecionada = 'Empresa';
+              });
+            },
+            onAlterarPressed: (empresa) {
+              setState(() {
+                empresaSelecionada = empresa;
+                opcaoSelecionada = 'Empresa';
+              });
+            },
+            onDesativarPressed: (empresa) {
+              setState(() {
+                opcaoSelecionada = 'Empresas';
+              });
+            },
+          ),
         );
-
       case 'Empresa':
         return EmpresaPage(
           empresa: empresaSelecionada,

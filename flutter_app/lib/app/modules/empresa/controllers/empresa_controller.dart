@@ -12,38 +12,38 @@ class EmpresaController {
     required String cnpj,
     required String im,
     required String codigoEndereco,
-    required String dataCadastroEmpresa,
-    required String dataDesativadoEmpresa,
+    required String dataCadastro,
+    required String dataDesativado,
     required Map<String, dynamic> endereco,
   }) async {
     try {
-      final empresa = EmpresaModel(
+      final empresaModel = EmpresaModel(
         codigo: codigo,
         razao: razao,
         fantasia: fantasia,
         cnpj: cnpj,
         im: im,
         codigoEndereco: codigoEndereco,
-        dataCadastroEmpresa: dataCadastroEmpresa,
-        dataDesativadoEmpresa: dataDesativadoEmpresa,
+        dataCadastro: dataCadastro,
+        dataDesativado: dataDesativado,
         endereco: EnderecoModel.fromJson(endereco),
       );
 
       final body = jsonEncode({
-        'codigo': empresa.codigo,
-        'razao': empresa.razao,
-        'fantasia': empresa.fantasia,
-        'cnpj': empresa.cnpj,
-        'im': empresa.im,
-        'codigoEndereco': empresa.codigoEndereco,
-        'dataCadastroEmpresa': empresa.dataCadastroEmpresa,
-        'dataDesativadoEmpresa': empresa.dataDesativadoEmpresa,
-        'endereco': empresa.endereco,
+        'codigo': empresaModel.codigo,
+        'razao': empresaModel.razao,
+        'fantasia': empresaModel.fantasia,
+        'cnpj': empresaModel.cnpj,
+        'im': empresaModel.im,
+        'codigoEndereco': empresaModel.codigoEndereco,
+        'dataCadastro': empresaModel.dataCadastro,
+        'dataDesativado': empresaModel.dataDesativado,
+        'endereco': empresaModel.endereco,
       });
 
       http.Response response;
 
-      if (empresa.codigo.isEmpty) {
+      if (empresaModel.codigo.isEmpty) {
         response = await http.post(
           Uri.parse(ApiRoutes.empresaPost),
           headers: {'Content-Type': 'application/json'},
@@ -51,7 +51,7 @@ class EmpresaController {
         );
       } else {
         response = await http.put(
-          Uri.parse('${ApiRoutes.empresaPut}/${empresa.codigo}'),
+          Uri.parse('${ApiRoutes.empresaPut}/${empresaModel.codigo}'),
           headers: {'Content-Type': 'application/json'},
           body: body,
         );

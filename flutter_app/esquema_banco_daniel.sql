@@ -1,6 +1,6 @@
--- DROP SCHEMA `certeira`;
+DROP SCHEMA `certeira`;
 
--- CREATE SCHEMA `certeira` DEFAULT CHARACTER SET utf8 ;
+CREATE SCHEMA `certeira` DEFAULT CHARACTER SET utf8 ;
 
 -- Tabelas de localização
 CREATE TABLE certeira.Estado (

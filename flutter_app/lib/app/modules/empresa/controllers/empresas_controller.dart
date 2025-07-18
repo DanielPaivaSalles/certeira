@@ -17,36 +17,25 @@ class EmpresasController extends ChangeNotifier {
   Future<void> loadEmpresas() async {
     try {
       final url = Uri.parse(ApiRoutes.empresas);
-      print(url);
       final response = await http.get(url);
 
+      //print('🔵 Status da resposta: ${response.statusCode}');
+      //print('🔵 Body da resposta: ${response.body}');
       if (response.statusCode == 200) {
         final List<dynamic> data = jsonDecode(response.body);
 
-        allEmpresas =
-            data
-                .map(
-                  (json) => EmpresaModel(
-                    codigo: json['codigo'] ?? '',
-                    razao: json['razao'] ?? '',
-                    fantasia: json['fantasia'] ?? '',
-                    cnpj: json['cnpj'] ?? '',
-                    im: json['im'] ?? '',
-                    codigoEndereco: json['codigoEndereco'] ?? '',
-                    dataCadastroEmpresa: json['dataCadastroEmpresa'] ?? '',
-                    dataDesativadoEmpresa: json['dataDesativadoEmpresa'] ?? '',
-                    endereco: json['endereco'] ?? '',
-                  ),
-                )
-                .toList();
+        //print('✅ JSON decodificado: $data');
 
+        allEmpresas = data.map((json) => EmpresaModel.fromJson(json)).toList();
         filteredEmpresas = List.from(allEmpresas);
+
+        //print('✅ Total de empresas carregadas: ${filteredEmpresas.length}');
         notifyListeners();
       } else {
-        //print('Erro ao carregar empresas: ${response.statusCode}');
+        //print('❌ Erro ao carregar empresas: ${response.statusCode}');
       }
     } catch (e) {
-      //print('Erro ao carregar empresas: $e');
+      //print('❌ Exceção ao carregar empresas: $e');
     }
   }
 
@@ -63,7 +52,15 @@ class EmpresasController extends ChangeNotifier {
                 empresa.fantasia.toLowerCase().contains(query) ||
                 empresa.cnpj.toLowerCase().contains(query) ||
                 empresa.codigoEndereco.toLowerCase().contains(query) ||
-                (empresa.endereco?.cidade.toLowerCase() ?? '').contains(query);
+                (empresa.endereco?.cidade?.cidade.toLowerCase() ?? '').contains(
+                  query,
+                ) ||
+                (empresa.endereco?.bairro?.bairro.toLowerCase() ?? '').contains(
+                  query,
+                ) ||
+                (empresa.endereco?.rua?.rua.toLowerCase() ?? '').contains(
+                  query,
+                );
           }).toList();
     }
     notifyListeners();
