@@ -1,0 +1,165 @@
+# SUGESTÕES DE MELHORIAS - PROJETO CERTEIRA
+# Análise Técnica Coordenada pelo BMad Orchestrator
+
+## STATUS: Análise Completa ✅
+- [x] Arquivo de sugestões criado
+- [x] Análise da API
+- [x] Análise do Flutter App  
+- [x] Resumo e recomendações finais
+
+---
+## RESUMO EXECUTIVO
+
+O projeto Certeira é um sistema de gestão empresarial com backend PHP (CodeIgniter 4) e frontend Flutter. 
+A arquitetura é sólida, mas existem oportunidades significativas de melhoria em segurança, 
+estrutura de código e funcionalidades.
+
+**SITUAÇÃO ATUAL:**
+- Backend: API REST em CodeIgniter 4 com MySQL
+- Frontend: Flutter desktop com arquitetura MVC
+- Autenticação: JWT implementada
+- Funcionalidades: Gestão de empresas, endereços e autenticação
+
+---
+## DESCOBERTAS TÉCNICAS
+
+### API (Backend) - CodeIgniter 4
+
+**PONTOS POSITIVOS:**
+- ✅ Framework robusto (CodeIgniter 4)
+- ✅ Estrutura MVC bem implementada  
+- ✅ Autenticação JWT funcional
+- ✅ Models com callbacks (uppercaseFields)
+- ✅ Soft delete implementado (dataDesativado)
+
+**PROBLEMAS CRÍTICOS:**
+- 🚨 CREDENCIAIS HARDCODED no AuthController (linhas 22-24)
+  - Email: danielpaivasalles@gmail.com
+  - Senha: 530337503b614a@D
+  - Tipo: empregado
+- 🚨 Configuração de banco exposta (Database.php)
+- 🚨 Falta validação de entrada robusta
+- 🚨 Ausência de middleware de autenticação
+- 🚨 Logs de debug em produção
+
+**ESTRUTURA DA API:**
+- Controllers: Auth, Empresa, Endereco, Estado, Cidade, Bairro, Rua
+- Models: EmpresaModel, EnderecoModel, etc.
+- Database: MySQL (localhost, user: root, pass: root, db: certeira)
+
+### Flutter App (Frontend)
+
+**PONTOS POSITIVOS:**  
+- ✅ Arquitetura MVC organizada
+- ✅ Uso do Provider para gerenciamento de estado
+- ✅ Controllers bem estruturados
+- ✅ Models com fromJson implementados
+- ✅ Sistema de busca/filtros implementado
+
+**PROBLEMAS IDENTIFICADOS:**
+- ⚠️ Ausência de persistência de sessão
+- ⚠️ Falta tratamento de erros robusto  
+- ⚠️ Não utiliza o database_helper criado
+- ⚠️ Códigos comentados (debug prints)
+- ⚠️ Configuração simples demais no main.dart
+
+**ESTRUTURA DO FLUTTER:**
+- Módulos: Auth, Empresa, Dashboard, Endereco, Estado, Cidade, Bairro, Rua
+- Core: Constants, Helpers, Widgets customizados
+- Dependencies: http, provider, window_size
+
+---
+## RECOMENDAÇÕES PRIORITÁRIAS
+
+### 🔴 CRÍTICO - SEGURANÇA (URGENTE)
+
+1. **REMOVER CREDENCIAIS HARDCODED** (AuthController.php:22-24)
+   - Implementar sistema de variáveis de ambiente
+   - Usar .env para configurações sensíveis
+
+2. **IMPLEMENTAR AUTENTICAÇÃO ROBUSTA**
+   - Middleware JWT em todas as rotas protegidas
+   - Validação de token em cada request
+   - Refresh token system
+
+3. **CONFIGURAÇÃO SEGURA DE BANCO**
+   - Mover credentials para .env
+   - Implementar conexões seguras
+   - Logs de auditoria
+
+### 🟡 ALTA PRIORIDADE - ARQUITETURA
+
+4. **GERENCIAMENTO DE ESTADO NO FLUTTER**
+   - Implementar persistência de sessão (SharedPreferences ou Database)
+   - Melhorar tratamento de erros globalmente
+   - Provider pattern para autenticação
+
+5. **VALIDAÇÃO E SANITIZAÇÃO**
+   - Input validation robusta na API
+   - Sanitização de dados
+   - Rate limiting
+
+6. **ESTRUTURA DE LOGS**
+   - Sistema de logs estruturado
+   - Separação de logs por ambiente
+   - Monitoramento de erros
+
+### 🟢 MELHORIAS FUNCIONAIS
+
+7. **UX/UI IMPROVEMENTS**
+   - Loading states
+   - Error handling visual  
+   - Offline capabilities
+
+8. **PERFORMANCE**
+   - Paginação na listagem de empresas
+   - Lazy loading
+   - Cache strategies
+
+9. **TESTES**
+   - Unit tests para controllers
+   - Integration tests para API
+   - Widget tests no Flutter
+
+### 📋 ROADMAP SUGERIDO
+
+**FASE 1 (Urgente - 1 semana):**
+- Remover credenciais hardcoded
+- Implementar middleware JWT
+- Configurar variáveis de ambiente
+
+**FASE 2 (Curto prazo - 2-3 semanas):**
+- Persistência de sessão no Flutter  
+- Validação robusta de inputs
+- Sistema de logs estruturado
+
+**FASE 3 (Médio prazo - 1-2 meses):**
+- Testes automatizados
+- Performance optimization
+- Melhorias de UX
+
+---
+## ARQUIVOS CRÍTICOS IDENTIFICADOS
+
+### Backend:
+- `api/app/Controllers/AuthController.php` - CREDENCIAIS EXPOSTAS
+- `api/app/Config/Database.php` - Configuração de banco
+- `api/app/Config/Routes.php` - Definição de rotas
+
+### Frontend:
+- `flutter_app/lib/main.dart` - Configuração inicial
+- `flutter_app/lib/app/core/constants.dart` - URLs da API
+- `flutter_app/lib/app/modules/auth/` - Sistema de login
+
+---
+## OBSERVAÇÕES ADICIONAIS
+
+- O projeto tem uma base sólida e arquitetura bem pensada
+- A separação de responsabilidades está bem implementada
+- É necessário focar em segurança antes de qualquer nova funcionalidade
+- O sistema tem potencial para escalar bem com as melhorias sugeridas
+
+---
+Data da Análise: 2025-07-22
+Responsável: BMad Orchestrator (Expert System Analyst)
+Prioridade: CRÍTICA - Implementar melhorias de segurança imediatamente

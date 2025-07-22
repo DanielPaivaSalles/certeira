@@ -18,10 +18,12 @@ class AuthController extends ResourceController {
         $email = $json['email'] ?? '';
         $senha = $json['senha'] ?? '';
 
-        //Parametros para teste (apagar antes de subir)
-        $tipo = 'empregado';
-        $email = 'danielpaivasalles@gmail.com';
-        $senha = '530337503b614a@D';
+        // Usar dados do .env apenas em desenvolvimento
+        if (ENVIRONMENT === 'development' && (!$tipo || !$email || !$senha)) {
+            $tipo = getenv('TEST_USER_TYPE');
+            $email = getenv('TEST_USER_EMAIL');
+            $senha = getenv('TEST_USER_PASSWORD');
+        }
 
         //Se algum parametro estiver vazio, devolve erro 400
         if (!$tipo || !$email || !$senha) {
@@ -57,7 +59,14 @@ class AuthController extends ResourceController {
             ];
 
             //Em seguida o token é criptografado
-            $jwt = JWT::encode($payload, getenv('JWT_SECRET'), 'HS256');
+            $jwtSecret = getenv('JWT_SECRET');
+            if (!$jwtSecret) {
+                return $this->response->setJSON([
+                    'status' => false,
+                    'mensagem' => 'Configuração de segurança inválida.'
+                ])->setStatusCode(500);
+            }
+            $jwt = JWT::encode($payload, $jwtSecret, 'HS256');
 
             //Depois de pronto, o token é entregue via json.
             return $this->response->setJSON([
