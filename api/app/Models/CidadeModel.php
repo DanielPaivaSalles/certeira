@@ -7,7 +7,7 @@ use CodeIgniter\Model;
 class CidadeModel extends Model {
     protected $table = 'Cidade';
     protected $primaryKey = 'codigo';
-    protected $allowedFields = ['cidade', 'codigoEstado', 'ibge', 'dataCadastro'];
+    protected $allowedFields = ['cidade', 'codigoEstado', 'ibge'];
 
     protected $beforeInsert = ['uppercaseFields'];
     protected $beforeUpdate = ['uppercaseFields'];

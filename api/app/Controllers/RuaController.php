@@ -23,7 +23,6 @@ class RuaController extends ResourceController {
         return [
             'codigo' => $rua['codigo'],
             'rua' => $rua['rua'],
-            'dataCadastro' => $rua['dataCadastro'],
         ];
     }
 
@@ -77,7 +76,6 @@ class RuaController extends ResourceController {
         //Cria os dados a serem inseridos na base
         $ruaData = [
             'rua' => trim($dados['rua']),
-            'dataCadastro' => date('Y-m-d H:i:s'),
         ];
 
         //Cria o insert no banco de dados
@@ -109,24 +107,6 @@ class RuaController extends ResourceController {
         return $this->response->setJSON($this->toArray($codigo));
     }
 
-    //Metodo para desativar uma instância na tabela
-    public function delete($codigo = null) {
-        //Se não for passado um código válido, vai retornar 'não encontrado'
-        if ($this->toArray($codigo) === null) {
-            return $this->failNotFound('Rua não encontrada!');
-        }
-
-        //Cria uma lista para alterar a dataDesativado
-        $ruaData = [
-            'dataDesativado' => date('Y-m-d H:i:s'),
-        ];
-
-        //Cria o update de dataDesativado no banco de dados
-        $this->ruaModel->update($codigo, $ruaData);
-
-        //Retorna um json confirmando que foi desativado
-        return $this->respond(['message' => 'Rua desativada com sucesso.']);
-    }
 }
 
 

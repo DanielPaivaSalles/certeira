@@ -23,7 +23,6 @@ class BairroController extends ResourceController {
         return [
             'codigo' => $bairro['codigo'],
             'bairro' => $bairro['bairro'],
-            'dataCadastro' => $bairro['dataCadastro'],
         ];
     }
 
@@ -63,7 +62,6 @@ class BairroController extends ResourceController {
         //Cria os dados a serem inseridos na base
         $bairroData = [
             'bairro' => $dados['bairro'],
-            'dataCadastro' => date('Y-m-d H:i:s'),
         ];
 
         //Cria o insert no banco de dados
@@ -95,24 +93,6 @@ class BairroController extends ResourceController {
         return $this->response->setJSON($this->toArray($codigo));
     }
 
-    //Metodo para desativar uma instância na tabela
-    public function delete($codigo = null) {
-        //Se não for passado um código válido, vai retornar 'não encontrado'
-        if ($this->toArray($codigo) === null) {
-            return $this->failNotFound('Bairro não encontrado!');
-        }
-
-        //Cria uma lista para alterar a dataDesativado
-        $bairroData = [
-            'dataDesativado' => date('Y-m-d H:i:s'),
-        ];
-
-        //Cria o update de dataDesativado no banco de dados
-        $this->bairroModel->update($codigo, $bairroData);
-
-        //Retorna um json confirmando que foi desativado
-        return $this->respond(['message' => 'Bairro desativada com sucesso.']);
-    }
 }
 
 

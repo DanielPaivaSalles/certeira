@@ -41,7 +41,6 @@ class EnderecoController extends ResourceController
             'codigoBairro' => $endereco['codigoBairro'],
             'codigoCidade' => $endereco['codigoCidade'],
             'cep' => $endereco['cep'],
-            'dataCadastro' => $endereco['dataCadastro'],
             'rua' => $rua,
             'bairro' => $bairro,
             'cidade' => $cidade,
@@ -88,7 +87,6 @@ class EnderecoController extends ResourceController
             'codigoBairro' => $dados['codigoBairro'],
             'codigoCidade' => $dados['codigoCidade'],
             'cep' => trim($dados['cep']),
-            'dataCadastro' => date('Y-m-d H:i:s'),
         ];
 
         //Cria o insert no banco de dados
@@ -124,24 +122,6 @@ class EnderecoController extends ResourceController
         return $this->response->setJSON($this->toArray($codigo));
     }
 
-    //Metodo para desativar uma instância na tabela
-    public function delete($codigo = null) {
-        //Se não for passado um código válido, vai retornar 'não encontrado'
-        if($this->toArray($codigo) === null) {
-            return $this->failNotFound('Endereço não encontrada!');
-        }
-
-        //Cria uma lista para alterar a dataDesativado
-        $enderecoData = [
-            'dataDesativado' => date('Y-m-d H:i:s'),
-        ];
-
-        //Cria o update de dataDesativado no banco de dados
-        $this->enderecoModel->update($codigo, $enderecoData);
-
-        //Retorna um json confirmando que foi desativado
-        return $this->respond(['message' => 'Endereço desativado com sucesso.']);
-    }
 }
 
 

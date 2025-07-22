@@ -4,23 +4,11 @@ import 'package:flutter_app/app/modules/rua/models/rua_model.dart';
 import 'package:http/http.dart' as http;
 
 class RuaController {
-  Future<bool> salvarRua({
-    required String codigo,
-    required String rua,
-    required String dataCadastro,
-  }) async {
+  Future<bool> salvarRua({required String codigo, required String rua}) async {
     try {
-      final ruaModel = RuaModel(
-        codigo: codigo,
-        rua: rua,
-        dataCadastro: dataCadastro,
-      );
+      final ruaModel = RuaModel(codigo: codigo, rua: rua);
 
-      final body = jsonEncode({
-        'codigo': ruaModel.codigo,
-        'rua': ruaModel.rua,
-        'dataCadastro': ruaModel.dataCadastro,
-      });
+      final body = jsonEncode({'codigo': ruaModel.codigo, 'rua': ruaModel.rua});
 
       http.Response response;
 

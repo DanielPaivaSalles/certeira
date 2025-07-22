@@ -10,7 +10,6 @@ class CidadeController {
     required String cidade,
     required String codigoEstado,
     required String ibge,
-    required String dataCadastro,
     required Map<String, dynamic> estado,
   }) async {
     try {
@@ -19,7 +18,6 @@ class CidadeController {
         cidade: cidade,
         codigoEstado: codigoEstado,
         ibge: ibge,
-        dataCadastro: dataCadastro,
         estado: EstadoModel.fromJson(estado),
       );
 
@@ -28,7 +26,6 @@ class CidadeController {
         'cidade': cidadeModel.cidade,
         'codigoEstado': cidadeModel.codigoEstado,
         'ibge': cidadeModel.ibge,
-        'dataCadastro': cidadeModel.dataCadastro,
         'estado': cidadeModel.estado?.toJson(), // ✅ Corrigido aqui
       });
 

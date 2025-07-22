@@ -24,7 +24,6 @@ class EstadoController extends ResourceController {
             'codigo' => $estado['codigo'],
             'estado' => $estado['estado'],
             'uf' => $estado['uf'],
-            'dataCadastro' => $estado['dataCadastro'],
         ];
     }
 
@@ -65,7 +64,6 @@ class EstadoController extends ResourceController {
         $estadoData = [
             'estado' => trim($dados['estado']),
             'uf' => $dados['uf'],
-            'dataCadastro' => date('Y-m-d H:i:s'),
         ];
 
         //Cria o insert no banco de dados
@@ -98,24 +96,6 @@ class EstadoController extends ResourceController {
         return $this->response->setJSON($this->toArray($codigo));
     }
 
-    //Metodo para desativar uma instância na tabela
-    public function delete($codigo = null) {
-        //Se não for passado um código válido, vai retornar 'não encontrado'
-        if ($this->toArray($codigo) === null) {
-            return $this->failNotFound('Estado não encontrado!');
-        }
-
-        //Cria uma lista para alterar a dataDesativado
-        $estadoData = [
-            'dataDesativado' => date('Y-m-d H:i:s'),
-        ];
-
-        //Cria o update de dataDesativado no banco de dados
-        $this->estadoModel->update($codigo, $estadoData);
-
-        //Retorna um json confirmando que foi desativado
-        return $this->respond(['message' => 'Estado desativada com sucesso.']);
-    }
 }
 
 

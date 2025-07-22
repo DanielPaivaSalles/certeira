@@ -7,7 +7,7 @@ use CodeIgniter\Model;
 class EstadoModel extends Model {
     protected $table = 'Estado';
     protected $primaryKey = 'codigo';
-    protected $allowedFields = ['estado', 'uf','dataCadastro'];
+    protected $allowedFields = ['estado', 'uf'];
 
     protected $beforeInsert = ['uppercaseFields'];
     protected $beforeUpdate = ['uppercaseFields'];

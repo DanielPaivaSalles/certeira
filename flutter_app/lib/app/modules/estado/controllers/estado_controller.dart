@@ -8,21 +8,14 @@ class EstadoController {
     required String codigo,
     required String estado,
     required String uf,
-    required String dataCadastro,
   }) async {
     try {
-      final estadoModel = EstadoModel(
-        codigo: codigo,
-        estado: estado,
-        uf: uf,
-        dataCadastro: dataCadastro,
-      );
+      final estadoModel = EstadoModel(codigo: codigo, estado: estado, uf: uf);
 
       final body = jsonEncode({
         'codigo': estadoModel.codigo,
         'estado': estadoModel.estado,
         'uf': estadoModel.uf,
-        'dataCadastro': estadoModel.dataCadastro,
       });
 
       http.Response response;

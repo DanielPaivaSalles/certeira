@@ -7,7 +7,7 @@ use CodeIgniter\Model;
 class RuaModel extends Model {
     protected $table = 'Rua';
     protected $primaryKey = 'codigo';
-    protected $allowedFields = ['rua', 'dataCadastro'];
+    protected $allowedFields = ['rua'];
 
     protected $beforeInsert = ['uppercaseFields'];
     protected $beforeUpdate = ['uppercaseFields'];

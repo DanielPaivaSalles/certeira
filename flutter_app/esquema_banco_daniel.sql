@@ -7,7 +7,6 @@ CREATE TABLE certeira.Estado (
   codigo INT AUTO_INCREMENT PRIMARY KEY,
   estado VARCHAR(100) NOT NULL,
   uf CHAR(2) NOT NULL,
-  dataCadastro DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE certeira.Cidade (
@@ -15,20 +14,17 @@ CREATE TABLE certeira.Cidade (
   cidade VARCHAR(100) NOT NULL,
   codigoEstado INT NOT NULL,
   ibge VARCHAR(7),
-  dataCadastro DATETIME DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (codigoEstado) REFERENCES Estado(codigo)
 );
 
 CREATE TABLE certeira.Bairro (
   codigo INT AUTO_INCREMENT PRIMARY KEY,
   bairro VARCHAR(100) NOT NULL,
-  dataCadastro DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE certeira.Rua (
   codigo INT AUTO_INCREMENT PRIMARY KEY,
   rua VARCHAR(100) NOT NULL,
-  dataCadastro DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE certeira.Endereco (
@@ -38,8 +34,6 @@ CREATE TABLE certeira.Endereco (
   codigoBairro INT NOT NULL,
   codigoCidade INT NOT NULL,
   cep VARCHAR(10),
-  dataCadastro DATETIME DEFAULT CURRENT_TIMESTAMP,
-  dataDesativado DATETIME DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (codigoBairro) REFERENCES Bairro(codigo),
   FOREIGN KEY (codigoCidade) REFERENCES Cidade(codigo),
   FOREIGN KEY (codigoRua) REFERENCES Rua(codigo)
@@ -73,7 +67,6 @@ CREATE TABLE certeira.Funcionario (
   codigo INT AUTO_INCREMENT PRIMARY KEY,
   codigoEmpresa INT NOT NULL,
   codigoEmpregado INT NOT NULL,
-  dataCadastro DATETIME DEFAULT CURRENT_TIMESTAMP,
   dataDesativado DATETIME DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (codigoEmpresa) REFERENCES Empresa(codigo),
   FOREIGN KEY (codigoEmpregado) REFERENCES Empregado(codigo)

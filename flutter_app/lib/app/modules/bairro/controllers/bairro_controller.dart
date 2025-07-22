@@ -7,19 +7,13 @@ class BairroController {
   Future<bool> salvarBairro({
     required String codigo,
     required String bairro,
-    required String dataCadastro,
   }) async {
     try {
-      final bairroModel = BairroModel(
-        codigo: codigo,
-        bairro: bairro,
-        dataCadastro: dataCadastro,
-      );
+      final bairroModel = BairroModel(codigo: codigo, bairro: bairro);
 
       final body = jsonEncode({
         'codigo': bairroModel.codigo,
         'bairro': bairroModel.bairro,
-        'dataCadastro': bairroModel.dataCadastro,
       });
 
       http.Response response;

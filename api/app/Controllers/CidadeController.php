@@ -29,7 +29,6 @@ class CidadeController extends ResourceController {
             'codigo' => $cidade['codigo'],
             'cidade' => $cidade['cidade'],
             'codigoEstado' => $cidade['codigoEstado'],
-            'dataCadastro' => $cidade['dataCadastro'],
             'ibge' => $cidade['ibge'],
             'estado' => $estado,
         ];
@@ -73,7 +72,6 @@ class CidadeController extends ResourceController {
             'cidade' => trim($dados['cidade']),
             'codigoEstado' => $dados['codigoEstado'],
             'ibge' => trim($dados['ibge']),
-            'dataCadastro' => date('Y-m-d H:i:s'),
         ];
 
         //Cria o insert no banco de dados
@@ -107,24 +105,6 @@ class CidadeController extends ResourceController {
         return $this->response->setJSON($this->toArray($this->cidadeModel->getInsertID()));
     }
 
-    //Metodo para desativar uma instância na tabela
-    public function delete($codigo = null) {
-        //Se não for passado um código válido, vai retornar 'não encontrado'
-        if($this->toArray($codigo === null)){
-            return $this->failNotFound('Cidade não encontrada!');
-        }
-
-        //Cria uma lista para alterar a dataDesativado
-        $cidadeData = [
-            'dataDesativado' => date('Y-m-d H:i:s'),
-        ];
-
-        //Cria o update de dataDesativado no banco de dados
-        $this->cidadeModel->update($codigo, $cidadeData);
-
-        //Retorna um json confirmando que foi desativado
-        return $this->respond(['message' => 'Cidade desativada com sucesso.']);
-    }
 }
 
 

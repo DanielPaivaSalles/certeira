@@ -1,0 +1,15 @@
+DEBUG - 2025-07-22 13:09:45 --> Database config loaded: {"hostname":"localhost","username":"root","password":"***SET***","database":"certeira","driver":"MySQLi","port":3306}
+WARNING - 2025-07-22 13:09:46 --> [DEPRECATED] App\Libraries\Logger::auth(): Implicitly marking parameter $email as nullable is deprecated, the explicit nullable type must be used instead in APPPATH\Libraries\Logger.php on line 82.
+ 1 SYSTEMPATH\Autoloader\Autoloader.php(316): include_once('C:\\Users\\3Visao\\Documents\\certeira\\certeira\\api\\system\\Debug\\Exceptions.php')
+ 2 SYSTEMPATH\Autoloader\Autoloader.php(295): CodeIgniter\Autoloader\Autoloader->includeFile('C:\\Users\\3Visao\\Documents\\certeira\\certeira\\api\\app\\Libraries\\Logger.php')
+ 3 SYSTEMPATH\Autoloader\Autoloader.php(271): CodeIgniter\Autoloader\Autoloader->loadInNamespace('App\\Libraries\\Logger')
+ 4 APPPATH\Controllers\AuthController.php(49): CodeIgniter\Autoloader\Autoloader->loadClass('App\\Libraries\\Logger')
+ 5 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\AuthController->login()
+ 6 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\AuthController))
+ 7 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+11 SYSTEMPATH\rewrite.php(44): require_once('C:\\Users\\3Visao\\Documents\\certeira\\certeira\\api\\public\\index.php')
+INFO - 2025-07-22 13:09:46 --> AUTH SUCCESS: login - danielpaivasalles@gmail.com [REQ: req_687f8d9a3984f6.03005793]
+INFO - 2025-07-22 13:09:46 --> Token JWT gerado com sucesso [REQ: req_687f8d9a3984f6.03005793]

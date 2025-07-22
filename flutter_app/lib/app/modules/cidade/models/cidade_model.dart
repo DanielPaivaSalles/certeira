@@ -5,7 +5,6 @@ class CidadeModel {
   final String cidade;
   final String codigoEstado;
   final String ibge;
-  final String dataCadastro;
   final EstadoModel? estado;
 
   CidadeModel({
@@ -13,7 +12,6 @@ class CidadeModel {
     this.cidade = '',
     this.codigoEstado = '',
     this.ibge = '',
-    this.dataCadastro = '',
     this.estado,
   });
 
@@ -23,7 +21,6 @@ class CidadeModel {
       cidade: json['cidade'] ?? '',
       codigoEstado: json['codigoEstado']?.toString() ?? '',
       ibge: json['ibge'] ?? '',
-      dataCadastro: json['dataCadastro'] ?? '',
       estado:
           json['estado'] != null ? EstadoModel.fromJson(json['estado']) : null,
     );
@@ -35,7 +32,6 @@ class CidadeModel {
       'cidade': cidade,
       'codigoEstado': codigoEstado,
       'ibge': ibge,
-      'dataCadastro': dataCadastro,
       'estado': estado?.toJson(),
     };
   }
