@@ -9,33 +9,40 @@ class EmpresasController extends ChangeNotifier {
 
   List<EmpresaModel> allEmpresas = [];
   List<EmpresaModel> filteredEmpresas = [];
+  bool _isLoading = false;
+  String? _errorMessage;
+
+  bool get isLoading => _isLoading;
+  String? get errorMessage => _errorMessage;
 
   EmpresasController() {
     searchController.addListener(_onSearchChanged);
   }
 
   Future<void> loadEmpresas() async {
+    _isLoading = true;
+    _errorMessage = null;
+    notifyListeners();
+
     try {
       final url = Uri.parse(ApiRoutes.empresas);
       final response = await http.get(url);
 
-      //print('🔵 Status da resposta: ${response.statusCode}');
-      //print('🔵 Body da resposta: ${response.body}');
       if (response.statusCode == 200) {
         final List<dynamic> data = jsonDecode(response.body);
-
-        //print('✅ JSON decodificado: $data');
 
         allEmpresas = data.map((json) => EmpresaModel.fromJson(json)).toList();
         filteredEmpresas = List.from(allEmpresas);
 
-        //print('✅ Total de empresas carregadas: ${filteredEmpresas.length}');
         notifyListeners();
       } else {
-        //print('❌ Erro ao carregar empresas: ${response.statusCode}');
+        _errorMessage = 'Erro ao carregar empresas: ${response.statusCode}';
       }
     } catch (e) {
-      //print('❌ Exceção ao carregar empresas: $e');
+      _errorMessage = 'Erro inesperado: $e';
+    } finally {
+      _isLoading = false;
+      notifyListeners();
     }
   }
 

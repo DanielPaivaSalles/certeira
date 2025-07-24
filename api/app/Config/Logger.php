@@ -48,7 +48,7 @@ class Logger extends BaseConfig
      * Each item that is logged has an associated date. You can use PHP date
      * codes to set your own date formatting
      */
-    public string $dateFormat = 'Y-m-d H:i:s';
+    public string $dateFormat = 'd-m-Y H:i:s';
 
     /**
      * --------------------------------------------------------------------------
@@ -120,31 +120,23 @@ class Logger extends BaseConfig
             'path' => '',
         ],
 
-        /*
-         * The ChromeLoggerHandler requires the use of the Chrome web browser
-         * and the ChromeLogger extension. Uncomment this block to use it.
-         */
-        // 'CodeIgniter\Log\Handlers\ChromeLoggerHandler' => [
-        //     /*
-        //      * The log levels that this handler will handle.
-        //      */
-        //     'handles' => ['critical', 'alert', 'emergency', 'debug',
-        //                   'error', 'info', 'notice', 'warning'],
-        // ],
+        'CodeIgniter\Log\Handlers\FileHandler' => [
+            'handles' => [
+                'critical', 'alert', 'emergency', 'debug',
+                'error', 'info', 'notice', 'warning',
+            ],
+            'path' => WRITEPATH . 'logs/',
+            'fileExtension' => 'log',
+            'filePermissions' => 0644,
+            'dateFormat' => 'd-m-Y H:i:s',
+        ],
 
-        /*
-         * The ErrorlogHandler writes the logs to PHP's native `error_log()` function.
-         * Uncomment this block to use it.
-         */
-        // 'CodeIgniter\Log\Handlers\ErrorlogHandler' => [
-        //     /* The log levels this handler can handle. */
-        //     'handles' => ['critical', 'alert', 'emergency', 'debug', 'error', 'info', 'notice', 'warning'],
-        //
-        //     /*
-        //     * The message type where the error should go. Can be 0 or 4, or use the
-        //     * class constants: `ErrorlogHandler::TYPE_OS` (0) or `ErrorlogHandler::TYPE_SAPI` (4)
-        //     */
-        //     'messageType' => 0,
-        // ],
+        // Custom Security Handler
+        'App\Libraries\SecurityLogHandler' => [
+            'handles' => ['security'],
+            'path' => WRITEPATH . 'logs/security/',
+            'fileExtension' => 'log',
+            'dateFormat' => 'd-m-Y H:i:s',
+        ],
     ];
 }

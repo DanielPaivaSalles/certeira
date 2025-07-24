@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Models\EmpresaModel;
 use App\Controllers\EnderecoController;
 use CodeIgniter\RESTful\ResourceController;
+use App\Helpers\ValidationHelper;
 
 class EmpresaController extends ResourceController {
     protected $empresaModel;
@@ -66,27 +67,48 @@ class EmpresaController extends ResourceController {
         //Dados recupera as informações enviadas via formulário
         $dados = $this->request->getJSON(true);
 
-        //Verifica se os dados estão vazios. Caso sim, retorna um pedido de incluir eles
-        if(empty($dados['razao'])||empty($dados['fantasia'])||empty($dados['cnpj'])||empty($dados['im'])){
-            return $this->failValidationErrors("Campos 'Razão', 'Fantasia', 'CNPJ' ou 'IM' obrigatórios");
+        // Validar campos obrigatórios
+        $required_fields = ['razao', 'fantasia', 'cnpj', 'im'];
+        $missing_fields = ValidationHelper::validateRequired($dados, $required_fields);
+
+        if (!empty($missing_fields)) {
+            return $this->response->setJSON([
+                'status' => false,
+                'mensagem' => 'Campos obrigatórios faltando: ' . implode(', ', $missing_fields)
+            ])->setStatusCode(400);
+        }
+        
+        // Validar CNPJ
+        if (!ValidationHelper::validateCNPJ($dados['cnpj'])) {
+            return $this->response->setJSON([
+                'status' => false,
+                'mensagem' => 'CNPJ inválido.'
+            ])->setStatusCode(400);
         }
 
-        //Cria os dados a serem inseridos na base
+        // Sanitizar dados
         $empresaData = [
-            'razao' => trim($dados['razao']),
-            'fantasia' => trim($dados['fantasia']),
-            'cnpj' => trim($dados['cnpj']),
-            'im' => trim($dados['im']),
-            'codigoEndereco' => $dados['codigoEndereco'],
-            'dataCadastro' => date('Y-m-d H:i:s'),
+            'razao' => ValidationHelper::sanitizeString($dados['razao']),
+            'fantasia' => ValidationHelper::sanitizeString($dados['fantasia']),
+            'cnpj' => ValidationHelper::sanitizeString($dados['cnpj']),
+            'im' => ValidationHelper::sanitizeString($dados['im']),
+            'codigoEndereco' => filter_var($dados['codigoEndereco'], FILTER_VALIDATE_INT),
+            'dataCadastro' => date('d-m-Y H:i:s'),
             'dataDesativado' => null,
         ];
 
-        //Cria o insert no banco de dados
-        $this->empresaModel->insert($empresaData);
-
-        //Retorna um json que acabou de ser inserido
-        return $this->response->setJSON($this->toArray($this->empresaModel->getInsertID()));
+        try {
+            $this->empresaModel->insert($empresaData);
+            return $this->response->setJSON([
+                'status' => true,
+                'data' => $this->toArray($this->empresaModel->getInsertID())
+            ]);
+        } catch (\Exception $e) {
+            return $this->response->setJSON([
+                'status' => false,
+                'mensagem' => 'Erro ao criar empresa: ' . $e->getMessage()
+            ])->setStatusCode(500);
+        }
     }
 
     //Metodo para alterar uma instância na tabela

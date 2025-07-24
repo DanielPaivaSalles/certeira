@@ -26,7 +26,7 @@ class Database extends Config
      */
     public array $default = [
         'DSN'          => '',
-        'hostname'     => getenv($host),//'localhost',
+        'hostname'     => 'localhost',
         'username'     => 'root',
         'password'     => 'root',
         'database'     => 'certeira',
@@ -45,8 +45,8 @@ class Database extends Config
         'numberNative' => false,
         'foundRows'    => false,
         'dateFormat'   => [
-            'date'     => 'Y-m-d',
-            'datetime' => 'Y-m-d H:i:s',
+            'date'     => 'd-m-Y',
+            'datetime' => 'd-m-Y H:i:s',
             'time'     => 'H:i:s',
         ],
     ];

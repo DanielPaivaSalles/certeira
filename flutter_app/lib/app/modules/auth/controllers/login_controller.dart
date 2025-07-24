@@ -11,7 +11,7 @@ class LoginController {
       final resposta = await http.post(
         url,
         headers: {'Content-Type': 'application/json'},
-        body: jsonEncode({'email': email, 'senha': senha}),
+        body: jsonEncode({'email': email, 'senha': senha, 'tipo': 'empregado'}),
       );
 
       if (resposta.statusCode == 200) {
